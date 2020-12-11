@@ -6,7 +6,7 @@ class CategoryController {
       const category = await Category.findAll()
       res.status(200).json(category)
     } catch (error) {
-      console.log(error)
+      next(error)
     }
   }
 }

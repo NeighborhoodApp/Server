@@ -6,7 +6,7 @@ class CommentController {
       const comment = await Comment.findAll()
       res.status(200).json(comment)
     } catch (error) {
-      console.log(error)
+      next(error)
     }
   }
 
@@ -19,7 +19,7 @@ class CommentController {
       }
       res.status(200).json(comment)
     } catch (error) {
-      console.log(error.msg)
+      next(error)
     }
   }
 
@@ -29,7 +29,7 @@ class CommentController {
       const comment = await Comment.create(payload)
       res.status(201).json(comment)
     } catch (error) {
-      console.log(error)
+      next(error)
     }
   }
 
@@ -48,7 +48,7 @@ class CommentController {
       }
       res.status(200).json(comment[1][0])
     } catch (error) {
-      console.log(error.msg)
+      next(error)
     }
   }
 
@@ -65,7 +65,7 @@ class CommentController {
       }
       res.status(200).json('Successful deleted comment')
     } catch (error) {
-      console.log(error.msg)
+      next(error)
     }
   }
 }

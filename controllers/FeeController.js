@@ -6,7 +6,7 @@ class FeeController {
       const fee = await Fee.findAll()
       res.status(200).json(fee)
     } catch (error) {
-      console.log(error)
+      next(error)
     }
   }
 
@@ -19,7 +19,7 @@ class FeeController {
       }
       res.status(200).json(fee)
     } catch (error) {
-      console.log(error.msg)
+      next(error)
     }
   }
 
@@ -29,7 +29,7 @@ class FeeController {
       const fee = await Fee.create(payload)
       res.status(201).json(fee)
     } catch (error) {
-      console.log(error)
+      next(error)
     }
   }
 
@@ -48,7 +48,7 @@ class FeeController {
       }
       res.status(200).json(fee[1][0])
     } catch (error) {
-      console.log(error.msg)
+      next(error)
     }
   }
 
@@ -65,7 +65,7 @@ class FeeController {
       }
       res.status(200).json('Successful deleted fees')
     } catch (error) {
-      console.log(error.msg)
+      next(error)
     }
   }
 }

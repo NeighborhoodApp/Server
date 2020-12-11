@@ -6,7 +6,7 @@ class EventController {
       const event = await Event.findAll()
       res.status(200).json(event)
     } catch (error) {
-      console.log(error)
+      next(error)
     }
   }
 
@@ -19,7 +19,7 @@ class EventController {
       }
       res.status(200).json(event)
     } catch (error) {
-      console.log(error.msg)
+      next(error)
     }
   }
 
@@ -29,7 +29,7 @@ class EventController {
       const event = await Event.create(payload)
       res.status(201).json(event)
     } catch (error) {
-      console.log(error)
+      next(error)
     }
   }
 
@@ -48,7 +48,7 @@ class EventController {
       }
       res.status(200).json(event[1][0])
     } catch (error) {
-      console.log(error.msg)
+      next(error)
     }
   }
 
@@ -65,7 +65,7 @@ class EventController {
       }
       res.status(200).json('Successful deleted event')
     } catch (error) {
-      console.log(error.msg)
+      next(error)
     }
   }
 }

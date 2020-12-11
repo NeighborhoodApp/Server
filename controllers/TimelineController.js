@@ -6,7 +6,7 @@ class TimelineController {
       const timeline = await Timeline.findAll()
       res.status(200).json(timeline)
     } catch (error) {
-      console.log(error)
+      next(error)
     }
   }
 
@@ -19,7 +19,7 @@ class TimelineController {
       }
       res.status(200).json(timeline)
     } catch (error) {
-      console.log(error.msg)
+      next(error)
     }
   }
 
@@ -29,7 +29,7 @@ class TimelineController {
       const timeline = await Timeline.create(payload)
       res.status(201).json(timeline)
     } catch (error) {
-      console.log(error)
+      next(error)
     }
   }
 
@@ -48,7 +48,7 @@ class TimelineController {
       }
       res.status(200).json(timeline[1][0])
     } catch (error) {
-      console.log(error.msg)
+      next(error)
     }
   }
 
@@ -65,7 +65,7 @@ class TimelineController {
       }
       res.status(200).json('Successful deleted timeline')
     } catch (error) {
-      console.log(error.msg)
+      next(error)
     }
   }
 }
