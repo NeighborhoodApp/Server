@@ -1,0 +1,286 @@
+{
+  "Roles": [
+    {
+      "id": 1,
+      "role_name": "Super Admin"
+    },
+    {
+      "id": 2,
+      "role_name": "Admin"
+    },
+    {
+      "id": 3,
+      "role_name": "Warga"
+    }
+  ],
+  "Developers": [
+    {
+      "id": 1,
+      "name": "Developer 1",
+      "adress": "Jl. Alamat Developer 1, Nama Kota",
+      "RoleId": 1,
+      "status": "Active"
+    },
+    {
+      "id": 2,
+      "name": "Developer 2",
+      "adress": "Jl. Alamat Developer 2, Nama Kota",
+      "RoleId": 1,
+      "status": "Inactive"
+    },
+    {
+      "id": 2,
+      "name": "Developer 2",
+      "adress": "Jl. Alamat Developer 2, Nama Kota",
+      "RoleId": 1,
+      "status": "Active"
+    }
+  ],
+  "RealEstates": [
+    {
+      "id": 1,
+      "name": "Real Estet 1 Perumahan Pematang Sejahtera Plaju",
+      "adress": "16 Ulu, Kec. Seberang Ulu II, Kota Palembang, Sumatera Selatan 30111",
+      "coordinate": "-2.9985332514737544, 104.790206885603",
+      "DeveloperId": 1,
+      "status": "Active"
+    },
+    {
+      "id": 2,
+      "name": "Real Estet 2 Komplek Jaya Permai",
+      "adress": "16 Ulu, Kec. Seberang Ulu II, Kota Palembang, Sumatera Selatan 30111",
+      "coordinate": "-2.999220773018713, 104.79017833687155",
+      "DeveloperId": 2,
+      "status": "Inactive"
+    },
+    {
+      "id": 3,
+      "name": "Real Estet 3 Perumahan Kenanga Indah Residence",
+      "adress": "Lrg. Kenanga, 16 Ulu, Kec. Seberang Ulu II, Kota Palembang, Sumatera Selatan 30118",
+      "coordinate": "-2.99680540751585, 104.79376145421122",
+      "DeveloperId": 2,
+      "status": "Active"
+    },
+    {
+      "id": 4,
+      "name": "Real Estet 4 Green Plaju Estate",
+      "adress": "Lrg. Ilham, RT.070/RW.006, Kel. 16, Kec. Seberang Ulu II, Palembang Ulu, Sumatera Selatan 30265",
+      "coordinate": "-2.996095373430308, 104.79039816125677",
+      "DeveloperId": 3,
+      "status": "Active"
+    },
+    {
+      "id": 5,
+      "name": "Real Estet 5 Perumahan griya indah 7",
+      "adress": "Jln. Ahmad yani ( belakang jm plaju, 16 Ulu, Kec. Seberang Ulu II, Kota Palembang, Sumatera Selatan 30111",
+      "coordinate": "-2.991282145902664, 104.79348846335574",
+      "DeveloperId": 3,
+      "status": "Active"
+    }
+  ],
+  "Complexs": [
+    {
+      "id": 1,
+      "name": "Real Estet 1 Komplek A1",
+      "RealEstateId": 1,
+      "status": "Active"
+    },
+    {
+      "id": 2,
+      "name": "Real Estet 1 Komplek B1",
+      "RealEstateId": 1,
+      "status": "Active"
+    },
+    {
+      "id": 3,
+      "name": "Real Estet 1 Komplek C1",
+      "RealEstateId": 1,
+      "status": "Inactive"
+    },
+    {
+      "id": 4,
+      "name": "Real Estet 2 Komplek A2",
+      "RealEstateId": 2,
+      "status": "Active"
+    },
+    {
+      "id": 5,
+      "name": "Real Estet 2 Komplek B2",
+      "RealEstateId": 2,
+      "status": "Active"
+    },
+    {
+      "id": 6,
+      "name": "Real Estet 3 Komplek A3",
+      "RealEstateId": 3,
+      "status": "Inactive"
+    },
+    {
+      "id": 7,
+      "name": "Real Estet 3 Komplek B3",
+      "RealEstateId": 3,
+      "status": "Inactive"
+    },
+    {
+      "id": 8,
+      "name": "Real Estet 4 Komplek A4",
+      "RealEstateId": 4,
+      "status": "Inactive"
+    },
+    {
+      "id": 9,
+      "name": "Real Estet 4 Komplek B4",
+      "RealEstateId": 4,
+      "status": "Inactive"
+    },
+    {
+      "id": 10,
+      "name": "Real Estet 5 Komplek A5",
+      "RealEstateId": 5,
+      "status": "Inactive"
+    },
+    {
+      "id": 11,
+      "name": "Real Estet 5 Komplek B5",
+      "RealEstateId": 5,
+      "status": "Inactive"
+    }
+  ],
+  "Users": [
+    {
+      "id": 1,
+      "fullname": "Admin 1",
+      "address": "Real Estet 1 Alamat Admin 1",
+      "RoleId": 2,
+      "RealEstateId": 1,
+      "ComplexId": 1,
+      "status": "Active"
+    },
+    {
+      "id": 2,
+      "fullname": "Admin 2",
+      "address": "Real Estet 1 Alamat Admin",
+      "RoleId": 2,
+      "RealEstateId": 1,
+      "ComplexId": 2,
+      "status": "Active"
+    },
+    {
+      "id": 3,
+      "fullname": "Admin 1",
+      "address": "Real Estet 2 Alamat Admin",
+      "RoleId": 2,
+      "RealEstateId": 2,
+      "ComplexId": 4,
+      "status": "Active"
+    },
+    {
+      "id": 4,
+      "fullname": "Admin 1",
+      "address": "Real Estet 2 Alamat Admin",
+      "RoleId": 2,
+      "RealEstateId": 2,
+      "ComplexId": 5,
+      "status": "Active"
+    },
+    {
+      "id": 5,
+      "fullname": "Warga 1",
+      "address": "Real Estet 1 Alamat Warga",
+      "RoleId": 3,
+      "RealEstateId": 1,
+      "ComplexId": 1,
+      "status": "Active"
+    },
+    {
+      "id": 6,
+      "fullname": "Warga 2",
+      "address": "Real Estet 1 Alamat Warga",
+      "RoleId": 3,
+      "RealEstateId": 1,
+      "ComplexId": 2,
+      "status": "Active"
+    },
+    {
+      "id": 7,
+      "fullname": "Warga 3",
+      "address": "Real Estet 2 Alamat Warga",
+      "RoleId": 3,
+      "RealEstateId": 2,
+      "ComplexId": 4,
+      "status": "Active"
+    },
+    {
+      "id": 8,
+      "fullname": "Warga 4",
+      "address": "Real Estet 2 Alamat Warga",
+      "RoleId": 3,
+      "RealEstateId": 2,
+      "ComplexId": 5,
+      "status": "Active"
+    }
+  ],
+  "Categories": [
+    {
+      "id": 1,
+      "category": "Pengajian",
+      "type": "Event"
+    },
+    {
+      "id": 1,
+      "category": "Arisan",
+      "type": "Event"
+    },
+    {
+      "id": 1,
+      "category": "Lainnya",
+      "type": "Event"
+    }
+  ],
+  "Events": [
+    {
+      "id": 1,
+      "name": "Pengajian di rumah Warga 1",
+      "description": "Description of Pengajian",
+      "image": "imges/imangename.jpg",
+      "date": "2020-12-30T00:00:00.000Z",
+      "CategoryId": 1,
+      "UserId": 5,
+      "RealEstateId": 1
+    }
+  ],
+  "Fees": [
+    {
+      "id": 1,
+      "name": "Iuran Kebersihan",
+      "description": "Description of iuran kebersihan",
+      "due_date": "2020-12-27T00:00:00.000Z",
+      "RealEstateId": 1,
+      "ComplexId": 1
+    }
+  ],
+  "Timelines": [
+    {
+      "id": 1,
+      "description": "This is test timelines by warga 1",
+      "image": "images/imageurl.jpg",
+      "privacy": "public",
+      "UserId": 6
+    },
+    {
+      "id": 2,
+      "description": "This is test timelines by warga 3",
+      "image": "images/imageurl.jpg",
+      "privacy": "member",
+      "UserId": 7
+    }
+  ],
+  "Comments": [
+    {
+      "id": 1,
+      "comment": "Comment in timeline 1 by warga 2",
+      "UserId": 6,
+      "TimelineId": 1
+    }
+  ]
+}
