@@ -35,6 +35,10 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           msg: 'Please enter timeline privacy'
+        },
+        isIn: {
+          args: [['public', 'member']],
+          msg: 'Must be public or member'
         }
       }
     },

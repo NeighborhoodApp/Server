@@ -48,6 +48,15 @@ module.exports = (sequelize, DataTypes) => {
         },
         notEmpty: {
           msg: 'Please enter event date'
+        },
+        isValidDate(value) {
+          const dateNow = new Date()
+          const inputDate = new Date(value)
+          if (dateNow.getFullYear() >= inputDate.getFullYear()) {
+            if (dateNow.getMonth() > inputDate.getMonth() || dateNow.getDate() > inputDate.getDate()) {
+              throw new Error('Date must be greater than today')
+            }
+          }
         }
       }
     },

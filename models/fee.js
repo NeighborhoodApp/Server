@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Fees extends Model {
+  class Fee extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,11 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // Fees.belongsTo(models.RealEsate)
-      // Fees.belongsTo(models.Complex)
+      // Fee.belongsTo(models.RealEsate)
+      // Fee.belongsTo(models.Complex)
     }
   };
-  Fees.init({
+  Fee.init({
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -42,7 +42,16 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Please enter valid date'
         },
         notEmpty: {
-          msg: 'Please enter fees date'
+          msg: 'Please enter event date'
+        },
+        isValidDate(value) {
+          const dateNow = new Date()
+          const inputDate = new Date(value)
+          if (dateNow.getFullYear() >= inputDate.getFullYear()) {
+            if (dateNow.getMonth() > inputDate.getMonth() || dateNow.getDate() > inputDate.getDate()) {
+              throw new Error('Date must be greater than today')
+            }
+          }
         }
       }
     },
@@ -72,7 +81,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'Fees',
+    modelName: 'Fee',
   });
-  return Fees;
+  return Fee;
 };

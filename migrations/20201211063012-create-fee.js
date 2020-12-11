@@ -17,7 +17,7 @@ module.exports = {
       due_date: {
         type: Sequelize.DATE
       },
-      RealEsateId: {
+      RealEstateId: {
         type: Sequelize.INTEGER
       },
       ComplexId: {
