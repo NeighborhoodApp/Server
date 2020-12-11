@@ -32,7 +32,7 @@ class Middleware {
           },
         });
         if (!loggedUser) throw { msg: "Authentication failed", status: 401 };
-        else if (loggedUser.role !== 2)
+        else if (loggedUser.RoleId !== 2)
           throw { msg: "Authentication failed", status: 401 };
         else {
           req.loggedIn = decoded;
@@ -71,7 +71,6 @@ class Middleware {
   static async authorization(req, res, next) {}
 
   static errorHandler(err, req, res, next) {
-    console.log(err);
     let status = err.status || 500;
     let msg = err.msg || "Internal Server Error";
 

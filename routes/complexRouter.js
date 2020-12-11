@@ -3,6 +3,7 @@ const router = express.Router();
 const ComplexController = require("../controllers/ComplexController");
 const Middleware = require("../middlewares/middleware");
 
+router.use(Middleware.ownerAuth);
 router.get("/", ComplexController.get);
 router.post("/", ComplexController.create);
 router.get("/:id", ComplexController.getOne);

@@ -21,7 +21,7 @@ class UserController {
     }
   }
 
-  static async loginWarga(req, res, next) {
+  static async loginClient(req, res, next) {
     const { email, password } = req.body;
     try {
       const foundUser = await User.findOne({
@@ -48,17 +48,43 @@ class UserController {
     }
   }
 
-  static async registerWarga(req, res, next) {
+  static async registerAdmin(req, res, next) {
     const {
       email,
       password,
       fullname,
       address,
-      RoleId,
       RealEstateId,
       ComplexId,
     } = req.body;
+    const RoleId = 2;
+    try {
+      const newUser = await User.create({
+        email,
+        password,
+        fullname,
+        address,
+        RoleId,
+        RealEstateId,
+        ComplexId,
+      });
+      res.status(201).json({ id: newUser.id, email: newUser.email });
+    } catch (err) {
+      next(err);
+    }
+  }
 
+  static async registerWarga(req, res, next) {
+    console.log();
+    const {
+      email,
+      password,
+      fullname,
+      address,
+      RealEstateId,
+      ComplexId,
+    } = req.body;
+    const RoleId = 3;
     try {
       const newUser = await User.create({
         email,
@@ -121,10 +147,32 @@ class UserController {
     }
   }
 
-  static async update(req, res, next) {
-    const { fullname, address, RoleId, RealEstateId, ComplexId } = req.body;
+  static async patch(req, res, next) {
+    const { status } = req.body;
     const userId = +req.params.id;
 
+    try {
+      if (!status) throw { msg: "Bad Request", status: 400 };
+      else {
+        await User.update(
+          { status },
+          {
+            where: {
+              id: userId,
+            },
+          }
+        );
+        res.status(200).json({ msg: `User status is successfully updated` });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async update(req, res, next) {
+    const { fullname, address, RealEstateId, ComplexId } = req.body;
+    const RoleId = 3;
+    const userId = +req.params.id;
     try {
       await User.update(
         { fullname, address, RoleId, RealEstateId, ComplexId },

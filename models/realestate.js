@@ -9,9 +9,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      RealEstate.hasMany(models.Complex);
       // RealEstate.hasMany(models.Event);
       // RealEstate.hasMany(models.Fee);
+      RealEstate.hasMany(models.Complex);
       RealEstate.hasMany(models.User);
       RealEstate.belongsTo(models.Developer, {
         foreignKey: "DeveloperId",
