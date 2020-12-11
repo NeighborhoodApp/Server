@@ -12,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Event.belongsTo(models.Category)
-      // Event.belongsTo(models.User)
-      // Event.belongsTo(models.RealEstate)
+      Event.belongsTo(models.User)
+      Event.belongsTo(models.RealEstate)
     }
   };
   Event.init({

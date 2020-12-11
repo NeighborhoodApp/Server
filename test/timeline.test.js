@@ -40,7 +40,7 @@ describe('Test Router Timeline', () => {
       })
       const { body, status } = res
       expect(status).toBe(400)
-      expect(body).toHaveProperty('error', 'Timeline.privacy cannot be null')
+      expect(body).toHaveProperty('msg', 'Timeline.privacy cannot be null')
       done()
     })
 
@@ -53,7 +53,7 @@ describe('Test Router Timeline', () => {
       })
       const { body, status } = res
       expect(status).toBe(400)
-      expect(body).toHaveProperty('error', 'Please enter timeline description')
+      expect(body).toHaveProperty('msg', 'Please enter timeline description')
       done()
     })
 
@@ -66,7 +66,7 @@ describe('Test Router Timeline', () => {
       })
       const { body, status } = res
       expect(status).toBe(400)
-      expect(body).toHaveProperty('error', 'Privacy must be public or member')
+      expect(body).toHaveProperty('msg', 'Privacy must be public or member')
       done()
     })
   })
@@ -107,7 +107,7 @@ describe('Test Router Timeline', () => {
       })
       const { body, status } = res
       expect(status).toBe(400)
-      expect(body).toHaveProperty('error', 'Please enter timeline description')
+      expect(body).toHaveProperty('msg', 'Please enter timeline description')
       done()
     })
 
@@ -120,7 +120,7 @@ describe('Test Router Timeline', () => {
       })
       const { body, status } = res
       expect(status).toBe(404)
-      expect(body).toHaveProperty('error', 'Timeline not found')
+      expect(body).toHaveProperty('msg', 'Timeline not found')
       done()
     })
   })
@@ -138,7 +138,7 @@ describe('Test Router Timeline', () => {
       const res = await request(app).del(`/timeline/0`)
       const { body, status } = res
       expect(status).toBe(404)
-      expect(body).toHaveProperty('error', 'Timeline not found')
+      expect(body).toHaveProperty('msg', 'Timeline not found')
       done()
     })
   })

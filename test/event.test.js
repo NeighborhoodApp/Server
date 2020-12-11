@@ -49,7 +49,7 @@ describe('Test Router Event', () => {
       })
       const { body, status } = res
       expect(status).toBe(400)
-      expect(body).toHaveProperty('error', 'Event.CategoryId cannot be null')
+      expect(body).toHaveProperty('msg', 'Event.CategoryId cannot be null')
       done()
     })
 
@@ -65,7 +65,7 @@ describe('Test Router Event', () => {
       })
       const { body, status } = res
       expect(status).toBe(400)
-      expect(body).toHaveProperty('error', 'Please enter event name')
+      expect(body).toHaveProperty('msg', 'Please enter event name')
       done()
     })
 
@@ -81,7 +81,7 @@ describe('Test Router Event', () => {
       })
       const { body, status } = res
       expect(status).toBe(400)
-      expect(body).toHaveProperty('error', 'Date must be greater than today')
+      expect(body).toHaveProperty('msg', 'Date must be greater than today')
       done()
     })
 
@@ -97,7 +97,7 @@ describe('Test Router Event', () => {
       })
       const { body, status } = res
       expect(status).toBe(400)
-      expect(body).toHaveProperty('error', 'Please enter valid date')
+      expect(body).toHaveProperty('msg', 'Please enter valid date')
       done()
     })
 
@@ -113,7 +113,7 @@ describe('Test Router Event', () => {
       })
       const { body, status } = res
       expect(status).toBe(400)
-      expect(body).toHaveProperty('error', 'Pleasse select your real estate, Please enter valid real estate')
+      expect(body).toHaveProperty('msg', 'Pleasse select your real estate, Please enter valid real estate')
       done()
     })
   })
@@ -163,7 +163,7 @@ describe('Test Router Event', () => {
       })
       const { body, status } = res
       expect(status).toBe(400)
-      expect(body).toHaveProperty('error', 'Please enter event name')
+      expect(body).toHaveProperty('msg', 'Please enter event name')
       done()
     })
 
@@ -179,7 +179,7 @@ describe('Test Router Event', () => {
       })
       const { body, status } = res
       expect(status).toBe(404)
-      expect(body).toHaveProperty('error', 'Event not found')
+      expect(body).toHaveProperty('msg', 'Event not found')
       done()
     })
   })
@@ -197,7 +197,7 @@ describe('Test Router Event', () => {
       const res = await request(app).del(`/event/0`)
       const { body, status } = res
       expect(status).toBe(404)
-      expect(body).toHaveProperty('error', 'Event not found')
+      expect(body).toHaveProperty('msg', 'Event not found')
       done()
     })
   })

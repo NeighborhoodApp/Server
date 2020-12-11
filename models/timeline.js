@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Timeline.hasMany(models.Comment)
-      // Timeline.belongsTo(models.User)
+      Timeline.belongsTo(models.User)
     }
   };
   Timeline.init({

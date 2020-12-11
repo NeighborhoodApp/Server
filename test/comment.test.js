@@ -37,7 +37,7 @@ describe('Test Router Comment', () => {
       })
       const { body, status } = res
       expect(status).toBe(400)
-      expect(body).toHaveProperty('error', 'Comment.TimelineId cannot be null')
+      expect(body).toHaveProperty('msg', 'Comment.TimelineId cannot be null')
       done()
     })
 
@@ -49,7 +49,7 @@ describe('Test Router Comment', () => {
       })
       const { body, status } = res
       expect(status).toBe(400)
-      expect(body).toHaveProperty('error', 'Please enter your comment')
+      expect(body).toHaveProperty('msg', 'Please enter your comment')
       done()
     })
   })
@@ -87,7 +87,7 @@ describe('Test Router Comment', () => {
       })
       const { body, status } = res
       expect(status).toBe(400)
-      expect(body).toHaveProperty('error', 'Please enter your comment')
+      expect(body).toHaveProperty('msg', 'Please enter your comment')
       done()
     })
 
@@ -99,7 +99,7 @@ describe('Test Router Comment', () => {
       })
       const { body, status } = res
       expect(status).toBe(404)
-      expect(body).toHaveProperty('error', 'Comment not found')
+      expect(body).toHaveProperty('msg', 'Comment not found')
       done()
     })
   })
@@ -117,7 +117,7 @@ describe('Test Router Comment', () => {
       const res = await request(app).del(`/comment/0`)
       const { body, status } = res
       expect(status).toBe(404)
-      expect(body).toHaveProperty('error', 'Comment not found')
+      expect(body).toHaveProperty('msg', 'Comment not found')
       done()
     })
   })

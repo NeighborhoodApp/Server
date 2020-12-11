@@ -43,7 +43,7 @@ describe('Test Router Fee', () => {
       })
       const { body, status } = res
       expect(status).toBe(400)
-      expect(body).toHaveProperty('error', 'Fee.ComplexId cannot be null')
+      expect(body).toHaveProperty('msg', 'Fee.ComplexId cannot be null')
       done()
     })
 
@@ -57,7 +57,7 @@ describe('Test Router Fee', () => {
       })
       const { body, status } = res
       expect(status).toBe(400)
-      expect(body).toHaveProperty('error', 'Please enter fees name')
+      expect(body).toHaveProperty('msg', 'Please enter fees name')
       done()
     })
 
@@ -71,7 +71,7 @@ describe('Test Router Fee', () => {
       })
       const { body, status } = res
       expect(status).toBe(400)
-      expect(body).toHaveProperty('error', 'Date must be greater than today')
+      expect(body).toHaveProperty('msg', 'Date must be greater than today')
       done()
     })
 
@@ -85,7 +85,7 @@ describe('Test Router Fee', () => {
       })
       const { body, status } = res
       expect(status).toBe(400)
-      expect(body).toHaveProperty('error', 'Please enter valid date')
+      expect(body).toHaveProperty('msg', 'Please enter valid date')
       done()
     })
 
@@ -99,7 +99,7 @@ describe('Test Router Fee', () => {
       })
       const { body, status } = res
       expect(status).toBe(400)
-      expect(body).toHaveProperty('error', 'Pleasse select your real estate, Please enter valid real estate')
+      expect(body).toHaveProperty('msg', 'Pleasse select your real estate, Please enter valid real estate')
       done()
     })
   })
@@ -143,7 +143,7 @@ describe('Test Router Fee', () => {
       })
       const { body, status } = res
       expect(status).toBe(400)
-      expect(body).toHaveProperty('error', 'Please enter fees name')
+      expect(body).toHaveProperty('msg', 'Please enter fees name')
       done()
     })
 
@@ -157,7 +157,7 @@ describe('Test Router Fee', () => {
       })
       const { body, status } = res
       expect(status).toBe(404)
-      expect(body).toHaveProperty('error', 'Fee not found')
+      expect(body).toHaveProperty('msg', 'Fee not found')
       done()
     })
   })
@@ -175,7 +175,7 @@ describe('Test Router Fee', () => {
       const res = await request(app).del(`/fee/0`)
       const { body, status } = res
       expect(status).toBe(404)
-      expect(body).toHaveProperty('error', 'Fee not found')
+      expect(body).toHaveProperty('msg', 'Fee not found')
       done()
     })
   })
