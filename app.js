@@ -12,6 +12,8 @@ app.use(express.json())
 app.use('/', routes)
 app.use(errorHandler)
 
-app.listen(PORT, () => {
-  console.log('Server running at http://localhost:' + PORT)
-})
+// app.listen(PORT, () => {
+//   console.log('Server running at http://localhost:' + PORT)
+// })
+
+module.exports = app

@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         isIn: {
           args: [['public', 'member']],
-          msg: 'Must be public or member'
+          msg: 'Privacy must be public or member'
         }
       }
     },

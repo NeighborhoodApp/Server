@@ -9,5 +9,5 @@ module.exports = function (err, req, res, next) {
     status = 400
     error = errors.join(", ")
   }
-  res.status(status).json(error)
+  res.status(status).json({ error })
 }
