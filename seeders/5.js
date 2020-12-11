@@ -1,10 +1,13 @@
 "use strict";
 
+const Helper = require("../helpers/helper");
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert("Users", [
       {
-        id: 1,
+        email: "admin1@mail.com",
+        password: Helper.hashPassword("admin1@mail.com"),
         fullname: "Admin 1",
         address: "Real Estet 1 Alamat Admin 1",
         RoleId: 2,
@@ -15,7 +18,8 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: 2,
+        email: "admin2@mail.com",
+        password: Helper.hashPassword("admin2@mail.com"),
         fullname: "Admin 2",
         address: "Real Estet 1 Alamat Admin",
         RoleId: 2,
@@ -26,7 +30,8 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: 3,
+        email: "admin3@mail.com",
+        password: Helper.hashPassword("admin3@mail.com"),
         fullname: "Admin 3",
         address: "Real Estet 2 Alamat Admin",
         RoleId: 2,
@@ -37,7 +42,8 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: 4,
+        email: "admin4@mail.com",
+        password: Helper.hashPassword("admin4@mail.com"),
         fullname: "Admin 4",
         address: "Real Estet 2 Alamat Admin",
         RoleId: 2,
@@ -48,7 +54,8 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: 5,
+        email: "warga1@mail.com",
+        password: Helper.hashPassword("warga1@mail.com"),
         fullname: "Warga 1",
         address: "Real Estet 1 Alamat Warga",
         RoleId: 3,
@@ -59,7 +66,8 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: 6,
+        email: "warga2@mail.com",
+        password: Helper.hashPassword("warga2@mail.com"),
         fullname: "Warga 2",
         address: "Real Estet 1 Alamat Warga",
         RoleId: 3,
@@ -70,7 +78,8 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: 7,
+        email: "warga3@mail.com",
+        password: Helper.hashPassword("warga3@mail.com"),
         fullname: "Warga 3",
         address: "Real Estet 2 Alamat Warga",
         RoleId: 3,
@@ -81,7 +90,8 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: 8,
+        email: "warga4@mail.com",
+        password: Helper.hashPassword("warga4@mail.com"),
         fullname: "Warga 4",
         address: "Real Estet 2 Alamat Warga",
         RoleId: 3,

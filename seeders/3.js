@@ -4,7 +4,6 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert("RealEstates", [
       {
-        id: 1,
         name: "Real Estet 1 Perumahan Pematang Sejahtera Plaju",
         address:
           "16 Ulu, Kec. Seberang Ulu II, Kota Palembang, Sumatera Selatan 30111",
@@ -15,7 +14,6 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: 2,
         name: "Real Estet 2 Komplek Jaya Permai",
         address:
           "16 Ulu, Kec. Seberang Ulu II, Kota Palembang, Sumatera Selatan 30111",
@@ -26,7 +24,6 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: 3,
         name: "Real Estet 3 Perumahan Kenanga Indah Residence",
         address:
           "Lrg. Kenanga, 16 Ulu, Kec. Seberang Ulu II, Kota Palembang, Sumatera Selatan 30118",
@@ -37,7 +34,6 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: 4,
         name: "Real Estet 4 Green Plaju Estate",
         address:
           "Lrg. Ilham, RT.070/RW.006, Kel. 16, Kec. Seberang Ulu II, Palembang Ulu, Sumatera Selatan 30265",
@@ -48,7 +44,6 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: 5,
         name: "Real Estet 5 Perumahan griya indah 7",
         address:
           "Jln. Ahmad yani ( belakang jm plaju, 16 Ulu, Kec. Seberang Ulu II, Kota Palembang, Sumatera Selatan 30111",
