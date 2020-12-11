@@ -44,10 +44,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       validate: {
         isDate: {
-          args: 'Please enter valid date'
+          msg: 'Please enter valid date'
         },
         notEmpty: {
-          args: 'Please enter event date'
+          msg: 'Please enter event date'
         }
       }
     },
@@ -56,10 +56,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       validate: {
         notEmpty: {
-          args: 'Pleasse select event category'
+          msd: 'Pleasse select event category'
         },
         isNumeric: {
-          args: 'Please enter valid category'
+          msd: 'Please enter valid category'
         }
       }
     },
@@ -72,10 +72,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       validate: {
         notEmpty: {
-          args: 'Pleasse select your real estate'
+          msg: 'Pleasse select your real estate'
         },
         isNumeric: {
-          args: 'Please enter valid real estate'
+          msg: 'Please enter valid real estate'
         }
       }
     }

@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Timeline extends Model {
+  class Comment extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,30 +11,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Timeline.hasMany(models.Comment)
-      // Timeline.belongsTo(models.User)
+      Comment.belongsTo(models.Timeline)
+      // Comment.belongsTo(models.User)
     }
   };
-  Timeline.init({
-    description: {
-      type: DataTypes.STRING,
+  Comment.init({
+    comment: {
       allowNull: false,
+      type: DataTypes.STRING,
       validate: {
         notEmpty: {
-          msg: 'Please enter timeline description'
-        }
-      }
-    },
-    image: {
-      allowNull: false,
-      type: DataTypes.STRING
-    },
-    privacy: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: {
-          msg: 'Please enter timeline privacy'
+          msg: 'Please enter your comment'
         }
       }
     },
@@ -42,9 +29,13 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.INTEGER
     },
+    TimelineId: {
+      allowNull: false,
+      type: DataTypes.INTEGER
+    },
   }, {
     sequelize,
-    modelName: 'Timeline',
+    modelName: 'Comment',
   });
-  return Timeline;
+  return Comment;
 };
