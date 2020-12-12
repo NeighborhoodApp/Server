@@ -10,18 +10,6 @@ beforeAll(async (done) => {
       type: "Event",
       createdAt: new Date(),
       updatedAt: new Date()
-    },
-    {
-      category: "Arisan",
-      type: "Event",
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      category: "Lainnya",
-      type: "Event",
-      createdAt: new Date(),
-      updatedAt: new Date()
     }
   ]
   try {
@@ -49,6 +37,16 @@ describe('Test Router Category', () => {
       const { body, status } = res
       expect(status).toBe(200)
       expect(body[0]).toHaveProperty('category', 'Pengajian')
+      expect(body[0]).toHaveProperty('Events')
+      await queryInterface.bulkDelete('Categories', null, {})
+      done()
+    })
+
+    it('404 Failed get category - should return error if category is empty', async (done) => {
+      const res = await request(app).get('/category')
+      const { body, status } = res
+      expect(status).toBe(404)
+      expect(body).toHaveProperty('msg', 'Category not found')
       done()
     })
   })
