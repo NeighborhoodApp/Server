@@ -3,7 +3,7 @@ const router = express.Router();
 const userRouter = require("./userRouter.js");
 const developerRouter = require("./developerRouter.js");
 const roleRouter = require("./roleRouter.js");
-const realEstateRouter = require("./RealEstateRouter.js");
+const realEstateRouter = require("./realEstateRouter");
 const complexRouter = require("./complexRouter.js");
 
 router.use("/users", userRouter);

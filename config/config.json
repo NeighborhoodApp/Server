@@ -1,14 +1,14 @@
 {
   "development": {
     "username": "postgres",
-    "password": "b4s4r4",
+    "password": "root",
     "database": "tetonggo_server",
     "host": "localhost",
     "dialect": "postgres"
   },
   "test": {
     "username": "postgres",
-    "password": "b4s4r4",
+    "password": "root",
     "database": "tetonggo_test",
     "host": "127.0.0.1",
     "dialect": "postgres"

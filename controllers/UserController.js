@@ -4,10 +4,9 @@ const Helper = require("../helpers/helper");
 class UserController {
   static async loginCMS(req, res, next) {
     const { email, password } = req.body;
+    console.log(req.body);
     try {
-      if (email !== "admin@mail.com" && password !== "tetonggo5")
-        throw { msg: "User not found", status: 404 };
-      else {
+      if (email === "admin@mail.com" && password === "tetonggo5") {
         const accessToken = Helper.signToken({
           email: email,
         });
@@ -15,6 +14,8 @@ class UserController {
           access_token: accessToken,
           email: email,
         });
+      } else {
+        throw { msg: "User not found", status: 404 };
       }
     } catch (err) {
       next(err);
