@@ -4,7 +4,6 @@ const Helper = require("../helpers/helper");
 class UserController {
   static async loginCMS(req, res, next) {
     const { email, password } = req.body;
-    console.log(req.body);
     try {
       if (email === "admin@mail.com" && password === "tetonggo5") {
         const accessToken = Helper.signToken({
@@ -57,6 +56,7 @@ class UserController {
       address,
       RealEstateId,
       ComplexId,
+      status,
     } = req.body;
     const RoleId = 2;
     try {
@@ -68,6 +68,7 @@ class UserController {
         RoleId,
         RealEstateId,
         ComplexId,
+        status,
       });
       res.status(201).json({ id: newUser.id, email: newUser.email });
     } catch (err) {

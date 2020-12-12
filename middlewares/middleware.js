@@ -4,6 +4,7 @@ const { User } = require("../models");
 class Middleware {
   static async ownerAuth(req, res, next) {
     const { access_token } = req.headers;
+    console.log(access_token, 'access_token')
     try {
       if (!access_token) throw { msg: "Authentication failed", status: 401 };
       else {

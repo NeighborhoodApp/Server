@@ -1,4 +1,4 @@
-const { Complex, RealEstate } = require("../models");
+const { Complex, RealEstate, User } = require("../models");
 
 class ComplexController {
   static async get(req, res, next) {
@@ -35,9 +35,7 @@ class ComplexController {
         where: {
           id: complexId,
         },
-        include: {
-          model: RealEstate,
-        },
+        include: [RealEstate, User],
       });
       res.status(200).json({ foundComplex });
     } catch (err) {
