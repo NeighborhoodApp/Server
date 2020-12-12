@@ -1,4 +1,4 @@
-const { Developer, Role } = require("../models");
+const { Developer, Role, RealEstate } = require("../models");
 
 class DeveloperController {
   static async get(req, res, next) {
@@ -38,9 +38,7 @@ class DeveloperController {
         where: {
           id: developerId,
         },
-        include: {
-          model: Role,
-        },
+        include: [Role, RealEstate],
       });
       if (!foundDeveloper) throw { msg: "Developer not found", status: 404 };
 

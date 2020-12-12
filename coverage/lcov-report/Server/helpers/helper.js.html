@@ -23,9 +23,15 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
+<<<<<<< HEAD
                 <span class="strong">72.73% </span>
                 <span class="quiet">Statements</span>
                 <span class='fraction'>8/11</span>
+=======
+                <span class="strong">27.27% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>3/11</span>
+>>>>>>> ddaf2f9673dd28a4d8eafa2e3e58d1cb944c8eac
             </div>
         
             
@@ -37,16 +43,28 @@
         
             
             <div class='fl pad1y space-right2'>
+<<<<<<< HEAD
                 <span class="strong">75% </span>
                 <span class="quiet">Functions</span>
                 <span class='fraction'>3/4</span>
+=======
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/4</span>
+>>>>>>> ddaf2f9673dd28a4d8eafa2e3e58d1cb944c8eac
             </div>
         
             
             <div class='fl pad1y space-right2'>
+<<<<<<< HEAD
                 <span class="strong">72.73% </span>
                 <span class="quiet">Lines</span>
                 <span class='fraction'>8/11</span>
+=======
+                <span class="strong">27.27% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>3/11</span>
+>>>>>>> ddaf2f9673dd28a4d8eafa2e3e58d1cb944c8eac
             </div>
         
             
@@ -55,7 +73,11 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
+<<<<<<< HEAD
     <div class='status-line medium'></div>
+=======
+    <div class='status-line low'></div>
+>>>>>>> ddaf2f9673dd28a4d8eafa2e3e58d1cb944c8eac
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -83,8 +105,13 @@
 <a name='L24'></a><a href='#L24'>24</a>
 <a name='L25'></a><a href='#L25'>25</a>
 <a name='L26'></a><a href='#L26'>26</a>
+<<<<<<< HEAD
 <a name='L27'></a><a href='#L27'>27</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+=======
+<a name='L27'></a><a href='#L27'>27</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+>>>>>>> ddaf2f9673dd28a4d8eafa2e3e58d1cb944c8eac
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -94,6 +121,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<<<<<<< HEAD
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -109,6 +137,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+=======
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+>>>>>>> ddaf2f9673dd28a4d8eafa2e3e58d1cb944c8eac
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 &nbsp;
@@ -119,6 +164,7 @@ class Helper {
 <span class="cstat-no" title="statement not covered" >    return hash;</span>
   }
 &nbsp;
+<<<<<<< HEAD
   static comparePassword(password, hash) {
     return bcrypt.compareSync(password, hash);
   }
@@ -131,6 +177,20 @@ class Helper {
   static verifyToken(token) {
     const decoded = jwt.verify(token, process.env.SECRET);
     return decoded;
+=======
+<span class="fstat-no" title="function not covered" >  st</span>atic comparePassword(password, hash) {
+<span class="cstat-no" title="statement not covered" >    return bcrypt.compareSync(password, hash);</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  st</span>atic signToken(payload) {
+    const token = <span class="cstat-no" title="statement not covered" >jwt.sign(payload, process.env.SECRET);</span>
+<span class="cstat-no" title="statement not covered" >    return token;</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  st</span>atic verifyToken(token) {
+    const decoded = <span class="cstat-no" title="statement not covered" >jwt.verify(token, process.env.SECRET);</span>
+<span class="cstat-no" title="statement not covered" >    return decoded;</span>
+>>>>>>> ddaf2f9673dd28a4d8eafa2e3e58d1cb944c8eac
   }
 }
 &nbsp;
@@ -142,7 +202,11 @@ module.exports = Helper;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
+<<<<<<< HEAD
                 at Sat Dec 12 2020 15:49:49 GMT+0700 (Waktu Indonesia Barat)
+=======
+                at Fri Dec 11 2020 21:30:23 GMT+0700 (Western Indonesia Time)
+>>>>>>> ddaf2f9673dd28a4d8eafa2e3e58d1cb944c8eac
             </div>
         </div>
         <script src="../../prettify.js"></script>
