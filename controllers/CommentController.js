@@ -1,9 +1,11 @@
-const { Comment } = require('../models')
+const { Comment, User, Timeline } = require('../models')
 
 class CommentController {
   static async find(req, res, next) {
     try {
-      const comment = await Comment.findAll()
+      const comment = await Comment.findAll({
+        include: [User, Timeline]
+      })
       res.status(200).json(comment)
     } catch (error) {
       next(error)

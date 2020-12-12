@@ -1,9 +1,11 @@
-const { Fee } = require('../models')
+const { Fee, RealEstate, Complex } = require('../models')
 
 class FeeController {
   static async find(req, res, next) {
     try {
-      const fee = await Fee.findAll()
+      const fee = await Fee.findAll({
+        include: [RealEstate, Complex]
+      })
       res.status(200).json(fee)
     } catch (error) {
       next(error)
@@ -15,7 +17,7 @@ class FeeController {
     try {
       const fee = await Fee.findByPk(id)
       if (!fee) {
-        throw {msg: 'Fee not found', status: 404}
+        throw { msg: 'Fee not found', status: 404 }
       }
       res.status(200).json(fee)
     } catch (error) {
@@ -44,7 +46,7 @@ class FeeController {
         returning: true
       })
       if (!fee[1].length) {
-        throw {msg: 'Fee not found', status: 404}
+        throw { msg: 'Fee not found', status: 404 }
       }
       res.status(200).json(fee[1][0])
     } catch (error) {
@@ -61,7 +63,7 @@ class FeeController {
         }
       })
       if (!fee) {
-        throw {msg: 'Fee not found', status: 404}
+        throw { msg: 'Fee not found', status: 404 }
       }
       res.status(200).json('Successful deleted fees')
     } catch (error) {

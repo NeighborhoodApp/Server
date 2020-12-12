@@ -1,9 +1,11 @@
-const { Timeline } = require('../models')
+const { Timeline, User } = require('../models')
 
 class TimelineController {
   static async find(req, res, next) {
     try {
-      const timeline = await Timeline.findAll()
+      const timeline = await Timeline.findAll({
+        include: [User]
+      })
       res.status(200).json(timeline)
     } catch (error) {
       next(error)

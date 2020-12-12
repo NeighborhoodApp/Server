@@ -1,9 +1,11 @@
-const { Event } = require('../models')
+const { Event, Category, User, RealEstate } = require('../models')
 
 class EventController {
   static async find(req, res, next) {
     try {
-      const event = await Event.findAll()
+      const event = await Event.findAll({
+        include: [Category, User, RealEstate]
+      })
       res.status(200).json(event)
     } catch (error) {
       next(error)
