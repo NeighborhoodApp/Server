@@ -1,5 +1,5 @@
 const Helper = require("../helpers/helper");
-const { User } = require("../models");
+const { User, Comment } = require("../models");
 
 class Middleware {
   static async ownerAuth(req, res, next) {
@@ -70,10 +70,20 @@ class Middleware {
     }
   }
 
-  static async authorization(req, res, next) { }
+  static async imel(req, res, next) {
+    const commentId = +req.params.id;
+    try {
+      const foundComment = await Comment.findByPk(commentId);
+      if (!foundComment) throw { msg: "Comment not found", status: 404 };
+      else if (foundComment.UserId == req.loggedIn.id) next();
+      else throw { msg: "Not authorized", status: 401 };
+    } catch (err) {
+      next(err);
+    }
+  }
 
   static errorHandler(err, req, res, next) {
-    const errors = []
+    const errors = [];
     let status = err.status || 500;
     let msg = err.msg || "Internal Server Error";
 
