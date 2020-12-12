@@ -5,9 +5,7 @@ class UserController {
   static async loginCMS(req, res, next) {
     const { email, password } = req.body;
     try {
-      if (email !== "admin@mail.com" && password !== "tetonggo5")
-        throw { msg: "User not found", status: 404 };
-      else {
+      if (email === "admin@mail.com" && password === "tetonggo5") {
         const accessToken = Helper.signToken({
           email: email,
         });
@@ -15,6 +13,8 @@ class UserController {
           access_token: accessToken,
           email: email,
         });
+      } else {
+        throw { msg: "User not found", status: 404 };
       }
     } catch (err) {
       next(err);
@@ -75,7 +75,6 @@ class UserController {
   }
 
   static async registerWarga(req, res, next) {
-    console.log();
     const {
       email,
       password,
@@ -141,6 +140,7 @@ class UserController {
           },
         ],
       });
+      if (!foundUser) throw { msg: "User not found", status: 404 };
       res.status(200).json({ foundUser });
     } catch (err) {
       next(err);
@@ -152,9 +152,9 @@ class UserController {
     const userId = +req.params.id;
 
     try {
-      if (!status) throw { msg: "Bad Request", status: 400 };
+      if (!status) throw { msg: "Don't empty the status field", status: 400 };
       else {
-        await User.update(
+        const patchedUser = await User.update(
           { status },
           {
             where: {
@@ -162,6 +162,7 @@ class UserController {
             },
           }
         );
+        if (patchedUser[0] === 0) throw { msg: "User not found", status: 404 };
         res.status(200).json({ msg: `User status is successfully updated` });
       }
     } catch (err) {
@@ -174,7 +175,7 @@ class UserController {
     const RoleId = 3;
     const userId = +req.params.id;
     try {
-      await User.update(
+      const updatedUser = await User.update(
         { fullname, address, RoleId, RealEstateId, ComplexId },
         {
           where: {
@@ -182,6 +183,7 @@ class UserController {
           },
         }
       );
+      if (updatedUser[0] === 0) throw { msg: "User not found", status: 404 };
       res.status(200).json({ msg: `User info is successfully updated` });
     } catch (err) {
       next(err);
@@ -192,7 +194,8 @@ class UserController {
     const userId = +req.params.id;
 
     try {
-      await User.destroy({ where: { id: userId } });
+      const deletedUser = await User.destroy({ where: { id: userId } });
+      if (!deletedUser) throw { msg: "User not found", status: 404 };
       res.status(200).json({ msg: "User is successfully deleted" });
     } catch (err) {
       next(err);

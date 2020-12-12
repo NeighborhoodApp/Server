@@ -42,6 +42,8 @@ class DeveloperController {
           model: Role,
         },
       });
+      if (!foundDeveloper) throw { msg: "Developer not found", status: 404 };
+
       res.status(200).json({ foundDeveloper });
     } catch (err) {
       next(err);
@@ -53,7 +55,7 @@ class DeveloperController {
     const developerId = +req.params.id;
 
     try {
-      await Developer.update(
+      const updatedDeveloper = await Developer.update(
         { name, address, status },
         {
           where: {
@@ -61,6 +63,8 @@ class DeveloperController {
           },
         }
       );
+      if (updatedDeveloper[0] === 0)
+        throw { msg: "Developer not found", status: 404 };
       res.status(200).json({ msg: `Developer info is successfully updated` });
     } catch (err) {
       next(err);
@@ -71,7 +75,10 @@ class DeveloperController {
     const developerId = +req.params.id;
 
     try {
-      await Developer.destroy({ where: { id: developerId } });
+      const deletedDeveloper = await Developer.destroy({
+        where: { id: developerId },
+      });
+      if (!deletedDeveloper) throw { msg: "Developer not found", status: 404 };
       res.status(200).json({ msg: "Developer is successfully deleted" });
     } catch (err) {
       next(err);
