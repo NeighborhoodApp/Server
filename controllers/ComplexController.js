@@ -1,4 +1,4 @@
-const { Complex, RealEstate } = require("../models");
+const { Complex, RealEstate, User } = require("../models");
 
 class ComplexController {
   static async get(req, res, next) {
@@ -35,10 +35,9 @@ class ComplexController {
         where: {
           id: complexId,
         },
-        include: {
-          model: RealEstate,
-        },
+        include: [RealEstate, User],
       });
+      if (!foundComplex) throw { msg: "Complex not found", status: 404 };
       res.status(200).json({ foundComplex });
     } catch (err) {
       next(err);
@@ -50,7 +49,7 @@ class ComplexController {
     const complexId = +req.params.id;
 
     try {
-      await Complex.update(
+      const updatedComplex = await Complex.update(
         { name, RealEstateId, status },
         {
           where: {
@@ -58,6 +57,8 @@ class ComplexController {
           },
         }
       );
+      if (updatedComplex[0] === 0)
+        throw { msg: "Complex not found", status: 404 };
       res.status(200).json({ msg: `Complex info is successfully updated` });
     } catch (err) {
       next(err);
@@ -68,7 +69,10 @@ class ComplexController {
     const complexId = +req.params.id;
 
     try {
-      await Complex.destroy({ where: { id: complexId } });
+      const deletedComplex = await Complex.destroy({
+        where: { id: complexId },
+      });
+      if (!deletedComplex) throw { msg: "Complex not found", status: 404 };
       res.status(200).json({ msg: "Complex is successfully deleted" });
     } catch (err) {
       next(err);
