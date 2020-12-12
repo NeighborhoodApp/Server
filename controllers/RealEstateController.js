@@ -39,6 +39,7 @@ class RealEstateController {
         },
         include: [Developer, Complex],
       });
+      if (!foundRealEstate) throw { msg: "RealEstate not found", status: 404 };
       res.status(200).json({ foundRealEstate });
     } catch (err) {
       next(err);
@@ -50,7 +51,7 @@ class RealEstateController {
     const realEstateId = +req.params.id;
 
     try {
-      await RealEstate.update(
+      const updatedRealEstate = await RealEstate.update(
         { name, address, coordinate, DeveloperId, status },
         {
           where: {
@@ -58,6 +59,8 @@ class RealEstateController {
           },
         }
       );
+      if (updatedRealEstate[0] === 0)
+        throw { msg: "RealEstate not found", status: 404 };
       res.status(200).json({ msg: `RealEstate info is successfully updated` });
     } catch (err) {
       next(err);
@@ -68,7 +71,11 @@ class RealEstateController {
     const realEstateId = +req.params.id;
 
     try {
-      await RealEstate.destroy({ where: { id: realEstateId } });
+      const deletedRealEstate = await RealEstate.destroy({
+        where: { id: realEstateId },
+      });
+      if (!deletedRealEstate)
+        throw { msg: "RealEstate not found", status: 404 };
       res.status(200).json({ msg: "RealEstate is successfully deleted" });
     } catch (err) {
       next(err);
