@@ -63,7 +63,8 @@ describe("POST '/users/register-warga' should only registered by Admin", () => {
         });
       const { body, status } = response;
       expect(status).toBe(201);
-      expect(body).toHaveProperty("msg", expect.any(String));
+      expect(body).toHaveProperty("email", "warga5@mail.com");
+      expect(body).toHaveProperty("id", expect.any(Number));
       done();
     } catch (err) {
       done(err);
@@ -76,7 +77,7 @@ describe("POST '/users/register-warga' should only registered by Admin", () => {
         .post("/users/register-warga")
         .set("access_token", admin_token)
         .send({
-          email: "",
+          email: "warga5@mail.com",
           password: "warga5@mail.com",
           fullname: "Warga4",
           address: "Real Estet 2 Alamat Warga",
@@ -178,7 +179,10 @@ describe("POST '/users/register-warga' should only registered by Admin", () => {
         });
       const { body, status } = response;
       expect(status).toBe(400);
-      expect(body).toHaveProperty("msg", "Please fill the password");
+      expect(body).toHaveProperty(
+        "msg",
+        "Please fill the password, Password must include number!"
+      );
       done();
     } catch (err) {
       done(err);

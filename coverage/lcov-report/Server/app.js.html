@@ -25,22 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-<<<<<<< HEAD
-                <span class='fraction'>13/13</span>
-=======
                 <span class='fraction'>14/14</span>
->>>>>>> ddaf2f9673dd28a4d8eafa2e3e58d1cb944c8eac
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-<<<<<<< HEAD
-                <span class='fraction'>1/2</span>
-=======
                 <span class='fraction'>2/4</span>
->>>>>>> ddaf2f9673dd28a4d8eafa2e3e58d1cb944c8eac
             </div>
         
             
@@ -54,11 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-<<<<<<< HEAD
-                <span class='fraction'>13/13</span>
-=======
                 <span class='fraction'>14/14</span>
->>>>>>> ddaf2f9673dd28a4d8eafa2e3e58d1cb944c8eac
             </div>
         
             
@@ -86,90 +74,54 @@
 <a name='L15'></a><a href='#L15'>15</a>
 <a name='L16'></a><a href='#L16'>16</a>
 <a name='L17'></a><a href='#L17'>17</a>
-<<<<<<< HEAD
-<a name='L18'></a><a href='#L18'>18</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="missing-if-branch" title="else path not taken" >E</span>if (process.env.NODE_ENV != "production") {
-  require("dotenv").config();
-}
-&nbsp;
-const express = require("express");
-const app = express();
-const routes = require("./routes/index.js");
-const cors = require("cors");
-const Middleware = require("./middlewares/middleware");
-&nbsp;
-app.use(cors());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(routes);
-app.use(Middleware.errorHandler);
-&nbsp;
-=======
 <a name='L18'></a><a href='#L18'>18</a>
 <a name='L19'></a><a href='#L19'>19</a>
 <a name='L20'></a><a href='#L20'>20</a>
 <a name='L21'></a><a href='#L21'>21</a>
 <a name='L22'></a><a href='#L22'>22</a>
-<a name='L23'></a><a href='#L23'>23</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
+<a name='L23'></a><a href='#L23'>23</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="missing-if-branch" title="else path not taken" >E</span>if (process.env.NODE_ENV != "production") {
   require("dotenv").config();
 }
-const express = require('express')
-const PORT = process.env.PORT || <span class="branch-1 cbranch-no" title="branch not covered" >3000</span>
-const app = express()
-const cors = require('cors')
-const routes = require('./routes')
+const express = require("express");
+const PORT = process.env.PORT || <span class="branch-1 cbranch-no" title="branch not covered" >3000;</span>
+const app = express();
+const cors = require("cors");
+const routes = require("./routes");
 const Middleware = require("./middlewares/middleware");
 &nbsp;
-app.use(cors())
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
+app.use(cors());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 &nbsp;
-app.use('/', routes)
+app.use("/", routes);
 app.use(Middleware.errorHandler);
 &nbsp;
 // app.listen(PORT, () =&gt; {
 //   console.log('Server running at http://localhost:' + PORT)
 // })
 &nbsp;
->>>>>>> ddaf2f9673dd28a4d8eafa2e3e58d1cb944c8eac
 module.exports = app;
 &nbsp;</pre></td></tr></table></pre>
 
@@ -178,11 +130,7 @@ module.exports = app;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-<<<<<<< HEAD
-                at Sat Dec 12 2020 15:49:49 GMT+0700 (Waktu Indonesia Barat)
-=======
-                at Fri Dec 11 2020 21:30:23 GMT+0700 (Western Indonesia Time)
->>>>>>> ddaf2f9673dd28a4d8eafa2e3e58d1cb944c8eac
+                at Sat Dec 12 2020 16:53:18 GMT+0700 (Western Indonesia Time)
             </div>
         </div>
         <script src="../prettify.js"></script>
