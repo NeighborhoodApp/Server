@@ -4,9 +4,9 @@
   "description": "Server",
   "main": "index.js",
   "scripts": {
-    "test": "jest --detectOpenHandles --runInBand --forceExit --verbose  ",
-    "dev": "nodemon ./bin/www",
-    "start": "node ./bin/www"
+    "test": "jest --detectOpenHandles --forceExit --runInBand --verbose --collectCoverage --watch",
+    "start": "node app.js",
+    "dev": "node ./bin/www"
   },
   "repository": {
     "type": "git",

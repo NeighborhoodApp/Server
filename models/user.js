@@ -10,9 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // User.hasMany(models.Event);
-      // User.hasMany(models.Timeline)
-      // User.hasMany(models.Comment)
+      User.hasMany(models.Event);
+      User.hasMany(models.Timeline)
+      User.hasMany(models.Comment)
       User.belongsTo(models.Role, {
         foreignKey: "RoleId",
         targetKey: "id",

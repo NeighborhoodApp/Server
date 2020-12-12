@@ -68,9 +68,10 @@ class Middleware {
     }
   }
 
-  static async authorization(req, res, next) {}
+  static async authorization(req, res, next) { }
 
   static errorHandler(err, req, res, next) {
+    const errors = []
     let status = err.status || 500;
     let msg = err.msg || "Internal Server Error";
 
