@@ -56,6 +56,20 @@ describe('Test Router Category', () => {
   })
 })
 
+describe('Test Router Image', () => {
+  describe('Test endpoint POST /upload', () => {
+    it('201 Success upload file - should return link', async (done) => {
+      const res = await request(app).post('/upload').send({
+        file: 'test'
+      })
+      const { body, status } = res
+      expect(status).toBe(201)
+      expect(body).toBe('test')
+      done()
+    })
+  })
+})
+
 describe('Test Router Event', () => {
   let id = null
 
