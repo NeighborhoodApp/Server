@@ -70,8 +70,25 @@ class UserController {
         ComplexId,
         status,
       });
+      await RealEstate.update(
+        { status: "Active" },
+        {
+          where: {
+            id: RealEstateId,
+          },
+        }
+      );
+      await Complex.update(
+        { status: "Active" },
+        {
+          where: {
+            id: ComplexId,
+          },
+        }
+      );
       res.status(201).json({ id: newUser.id, email: newUser.email });
     } catch (err) {
+      console.log(err.stack);
       next(err);
     }
   }
