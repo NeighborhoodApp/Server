@@ -8,6 +8,10 @@ router.get("/", RealEstateController.get);
 router.post("/", RealEstateController.create);
 router.get("/:id", RealEstateController.getOne);
 router.put("/:id", RealEstateController.update);
-router.delete("/:id", RealEstateController.delete);
+router.delete(
+  "/:id",
+  Middleware.deleteRealEstateVerification,
+  RealEstateController.delete
+);
 
 module.exports = router;

@@ -22,7 +22,7 @@ class UserController {
   }
 
   static async loginClient(req, res, next) {
-    console.log('disiniiii')
+    console.log("disiniiii");
     const { email, password } = req.body;
     try {
       const foundUser = await User.findOne({
@@ -39,7 +39,7 @@ class UserController {
           id: foundUser.id,
           email: foundUser.email,
           RoleId: foundUser.RoleId,
-          coordinate: foundUser.RealEstate.coordinate
+          coordinate: foundUser.RealEstate.coordinate,
         });
         res.status(200).json({
           access_token: accessToken,
@@ -91,7 +91,6 @@ class UserController {
       );
       res.status(201).json({ id: newUser.id, email: newUser.email });
     } catch (err) {
-      console.log(err.stack);
       next(err);
     }
   }
@@ -125,15 +124,7 @@ class UserController {
   static async get(req, res, next) {
     try {
       const allUsers = await User.findAll({
-        include: [
-          { model: Role },
-          {
-            model: Complex,
-          },
-          {
-            model: RealEstate,
-          },
-        ],
+        include: [Role, Complex, RealEstate],
         order: [["id", "ASC"]],
       });
       res.status(200).json({ allUsers });
@@ -150,17 +141,7 @@ class UserController {
         where: {
           id: userId,
         },
-        include: [
-          {
-            model: Role,
-          },
-          {
-            model: Complex,
-          },
-          {
-            model: RealEstate,
-          },
-        ],
+        include: [Role, Complex, RealEstate],
       });
       if (!foundUser) throw { msg: "User not found", status: 404 };
       res.status(200).json({ foundUser });
@@ -193,8 +174,7 @@ class UserController {
   }
 
   static async update(req, res, next) {
-    const { fullname, address, RealEstateId, ComplexId } = req.body;
-    const RoleId = 3;
+    const { fullname, address, RoleId, RealEstateId, ComplexId } = req.body;
     const userId = +req.params.id;
     try {
       const updatedUser = await User.update(

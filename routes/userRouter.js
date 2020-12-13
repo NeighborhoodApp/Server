@@ -19,6 +19,10 @@ router.post(
 );
 router.patch("/:id", Middleware.adminAuth, UserController.patch);
 router.put("/:id", UserController.update);
-router.delete("/:id", UserController.delete);
+router.delete(
+  "/:id",
+  Middleware.deleteAdminVerification,
+  UserController.delete
+);
 
 module.exports = router;

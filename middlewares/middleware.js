@@ -1,5 +1,12 @@
 const Helper = require("../helpers/helper");
-const { User } = require("../models");
+const {
+  User,
+  Comment,
+  Developer,
+  RealEstate,
+  Role,
+  Complex,
+} = require("../models");
 
 class Middleware {
   static async ownerAuth(req, res, next) {
@@ -68,7 +75,116 @@ class Middleware {
     }
   }
 
-  static async authorization(req, res, next) { }
+  static async imel(req, res, next) {
+    const commentId = +req.params.id;
+    try {
+      const foundComment = await Comment.findByPk(commentId);
+      if (!foundComment) throw { msg: "Comment not found", status: 404 };
+      else if (foundComment.UserId == req.loggedIn.id) next();
+      else throw { msg: "Not authorized", status: 401 };
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async deleteDeveloperVerification(req, res, next) {
+    const developerId = +req.params.id;
+    try {
+      const foundDeveloper = await Developer.findOne({
+        where: {
+          id: developerId,
+        },
+        include: [Role, RealEstate],
+      });
+      if (foundDeveloper.RealEstates.length > 0)
+        throw {
+          msg:
+            "Can't delete, this Developer still has some dependent Real Estates in the registry",
+          status: 401,
+        };
+      else {
+        next();
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async deleteRealEstateVerification(req, res, next) {
+    const realEstateId = +req.params.id;
+    try {
+      const foundRealEstate = await RealEstate.findOne({
+        where: {
+          id: realEstateId,
+        },
+        include: [Complex],
+      });
+      if (foundRealEstate.Complexes.length > 0)
+        throw {
+          msg:
+            "Can't delete, dependent Complexes are found in this RealEstate registry",
+          status: 401,
+        };
+      else {
+        next();
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async deleteComplexVerification(req, res, next) {
+    const complexId = +req.params.id;
+    try {
+      const foundComplex = await Complex.findOne({
+        where: {
+          id: complexId,
+        },
+        include: [User],
+      });
+      if (foundComplex.Users.length > 0)
+        throw {
+          msg: "Can't delete, some Users are still registered in this area",
+          status: 401,
+        };
+      else {
+        next();
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+  static async deleteAdminVerification(req, res, next) {
+    const userId = +req.params.id;
+    try {
+      const foundUser = await User.findOne({
+        where: {
+          id: userId,
+        },
+        include: [Role],
+      });
+      if (foundUser.RoleId !== 2) next();
+      else if (foundUser.RoleId === 2) {
+        const allUsersAsAdmin = await User.findAll({
+          where: {
+            RoleId: 2,
+          },
+        });
+        if (allUsersAsAdmin.length > 1) next();
+        else {
+          throw {
+            msg:
+              "Can't proceed to delete, this user is the only admin right now",
+            status: 401,
+          };
+        }
+      } else {
+        next();
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
 
   static errorHandler(err, req, res, next) {
     let status = err.status || 500;
