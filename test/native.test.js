@@ -105,10 +105,26 @@ afterAll(async (done) => {
     await queryInterface.bulkDelete('Fees', null, {})
     await queryInterface.bulkDelete('Timelines', null, {})
     await queryInterface.bulkDelete('Comments', null, {})
-    await queryInterface.bulkDelete('Roles', null, {})
-    await queryInterface.bulkDelete('Developers', null, {})
-    await queryInterface.bulkDelete('RealEstates', null, {})
-    await queryInterface.bulkDelete('Complexes', null, {})
+    await queryInterface.bulkDelete("Roles", {
+      id: {
+        [Op.gt]: 3,
+      },
+    })
+    await queryInterface.bulkDelete("Developers", {
+      id: {
+        [Op.gt]: 1,
+      },
+    })
+    await queryInterface.bulkDelete("RealEstates", {
+      id: {
+        [Op.gt]: 1,
+      },
+    })
+    await queryInterface.bulkDelete("Complexes", {
+      id: {
+        [Op.gt]: 1,
+      },
+    })
     await queryInterface.bulkDelete('Users', null, {})
     done()
   } catch (error) {
@@ -283,7 +299,9 @@ describe('Test Router Event', () => {
 
   describe('Test endpoint GET /event', () => {
     it('200 Succes get event - should show event', async (done) => {
-      const res = await request(app).get('/event')
+      const res = await request(app)
+        .get('/event')
+        .set('access_token', access_token)
       const { body, status } = res
       expect(status).toBe(200)
       id = body[0].id
@@ -291,7 +309,9 @@ describe('Test Router Event', () => {
     })
 
     it('200 Succes get event by id - should show event by id', async (done) => {
-      const res = await request(app).get(`/event/${id}`)
+      const res = await request(app)
+        .get(`/event/${id}`)
+        .set('access_token', access_token)
       const { body, status } = res
       expect(status).toBe(200)
       expect(body).toHaveProperty('description', 'Test')
@@ -299,7 +319,9 @@ describe('Test Router Event', () => {
     })
 
     it('404 Failed get event - should return error if event not found', async (done) => {
-      const res = await request(app).get('/event/0')
+      const res = await request(app)
+        .get('/event/0')
+        .set('access_token', access_token)
       const { body, status } = res
       expect(status).toBe(404)
       expect(body).toHaveProperty('msg', 'Event not found')
@@ -371,15 +393,20 @@ describe('Test Router Event', () => {
 
   describe('Test endpoint DELETE /event', () => {
     it('200 Success delete - should delete event', async (done) => {
-      const res = await request(app).del(`/event/${id}`)
+      const res = await request(app)
+        .del(`/event/${id}`)
+        .set('access_token', access_token)
       const { body, status } = res
+      console.log(res.body)
       expect(status).toBe(200)
       expect(body).toBe('Successful deleted event')
       done()
     })
 
     it('404 Failed delete - should delete event', async (done) => {
-      const res = await request(app).del(`/event/0`)
+      const res = await request(app)
+        .del(`/event/0`)
+        .set('access_token', access_token)
       const { body, status } = res
       expect(status).toBe(404)
       expect(body).toHaveProperty('msg', 'Event not found')
@@ -494,7 +521,9 @@ describe('Test Router Fee', () => {
 
   describe('Test endpoint GET /fee', () => {
     it('200 Succes get fee - should show fee', async (done) => {
-      const res = await request(app).get('/fee')
+      const res = await request(app)
+        .get('/fee')
+        .set('access_token', access_token)
       const { body, status } = res
       expect(status).toBe(200)
       id = body[0].id
@@ -502,7 +531,9 @@ describe('Test Router Fee', () => {
     })
 
     it('200 Succes get fee by id - should show fee by id', async (done) => {
-      const res = await request(app).get(`/fee/${id}`)
+      const res = await request(app)
+        .get(`/fee/${id}`)
+        .set('access_token', access_token)
       const { body, status } = res
       expect(status).toBe(200)
       expect(body).toHaveProperty('name', 'Test fee pengajian')
@@ -510,7 +541,9 @@ describe('Test Router Fee', () => {
     })
 
     it('404 Failed get fee - should return error if fee not found', async (done) => {
-      const res = await request(app).get('/fee/0')
+      const res = await request(app)
+        .get('/fee/0')
+        .set('access_token', access_token)
       const { body, status } = res
       expect(status).toBe(404)
       expect(body).toHaveProperty('msg', 'Fee not found')
@@ -574,7 +607,9 @@ describe('Test Router Fee', () => {
 
   describe('Test endpoint DELETE /fee', () => {
     it('200 Success delete - should delete fee', async (done) => {
-      const res = await request(app).del(`/fee/${id}`)
+      const res = await request(app)
+        .del(`/fee/${id}`)
+        .set('access_token', access_token)
       const { body, status } = res
       expect(status).toBe(200)
       expect(body).toBe('Successful deleted fees')
@@ -582,7 +617,9 @@ describe('Test Router Fee', () => {
     })
 
     it('404 Failed delete - should delete fee', async (done) => {
-      const res = await request(app).del(`/fee/0`)
+      const res = await request(app)
+        .del(`/fee/0`)
+        .set('access_token', access_token)
       const { body, status } = res
       expect(status).toBe(404)
       expect(body).toHaveProperty('msg', 'Fee not found')
@@ -660,7 +697,9 @@ describe('Test Router Timeline', () => {
 
   describe('Test endpoint GET /timeline', () => {
     it('200 Succes get timeline - should show timeline', async (done) => {
-      const res = await request(app).get('/timeline')
+      const res = await request(app)
+        .get('/timeline')
+        .set('access_token', access_token)
       const { body, status } = res
       expect(status).toBe(200)
       id = body[0].id
@@ -668,7 +707,9 @@ describe('Test Router Timeline', () => {
     })
 
     it('200 Succes get timeline by id - should show timeline by id', async (done) => {
-      const res = await request(app).get(`/timeline/${id}`)
+      const res = await request(app)
+        .get(`/timeline/${id}`)
+        .set('access_token', access_token)
       const { body, status } = res
       expect(status).toBe(200)
       expect(body).toHaveProperty('description', 'Test')
@@ -676,7 +717,9 @@ describe('Test Router Timeline', () => {
     })
 
     it('404 Failed get timeline - should return error if timeline not found', async (done) => {
-      const res = await request(app).get('/timeline/0')
+      const res = await request(app)
+        .get('/timeline/0')
+        .set('access_token', access_token)
       const { body, status } = res
       expect(status).toBe(404)
       expect(body).toHaveProperty('msg', 'Timeline not found')
@@ -736,7 +779,9 @@ describe('Test Router Timeline', () => {
 
   describe('Test endpoint DELETE /timeline', () => {
     it('200 Success delete - should delete timeline', async (done) => {
-      const res = await request(app).del(`/timeline/${id}`)
+      const res = await request(app)
+        .del(`/timeline/${id}`)
+        .set('access_token', access_token)
       const { body, status } = res
       expect(status).toBe(200)
       expect(body).toBe('Successful deleted timeline')
@@ -744,7 +789,9 @@ describe('Test Router Timeline', () => {
     })
 
     it('404 Failed delete - should delete timeline', async (done) => {
-      const res = await request(app).del(`/timeline/0`)
+      const res = await request(app)
+        .del(`/timeline/0`)
+        .set('access_token', access_token)
       const { body, status } = res
       expect(status).toBe(404)
       expect(body).toHaveProperty('msg', 'Timeline not found')
@@ -803,7 +850,9 @@ describe('Test Router Comment', () => {
 
   describe('Test endpoint GET /comment', () => {
     it('200 Succes get comment - should show comment', async (done) => {
-      const res = await request(app).get('/comment')
+      const res = await request(app)
+        .get('/comment')
+        .set('access_token', access_token)
       const { body, status } = res
       expect(status).toBe(200)
       id = body[0].id
@@ -811,7 +860,9 @@ describe('Test Router Comment', () => {
     })
 
     it('200 Succes get comment by id - should show comment by id', async (done) => {
-      const res = await request(app).get(`/comment/${id}`)
+      const res = await request(app)
+        .get(`/comment/${id}`)
+        .set('access_token', access_token)
       const { body, status } = res
       expect(status).toBe(200)
       expect(body).toHaveProperty('comment', 'Test')
@@ -819,7 +870,9 @@ describe('Test Router Comment', () => {
     })
 
     it('404 Failed get comment - should return error if comment not found', async (done) => {
-      const res = await request(app).get('/comment/0')
+      const res = await request(app)
+        .get('/comment/0')
+        .set('access_token', access_token)
       const { body, status } = res
       expect(status).toBe(404)
       expect(body).toHaveProperty('msg', 'Comment not found')
@@ -875,7 +928,9 @@ describe('Test Router Comment', () => {
 
   describe('Test endpoint DELETE /comment', () => {
     it('200 Success delete - should delete comment', async (done) => {
-      const res = await request(app).del(`/comment/${id}`)
+      const res = await request(app)
+        .del(`/comment/${id}`)
+        .set('access_token', access_token)
       const { body, status } = res
       expect(status).toBe(200)
       expect(body).toBe('Successful deleted comment')
@@ -883,7 +938,9 @@ describe('Test Router Comment', () => {
     })
 
     it('404 Failed delete - should delete comment', async (done) => {
-      const res = await request(app).del(`/comment/0`)
+      const res = await request(app)
+        .del(`/comment/0`)
+        .set('access_token', access_token)
       const { body, status } = res
       expect(status).toBe(404)
       expect(body).toHaveProperty('msg', 'Comment not found')
