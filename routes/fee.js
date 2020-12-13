@@ -4,9 +4,9 @@ const Middleware = require("../middlewares/middleware");
 
 router.use(Middleware.wargaAuth);
 router.get("/", Controller.find);
-router.post("/", Controller.create);
+router.post("/", Middleware.createFeeAuthorization, Controller.create);
 router.get("/:id", Controller.findById);
-router.put("/:id", Controller.update);
-router.delete("/:id", Controller.delete);
+router.put("/:id", Middleware.feeAuthorization, Controller.update);
+router.delete("/:id", Middleware.feeAuthorization, Controller.delete);
 
 module.exports = router;

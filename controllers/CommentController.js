@@ -26,7 +26,11 @@ class CommentController {
   }
 
   static async create(req, res, next) {
-    const payload = req.body
+    const payload = {
+      comment: req.body.comment,
+      UserId: req.loggedIn.id,
+      TimelineId: req.params.timelineId
+    }
     try {
       const comment = await Comment.create(payload)
       res.status(201).json(comment)
@@ -37,7 +41,11 @@ class CommentController {
 
   static async update(req, res, next) {
     const id = req.params.id
-    const payload = req.body
+    const payload = {
+      comment: req.body.comment,
+      UserId: req.loggedIn.id,
+      TimelineId: req.params.timelineId
+    }
     try {
       const comment = await Comment.update(payload, {
         where: {

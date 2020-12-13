@@ -6,6 +6,9 @@ class EventController {
       const event = await Event.findAll({
         include: [Category, User, RealEstate]
       })
+      if (!event.length) {
+        throw {msg: 'Event not found', status: 404}
+      }
       res.status(200).json(event)
     } catch (error) {
       next(error)
@@ -26,7 +29,15 @@ class EventController {
   }
 
   static async create(req, res, next) {
-    const payload = req.body
+    const payload = {
+      name: req.body.name,
+      description: req.body.description,
+      image: req.body.image,
+      date: req.body.date,
+      CategoryId: req.body.CategoryId,
+      RealEstateId: req.body.RealEstateId,
+      UserId: req.loggedIn.id
+    }
     try {
       const event = await Event.create(payload)
       res.status(201).json(event)
@@ -37,7 +48,15 @@ class EventController {
 
   static async update(req, res, next) {
     const id = req.params.id
-    const payload = req.body
+    const payload = {
+      name: req.body.name,
+      description: req.body.description,
+      image: req.body.image,
+      date: req.body.date,
+      CategoryId: req.body.CategoryId,
+      RealEstateId: req.body.RealEstateId,
+      UserId: req.loggedIn.id
+    }
     try {
       const event = await Event.update(payload, {
         where: {

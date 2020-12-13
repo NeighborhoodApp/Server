@@ -6,6 +6,9 @@ const {
   RealEstate,
   Role,
   Complex,
+  Event,
+  Fee,
+  Timeline
 } = require("../models");
 
 class Middleware {
@@ -63,7 +66,7 @@ class Middleware {
           },
         });
         if (!loggedUser) throw { msg: "Authentication failed", status: 401 };
-        else if (loggedUser.RoleId !== 3)
+        else if (loggedUser.RoleId !== 3 && loggedUser.RoleId !== 2)
           throw { msg: "Authentication failed", status: 401 };
         else {
           req.loggedIn = decoded;
@@ -75,12 +78,58 @@ class Middleware {
     }
   }
 
-  static async imel(req, res, next) {
+  static async commentAuthorization(req, res, next) {
     const commentId = +req.params.id;
     try {
       const foundComment = await Comment.findByPk(commentId);
-      if (!foundComment) throw { msg: "Comment not found", status: 404 };
+      if (!foundComment) next()
       else if (foundComment.UserId == req.loggedIn.id) next();
+      else throw { msg: "Not authorized", status: 401 };
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async eventAuthorization(req, res, next) {
+    const eventId = +req.params.id;
+    try {
+      const foundEvent = await Event.findByPk(eventId);
+      if (!foundEvent) next()
+      else if (foundEvent.UserId == req.loggedIn.id) next();
+      else throw { msg: "Not authorized", status: 401 };
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async timelineAuthorization(req, res, next) {
+    const timelineId = +req.params.id;
+    try {
+      const foundTimeline = await Timeline.findByPk(timelineId);
+      if (!foundTimeline) next()
+      else if (foundTimeline.UserId == req.loggedIn.id) next();
+      else throw { msg: "Not authorized", status: 401 };
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async feeAuthorization(req, res, next) {
+    const feeId = +req.params.id;
+    try {
+      const foundFee = await Fee.findByPk(feeId);
+      if (!foundFee) next()
+      else if (req.loggedIn.RoleId !== 3 && 
+        foundFee.RealEstateId === req.loggedIn.RealEstateId && foundFee.ComplexId === req.loggedIn.ComplexId) next();
+      else throw { msg: "Not authorized", status: 401 };
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async createFeeAuthorization(req, res, next) {
+    try {
+      if (req.loggedIn.RoleId !== 3) next();
       else throw { msg: "Not authorized", status: 401 };
     } catch (err) {
       next(err);
