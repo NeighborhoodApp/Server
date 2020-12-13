@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       User.hasMany(models.Event);
-      User.hasMany(models.Timeline)
-      User.hasMany(models.Comment)
+      User.hasMany(models.Timeline);
+      User.hasMany(models.Comment);
       User.belongsTo(models.Role, {
         foreignKey: "RoleId",
         targetKey: "id",
@@ -92,9 +92,28 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      RoleId: DataTypes.INTEGER,
-      RealEstateId: DataTypes.INTEGER,
-      ComplexId: DataTypes.INTEGER,
+      RoleId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      RealEstateId: {
+        type: DataTypes.INTEGER,
+        validate: {
+          notEmpty: {
+            args: true,
+            msg: "Please fill the Real Estate field",
+          },
+        },
+      },
+      ComplexId: {
+        type: DataTypes.INTEGER,
+        validate: {
+          notEmpty: {
+            args: true,
+            msg: "Please fill the Complex field",
+          },
+        },
+      },
       status: {
         type: DataTypes.STRING,
         defaultValue: "Inactive",

@@ -14,7 +14,10 @@ class UserController {
           email: email,
         });
       } else {
-        throw { msg: "User not found", status: 404 };
+        throw {
+          msg: "Any user besides AppOwner isn't authorized to pass",
+          status: 401,
+        };
       }
     } catch (err) {
       next(err);
@@ -22,7 +25,6 @@ class UserController {
   }
 
   static async loginClient(req, res, next) {
-    console.log("disiniiii");
     const { email, password } = req.body;
     try {
       const foundUser = await User.findOne({

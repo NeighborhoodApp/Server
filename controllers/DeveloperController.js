@@ -73,10 +73,9 @@ class DeveloperController {
     const developerId = +req.params.id;
 
     try {
-      const deletedDeveloper = await Developer.destroy({
+      await Developer.destroy({
         where: { id: developerId },
       });
-      if (!deletedDeveloper) throw { msg: "Developer not found", status: 404 };
       res.status(200).json({ msg: "Developer is successfully deleted" });
     } catch (err) {
       next(err);

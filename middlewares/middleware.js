@@ -96,7 +96,8 @@ class Middleware {
         },
         include: [Role, RealEstate],
       });
-      if (foundDeveloper.RealEstates.length > 0)
+      if (!foundDeveloper) throw { msg: "Developer not found", status: 404 };
+      else if (foundDeveloper.RealEstates.length > 0)
         throw {
           msg:
             "Can't delete, this Developer still has some dependent Real Estates in the registry",
@@ -119,7 +120,8 @@ class Middleware {
         },
         include: [Complex],
       });
-      if (foundRealEstate.Complexes.length > 0)
+      if (!foundRealEstate) throw { msg: "RealEstate not found", status: 404 };
+      else if (foundRealEstate.Complexes.length > 0)
         throw {
           msg:
             "Can't delete, dependent Complexes are found in this RealEstate registry",
@@ -142,7 +144,8 @@ class Middleware {
         },
         include: [User],
       });
-      if (foundComplex.Users.length > 0)
+      if (!foundComplex) throw { msg: "Complex not found", status: 404 };
+      else if (foundComplex.Users.length > 0)
         throw {
           msg: "Can't delete, some Users are still registered in this area",
           status: 401,
@@ -163,7 +166,8 @@ class Middleware {
         },
         include: [Role],
       });
-      if (foundUser.RoleId !== 2) next();
+      if (!foundUser) throw { msg: "User not found", status: 404 };
+      else if (foundUser.RoleId !== 2) next();
       else if (foundUser.RoleId === 2) {
         const allUsersAsAdmin = await User.findAll({
           where: {
@@ -187,6 +191,7 @@ class Middleware {
   }
 
   static errorHandler(err, req, res, next) {
+    console.log(err);
     let status = err.status || 500;
     let msg = err.msg || "Internal Server Error";
 

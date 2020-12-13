@@ -69,13 +69,10 @@ class RealEstateController {
 
   static async delete(req, res, next) {
     const realEstateId = +req.params.id;
-
     try {
-      const deletedRealEstate = await RealEstate.destroy({
+      await RealEstate.destroy({
         where: { id: realEstateId },
       });
-      if (!deletedRealEstate)
-        throw { msg: "RealEstate not found", status: 404 };
       res.status(200).json({ msg: "RealEstate is successfully deleted" });
     } catch (err) {
       next(err);
