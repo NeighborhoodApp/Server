@@ -13,7 +13,6 @@ module.exports = {
     */
     const data = [
       {
-        id: 1,
         name: "Iuran Kebersihan",
         description: "Description of iuran kebersihan",
         due_date: "2020-12-27T00:00:00.000Z",
