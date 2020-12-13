@@ -58,6 +58,7 @@ class UserController {
       ComplexId,
       status,
     } = req.body;
+    console.log(req.body)
     const RoleId = 2;
     try {
       const newUser = await User.create({
