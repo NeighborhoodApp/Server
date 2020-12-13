@@ -25,8 +25,6 @@ class Helper {
   static calculateDistance(userCoordinat, timeline) {
     const result = []
 
-    // const filter = timeline.filter(el => (el.privacy === 'public'))
-
     timeline.forEach(el => {
       if (el.privacy === 'member') {
         result.push(el)

@@ -2,9 +2,9 @@ const app = require("../app");
 const { sequelize } = require("../models");
 const request = require("supertest");
 const { queryInterface } = sequelize;
-const { Op } = require("sequelize");
+const { beforeAll, it, expect } = require("@jest/globals");
 
-let warga_token;
+let warga_token, warga2_token, owner_token;
 
 beforeAll(async (done) => {
   try {
@@ -12,7 +12,17 @@ beforeAll(async (done) => {
       email: "warga2@mail.com",
       password: "warga2@mail.com",
     });
+    const res = await request(app).post("/users/login-client").send({
+      email: "warga1@mail.com",
+      password: "warga1@mail.com",
+    });
+    const respon = await request(app).post("/users/login-cms").send({
+      email: "admin@mail.com",
+      password: "tetonggo5",
+    });
     warga_token = response.body.access_token;
+    warga2_token = res.body.access_token;
+    owner_token = respon.body.access_token;
     done();
   } catch (err) {
     done(err);
@@ -21,11 +31,7 @@ beforeAll(async (done) => {
 
 afterAll(async (done) => {
   try {
-    await queryInterface.bulkDelete("Events", {
-      id: {
-        [Op.gt]: 1,
-      },
-    });
+    await queryInterface.bulkDelete("Events", {});
     done();
   } catch (error) {
     done();
@@ -34,8 +40,17 @@ afterAll(async (done) => {
 
 describe("Test Router Event", () => {
   let id = null;
-
   describe("Test endpoint POST /event", () => {
+    it('404 Failed get event - should return not found', async (done) => {
+      const res = await request(app)
+        .get('/event')
+        .set('access_token', warga_token)
+      const { body, status } = res
+      expect(status).toBe(404)
+      expect(body).toHaveProperty('msg', 'Event not found')
+      done()
+    })
+
     it("201 Success add event - should create event", async (done) => {
       const res = await request(app)
         .post("/event")
@@ -46,7 +61,6 @@ describe("Test Router Event", () => {
           image: "/image",
           date: "2020-12-30",
           CategoryId: 1,
-          UserId: 1,
           RealEstateId: 1,
         });
       const { body, status } = res;
@@ -70,7 +84,6 @@ describe("Test Router Event", () => {
           description: "Test",
           image: "/image",
           date: "2020-12-30",
-          UserId: 1,
           RealEstateId: 1,
         });
       const { body, status } = res;
@@ -89,7 +102,6 @@ describe("Test Router Event", () => {
           image: "/image",
           date: "2020-12-30",
           CategoryId: 1,
-          UserId: 1,
           RealEstateId: 1,
         });
       const { body, status } = res;
@@ -108,7 +120,6 @@ describe("Test Router Event", () => {
           image: "/image",
           date: "2020-12-10",
           CategoryId: 1,
-          UserId: 1,
           RealEstateId: 1,
         });
       const { body, status } = res;
@@ -127,7 +138,6 @@ describe("Test Router Event", () => {
           image: "/image",
           date: "2020-13-10",
           CategoryId: 1,
-          UserId: 1,
           RealEstateId: 1,
         });
       const { body, status } = res;
@@ -146,7 +156,6 @@ describe("Test Router Event", () => {
           image: "/image",
           date: "2020-12-30",
           CategoryId: 1,
-          UserId: 1,
           RealEstateId: "",
         });
       const { body, status } = res;
@@ -154,6 +163,27 @@ describe("Test Router Event", () => {
       expect(body).toHaveProperty(
         "msg",
         "Pleasse select your real estate, Please enter valid real estate"
+      );
+      done();
+    });
+
+    it("401 Failed create - should return error if owner created", async (done) => {
+      const res = await request(app)
+        .post("/event")
+        .set("access_token", owner_token)
+        .send({
+          name: "Test event pengajian",
+          description: "Test",
+          image: "/image",
+          date: "2020-12-30",
+          CategoryId: 1,
+          RealEstateId: 1,
+        });
+      const { body, status } = res;
+      expect(status).toBe(401);
+      expect(body).toHaveProperty(
+        "msg",
+        "Authentication failed"
       );
       done();
     });
@@ -167,7 +197,7 @@ describe("Test Router Event", () => {
 
       const { body, status } = res;
       expect(status).toBe(200);
-      id = body[1].id;
+      id = body[0].id;
       done();
     });
 
@@ -192,6 +222,16 @@ describe("Test Router Event", () => {
       expect(body).toHaveProperty("msg", "Event not found");
       done();
     });
+
+    it("401 Failed get event - should return error if no logged in user", async (done) => {
+      const res = await request(app)
+        .get("/event")
+
+      const { body, status } = res;
+      expect(status).toBe(401);
+      expect(body).toHaveProperty("msg", "Authentication failed");
+      done();
+    });
   });
 
   describe("Test endpoint PUT /event", () => {
@@ -205,7 +245,6 @@ describe("Test Router Event", () => {
           image: "/image",
           date: "2020-12-30",
           CategoryId: 1,
-          UserId: 1,
           RealEstateId: 1,
         });
       const { body, status } = res;
@@ -230,7 +269,6 @@ describe("Test Router Event", () => {
           image: "/image",
           date: "2020-12-30",
           CategoryId: 1,
-          UserId: 1,
           RealEstateId: 1,
         });
       const { body, status } = res;
@@ -249,12 +287,29 @@ describe("Test Router Event", () => {
           image: "/image",
           date: "2020-12-30",
           CategoryId: 1,
-          UserId: 1,
           RealEstateId: 1,
         });
       const { body, status } = res;
       expect(status).toBe(404);
       expect(body).toHaveProperty("msg", "Event not found");
+      done();
+    });
+
+    it("401 Failed update - should return error if not authorized", async (done) => {
+      const res = await request(app)
+        .put(`/event/${id}`)
+        .set("access_token", warga2_token)
+        .send({
+          name: "Test",
+          description: "Test",
+          image: "/image",
+          date: "2020-12-30",
+          CategoryId: 1,
+          RealEstateId: 1,
+        });
+      const { body, status } = res;
+      expect(status).toBe(401);
+      expect(body).toHaveProperty("msg", "Not authorized");
       done();
     });
   });
@@ -270,7 +325,7 @@ describe("Test Router Event", () => {
       done();
     });
 
-    it("404 Failed delete - should delete event", async (done) => {
+    it("404 Failed delete - should return error if not found", async (done) => {
       const res = await request(app)
         .del(`/event/0`)
         .set("access_token", warga_token);

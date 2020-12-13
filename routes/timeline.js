@@ -6,7 +6,7 @@ router.use(Middleware.wargaAuth)
 router.get('/', Controller.find)
 router.post('/', Controller.create)
 router.get('/:id', Controller.findById)
-router.put('/:id', Controller.update)
-router.delete('/:id', Controller.delete)
+router.put('/:id', Middleware.timelineAuthorization, Controller.update)
+router.delete('/:id', Middleware.timelineAuthorization, Controller.delete)
 
 module.exports = router
