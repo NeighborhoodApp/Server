@@ -4,6 +4,7 @@ const event = require('./event')
 const fee = require('./fee')
 const timeline = require('./timeline')
 const comment = require('./comment')
+const image = require('./image')
 const userRouter = require("./userRouter.js");
 const developerRouter = require("./developerRouter.js");
 const roleRouter = require("./roleRouter.js");
@@ -15,6 +16,7 @@ router.use('/event', event)
 router.use('/fee', fee)
 router.use('/timeline', timeline)
 router.use('/comment', comment)
+router.use('/upload', image)
 router.use("/users", userRouter);
 router.use("/developers", developerRouter);
 router.use("/roles", roleRouter);

@@ -13,7 +13,6 @@ module.exports = {
     */
     const data = [
       {
-        id: 1,
         description: "This is test timelines by warga 1",
         image: "images/imageurl.jpg",
         privacy: "public",
@@ -22,7 +21,6 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        id: 2,
         description: "This is test timelines by warga 3",
         image: "images/imageurl.jpg",
         privacy: "member",
