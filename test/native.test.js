@@ -1,11 +1,13 @@
 const app = require('../app')
 const { sequelize } = require('../models')
 const request = require('supertest')
-const { expect } = require('@jest/globals')
+const { expect, beforeAll } = require('@jest/globals')
 const { queryInterface } = sequelize
+const Helper = require("../helpers/helper");
 
+let access_token = null
 beforeAll(async (done) => {
-  const data = [
+  const category = [
     {
       category: "Pengajian",
       type: "Event",
@@ -13,8 +15,83 @@ beforeAll(async (done) => {
       updatedAt: new Date()
     }
   ]
+
+  const role = [
+    {
+      role: "Super Admin",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      role: "Admin",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      role: "Warga",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  ]
+
+  const developer = [
+    {
+      name: "Developer 1",
+      email: "developer1@gmail.com",
+      address: "Jl. Alamat Developer 1, Nama Kota",
+      RoleId: 1,
+      status: "Active",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }
+  ]
+
+  const realestate = [
+    {
+      name: "Real Estet 1 Perumahan Pematang Sejahtera Plaju",
+      address:
+        "16 Ulu, Kec. Seberang Ulu II, Kota Palembang, Sumatera Selatan 30111",
+      coordinate: "-2.9985332514737544, 104.790206885603",
+      DeveloperId: 1,
+      status: "Active",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }
+  ]
+
+  const complex = [
+    {
+      name: "Real Estet 1 Komplek A1",
+      RealEstateId: 1,
+      status: "Active",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }
+  ]
+
+  const user = [
+    {
+      email: "warga2@mail.com",
+      password: Helper.hashPassword("warga2@mail.com"),
+      fullname: "Warga 2",
+      address: "Real Estet 1 Alamat Warga",
+      RoleId: 3,
+      RealEstateId: 1,
+      ComplexId: 1,
+      status: "Active",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }
+  ]
+
   try {
-    await queryInterface.bulkInsert('Categories', data, {})
+    await queryInterface.bulkInsert('Categories', category, {})
+    await queryInterface.bulkInsert('Roles', role, {})
+    await queryInterface.bulkInsert('Developers', developer, {})
+    await queryInterface.bulkInsert('RealEstates', realestate, {})
+    await queryInterface.bulkInsert('Complexes', complex, {})
+    await queryInterface.bulkInsert('Users', user, {})
+
     done()
   } catch (error) {
     done()
@@ -28,6 +105,11 @@ afterAll(async (done) => {
     await queryInterface.bulkDelete('Fees', null, {})
     await queryInterface.bulkDelete('Timelines', null, {})
     await queryInterface.bulkDelete('Comments', null, {})
+    await queryInterface.bulkDelete('Roles', null, {})
+    await queryInterface.bulkDelete('Developers', null, {})
+    await queryInterface.bulkDelete('RealEstates', null, {})
+    await queryInterface.bulkDelete('Complexes', null, {})
+    await queryInterface.bulkDelete('Users', null, {})
     done()
   } catch (error) {
     done()
@@ -73,17 +155,30 @@ describe('Test Router Image', () => {
 describe('Test Router Event', () => {
   let id = null
 
+  beforeAll(async (done) => {
+    const res = await request(app).post('/users/login-client').send({
+      email: 'warga2@mail.com',
+      password: 'warga2@mail.com'
+    })
+    console.log(res.body)
+    access_token = res.body.access_token
+    done()
+  })
+
   describe('Test endpoint POST /event', () => {
+    console.log(access_token)
     it('201 Success add event - should create event', async (done) => {
-      const res = await request(app).post('/event').send({
-        name: 'Test event pengajian',
-        description: 'Test',
-        image: '/image',
-        date: '2020-12-30',
-        CategoryId: 1,
-        UserId: 1,
-        RealEstateId: 1
-      })
+      const res = await request(app).post('/event')
+        .set('access_token', access_token)
+        .send({
+          name: 'Test event pengajian',
+          description: 'Test',
+          image: '/image',
+          date: '2020-12-30',
+          CategoryId: 1,
+          UserId: 1,
+          RealEstateId: 1
+        })
       const { body, status } = res
       expect(status).toBe(201)
       expect(body).toHaveProperty('name')
@@ -97,14 +192,16 @@ describe('Test Router Event', () => {
     })
 
     it('400 Failed create - should return error if category is null', async (done) => {
-      const res = await request(app).post('/event').send({
-        name: 'Test event pengajian',
-        description: 'Test',
-        image: '/image',
-        date: '2020-12-30',
-        UserId: 1,
-        RealEstateId: 1
-      })
+      const res = await request(app).post('/event')
+        .set('access_token', access_token)
+        .send({
+          name: 'Test event pengajian',
+          description: 'Test',
+          image: '/image',
+          date: '2020-12-30',
+          UserId: 1,
+          RealEstateId: 1
+        })
       const { body, status } = res
       expect(status).toBe(400)
       expect(body).toHaveProperty('msg', 'Event.CategoryId cannot be null')
@@ -112,15 +209,17 @@ describe('Test Router Event', () => {
     })
 
     it('400 Failed create - should return error if name is empty', async (done) => {
-      const res = await request(app).post('/event').send({
-        name: '',
-        description: 'Test',
-        image: '/image',
-        date: '2020-12-30',
-        CategoryId: 1,
-        UserId: 1,
-        RealEstateId: 1
-      })
+      const res = await request(app).post('/event')
+        .set('access_token', access_token)
+        .send({
+          name: '',
+          description: 'Test',
+          image: '/image',
+          date: '2020-12-30',
+          CategoryId: 1,
+          UserId: 1,
+          RealEstateId: 1
+        })
       const { body, status } = res
       expect(status).toBe(400)
       expect(body).toHaveProperty('msg', 'Please enter event name')
@@ -128,15 +227,17 @@ describe('Test Router Event', () => {
     })
 
     it('400 Failed create - should return error if date has passed', async (done) => {
-      const res = await request(app).post('/event').send({
-        name: 'Test event pengajian',
-        description: 'Test',
-        image: '/image',
-        date: '2020-12-10',
-        CategoryId: 1,
-        UserId: 1,
-        RealEstateId: 1
-      })
+      const res = await request(app).post('/event')
+        .set('access_token', access_token)
+        .send({
+          name: 'Test event pengajian',
+          description: 'Test',
+          image: '/image',
+          date: '2020-12-10',
+          CategoryId: 1,
+          UserId: 1,
+          RealEstateId: 1
+        })
       const { body, status } = res
       expect(status).toBe(400)
       expect(body).toHaveProperty('msg', 'Date must be greater than today')
@@ -144,15 +245,17 @@ describe('Test Router Event', () => {
     })
 
     it('400 Failed create - should return error if date invalid format', async (done) => {
-      const res = await request(app).post('/event').send({
-        name: 'Test event pengajian',
-        description: 'Test',
-        image: '/image',
-        date: '2020-13-10',
-        CategoryId: 1,
-        UserId: 1,
-        RealEstateId: 1
-      })
+      const res = await request(app).post('/event')
+        .set('access_token', access_token)
+        .send({
+          name: 'Test event pengajian',
+          description: 'Test',
+          image: '/image',
+          date: '2020-13-10',
+          CategoryId: 1,
+          UserId: 1,
+          RealEstateId: 1
+        })
       const { body, status } = res
       expect(status).toBe(400)
       expect(body).toHaveProperty('msg', 'Please enter valid date')
@@ -160,15 +263,17 @@ describe('Test Router Event', () => {
     })
 
     it('400 Failed create - should return error if real estate is empty', async (done) => {
-      const res = await request(app).post('/event').send({
-        name: 'Test event pengajian',
-        description: 'Test',
-        image: '/image',
-        date: '2020-12-30',
-        CategoryId: 1,
-        UserId: 1,
-        RealEstateId: ''
-      })
+      const res = await request(app).post('/event')
+        .set('access_token', access_token)
+        .send({
+          name: 'Test event pengajian',
+          description: 'Test',
+          image: '/image',
+          date: '2020-12-30',
+          CategoryId: 1,
+          UserId: 1,
+          RealEstateId: ''
+        })
       const { body, status } = res
       expect(status).toBe(400)
       expect(body).toHaveProperty('msg', 'Pleasse select your real estate, Please enter valid real estate')
@@ -204,15 +309,17 @@ describe('Test Router Event', () => {
 
   describe('Test endpoint PUT /event', () => {
     it('200 Succes update event - should update event', async (done) => {
-      const res = await request(app).put(`/event/${id}`).send({
-        name: 'Test update event pengajian',
-        description: 'Test',
-        image: '/image',
-        date: '2020-12-30',
-        CategoryId: 1,
-        UserId: 1,
-        RealEstateId: 1
-      })
+      const res = await request(app).put(`/event/${id}`)
+        .set('access_token', access_token)
+        .send({
+          name: 'Test update event pengajian',
+          description: 'Test',
+          image: '/image',
+          date: '2020-12-30',
+          CategoryId: 1,
+          UserId: 1,
+          RealEstateId: 1
+        })
       const { body, status } = res
       expect(status).toBe(200)
       expect(body).toHaveProperty('name')
@@ -226,15 +333,17 @@ describe('Test Router Event', () => {
     })
 
     it('400 Failed update - should return error if name is empty', async (done) => {
-      const res = await request(app).put(`/event/${id}`).send({
-        name: '',
-        description: 'Test',
-        image: '/image',
-        date: '2020-12-30',
-        CategoryId: 1,
-        UserId: 1,
-        RealEstateId: 1
-      })
+      const res = await request(app).put(`/event/${id}`)
+        .set('access_token', access_token)
+        .send({
+          name: '',
+          description: 'Test',
+          image: '/image',
+          date: '2020-12-30',
+          CategoryId: 1,
+          UserId: 1,
+          RealEstateId: 1
+        })
       const { body, status } = res
       expect(status).toBe(400)
       expect(body).toHaveProperty('msg', 'Please enter event name')
@@ -242,15 +351,17 @@ describe('Test Router Event', () => {
     })
 
     it('404 Failed update - should return error if invalid id', async (done) => {
-      const res = await request(app).put(`/event/0`).send({
-        name: 'Test',
-        description: 'Test',
-        image: '/image',
-        date: '2020-12-30',
-        CategoryId: 1,
-        UserId: 1,
-        RealEstateId: 1
-      })
+      const res = await request(app).put(`/event/0`)
+        .set('access_token', access_token)
+        .send({
+          name: 'Test',
+          description: 'Test',
+          image: '/image',
+          date: '2020-12-30',
+          CategoryId: 1,
+          UserId: 1,
+          RealEstateId: 1
+        })
       const { body, status } = res
       expect(status).toBe(404)
       expect(body).toHaveProperty('msg', 'Event not found')
@@ -282,13 +393,15 @@ describe('Test Router Fee', () => {
 
   describe('Test endpoint POST /fee', () => {
     it('201 Success add fee - should create fee', async (done) => {
-      const res = await request(app).post('/fee').send({
-        name: 'Test fee pengajian',
-        description: 'Test',
-        due_date: '2020-12-30',
-        RealEstateId: 1,
-        ComplexId: 1
-      })
+      const res = await request(app).post('/fee')
+        .set('access_token', access_token)
+        .send({
+          name: 'Test fee pengajian',
+          description: 'Test',
+          due_date: '2020-12-30',
+          RealEstateId: 1,
+          ComplexId: 1
+        })
       const { body, status } = res
       expect(status).toBe(201)
       expect(body).toHaveProperty('name')
@@ -300,12 +413,14 @@ describe('Test Router Fee', () => {
     })
 
     it('400 Failed create - should return error if complex is null', async (done) => {
-      const res = await request(app).post('/fee').send({
-        name: 'Test fee pengajian',
-        description: 'Test',
-        due_date: '2020-12-30',
-        RealEstateId: 1,
-      })
+      const res = await request(app).post('/fee')
+        .set('access_token', access_token)
+        .send({
+          name: 'Test fee pengajian',
+          description: 'Test',
+          due_date: '2020-12-30',
+          RealEstateId: 1,
+        })
       const { body, status } = res
       expect(status).toBe(400)
       expect(body).toHaveProperty('msg', 'Fee.ComplexId cannot be null')
@@ -313,13 +428,15 @@ describe('Test Router Fee', () => {
     })
 
     it('400 Failed create - should return error if name is empty', async (done) => {
-      const res = await request(app).post('/fee').send({
-        name: '',
-        description: 'Test',
-        due_date: '2020-12-30',
-        RealEstateId: 1,
-        ComplexId: 1
-      })
+      const res = await request(app).post('/fee')
+        .set('access_token', access_token)
+        .send({
+          name: '',
+          description: 'Test',
+          due_date: '2020-12-30',
+          RealEstateId: 1,
+          ComplexId: 1
+        })
       const { body, status } = res
       expect(status).toBe(400)
       expect(body).toHaveProperty('msg', 'Please enter fees name')
@@ -327,13 +444,15 @@ describe('Test Router Fee', () => {
     })
 
     it('400 Failed create - should return error if date has passed', async (done) => {
-      const res = await request(app).post('/fee').send({
-        name: 'Test fee pengajian',
-        description: 'Test',
-        due_date: '2020-12-3',
-        RealEstateId: 1,
-        ComplexId: 1
-      })
+      const res = await request(app).post('/fee')
+        .set('access_token', access_token)
+        .send({
+          name: 'Test fee pengajian',
+          description: 'Test',
+          due_date: '2020-12-3',
+          RealEstateId: 1,
+          ComplexId: 1
+        })
       const { body, status } = res
       expect(status).toBe(400)
       expect(body).toHaveProperty('msg', 'Date must be greater than today')
@@ -341,13 +460,15 @@ describe('Test Router Fee', () => {
     })
 
     it('400 Failed create - should return error if date invalid format', async (done) => {
-      const res = await request(app).post('/fee').send({
-        name: 'Test fee pengajian',
-        description: 'Test',
-        due_date: '2020-13-30',
-        RealEstateId: 1,
-        ComplexId: 1
-      })
+      const res = await request(app).post('/fee')
+        .set('access_token', access_token)
+        .send({
+          name: 'Test fee pengajian',
+          description: 'Test',
+          due_date: '2020-13-30',
+          RealEstateId: 1,
+          ComplexId: 1
+        })
       const { body, status } = res
       expect(status).toBe(400)
       expect(body).toHaveProperty('msg', 'Please enter valid date')
@@ -355,13 +476,15 @@ describe('Test Router Fee', () => {
     })
 
     it('400 Failed create - should return error if real estate is empty', async (done) => {
-      const res = await request(app).post('/fee').send({
-        name: 'Test fee pengajian',
-        description: 'Test',
-        due_date: '2020-12-30',
-        RealEstateId: '',
-        ComplexId: 1
-      })
+      const res = await request(app).post('/fee')
+        .set('access_token', access_token)
+        .send({
+          name: 'Test fee pengajian',
+          description: 'Test',
+          due_date: '2020-12-30',
+          RealEstateId: '',
+          ComplexId: 1
+        })
       const { body, status } = res
       expect(status).toBe(400)
       expect(body).toHaveProperty('msg', 'Pleasse select your real estate, Please enter valid real estate')
@@ -397,13 +520,15 @@ describe('Test Router Fee', () => {
 
   describe('Test endpoint PUT /fee', () => {
     it('200 Succes update fee - should update fee', async (done) => {
-      const res = await request(app).put(`/fee/${id}`).send({
-        name: 'Test update fee pengajian',
-        description: 'Test',
-        due_date: '2020-12-30',
-        RealEstateId: 1,
-        ComplexId: 1
-      })
+      const res = await request(app).put(`/fee/${id}`)
+        .set('access_token', access_token)
+        .send({
+          name: 'Test update fee pengajian',
+          description: 'Test',
+          due_date: '2020-12-30',
+          RealEstateId: 1,
+          ComplexId: 1
+        })
       const { body, status } = res
       expect(status).toBe(200)
       expect(body).toHaveProperty('name')
@@ -415,13 +540,15 @@ describe('Test Router Fee', () => {
     })
 
     it('400 Failed update - should return error if name is empty', async (done) => {
-      const res = await request(app).put(`/fee/${id}`).send({
-        name: '',
-        description: 'Test',
-        due_date: '2020-12-30',
-        RealEstateId: 1,
-        ComplexId: 1
-      })
+      const res = await request(app).put(`/fee/${id}`)
+        .set('access_token', access_token)
+        .send({
+          name: '',
+          description: 'Test',
+          due_date: '2020-12-30',
+          RealEstateId: 1,
+          ComplexId: 1
+        })
       const { body, status } = res
       expect(status).toBe(400)
       expect(body).toHaveProperty('msg', 'Please enter fees name')
@@ -429,13 +556,15 @@ describe('Test Router Fee', () => {
     })
 
     it('404 Failed update - should return error if invalid id', async (done) => {
-      const res = await request(app).put(`/fee/0`).send({
-        name: 'Test update fee pengajian',
-        description: 'Test',
-        due_date: '2020-12-30',
-        RealEstateId: 1,
-        ComplexId: 1
-      })
+      const res = await request(app).put(`/fee/0`)
+        .set('access_token', access_token)
+        .send({
+          name: 'Test update fee pengajian',
+          description: 'Test',
+          due_date: '2020-12-30',
+          RealEstateId: 1,
+          ComplexId: 1
+        })
       const { body, status } = res
       expect(status).toBe(404)
       expect(body).toHaveProperty('msg', 'Fee not found')
@@ -467,12 +596,14 @@ describe('Test Router Timeline', () => {
 
   describe('Test endpoint POST /timeline', () => {
     it('201 Success add timeline - should create timeline', async (done) => {
-      const res = await request(app).post('/timeline').send({
-        description: 'Test',
-        image: 'image.jpg',
-        privacy: 'public',
-        UserId: 1
-      })
+      const res = await request(app).post('/timeline')
+        .set('access_token', access_token)
+        .send({
+          description: 'Test',
+          image: 'image.jpg',
+          privacy: 'public',
+          UserId: 1
+        })
       const { body, status } = res
       expect(status).toBe(201)
       expect(body).toHaveProperty('description')
@@ -483,11 +614,13 @@ describe('Test Router Timeline', () => {
     })
 
     it('400 Failed create - should return error if privacy is null', async (done) => {
-      const res = await request(app).post('/timeline').send({
-        description: 'Test',
-        image: 'image.jpg',
-        UserId: 1
-      })
+      const res = await request(app).post('/timeline')
+        .set('access_token', access_token)
+        .send({
+          description: 'Test',
+          image: 'image.jpg',
+          UserId: 1
+        })
       const { body, status } = res
       expect(status).toBe(400)
       expect(body).toHaveProperty('msg', 'Timeline.privacy cannot be null')
@@ -495,12 +628,14 @@ describe('Test Router Timeline', () => {
     })
 
     it('400 Failed create - should return error if description is empty', async (done) => {
-      const res = await request(app).post('/timeline').send({
-        description: '',
-        image: 'image.jpg',
-        privacy: 'public',
-        UserId: 1
-      })
+      const res = await request(app).post('/timeline')
+        .set('access_token', access_token)
+        .send({
+          description: '',
+          image: 'image.jpg',
+          privacy: 'public',
+          UserId: 1
+        })
       const { body, status } = res
       expect(status).toBe(400)
       expect(body).toHaveProperty('msg', 'Please enter timeline description')
@@ -508,12 +643,14 @@ describe('Test Router Timeline', () => {
     })
 
     it('400 Failed create - should return error if invalid format privacy ', async (done) => {
-      const res = await request(app).post('/timeline').send({
-        description: 'Test',
-        image: 'image.jpg',
-        privacy: 'private',
-        UserId: 1
-      })
+      const res = await request(app).post('/timeline')
+        .set('access_token', access_token)
+        .send({
+          description: 'Test',
+          image: 'image.jpg',
+          privacy: 'private',
+          UserId: 1
+        })
       const { body, status } = res
       expect(status).toBe(400)
       expect(body).toHaveProperty('msg', 'Privacy must be public or member')
@@ -549,12 +686,14 @@ describe('Test Router Timeline', () => {
 
   describe('Test endpoint PUT /timeline', () => {
     it('200 Succes update timeline - should update timeline', async (done) => {
-      const res = await request(app).put(`/timeline/${id}`).send({
-        description: 'Test update',
-        image: 'image.jpg',
-        privacy: 'public',
-        UserId: 1
-      })
+      const res = await request(app).put(`/timeline/${id}`)
+        .set('access_token', access_token)
+        .send({
+          description: 'Test update',
+          image: 'image.jpg',
+          privacy: 'public',
+          UserId: 1
+        })
       const { body, status } = res
       expect(status).toBe(200)
       expect(body).toHaveProperty('description')
@@ -565,12 +704,14 @@ describe('Test Router Timeline', () => {
     })
 
     it('400 Failed update - should return error if description is empty', async (done) => {
-      const res = await request(app).put(`/timeline/${id}`).send({
-        description: '',
-        image: 'image.jpg',
-        privacy: 'public',
-        UserId: 1
-      })
+      const res = await request(app).put(`/timeline/${id}`)
+        .set('access_token', access_token)
+        .send({
+          description: '',
+          image: 'image.jpg',
+          privacy: 'public',
+          UserId: 1
+        })
       const { body, status } = res
       expect(status).toBe(400)
       expect(body).toHaveProperty('msg', 'Please enter timeline description')
@@ -578,12 +719,14 @@ describe('Test Router Timeline', () => {
     })
 
     it('404 Failed update - should return error if invalid id', async (done) => {
-      const res = await request(app).put(`/timeline/0`).send({
-        description: 'Test update',
-        image: 'image.jpg',
-        privacy: 'public',
-        UserId: 1
-      })
+      const res = await request(app).put(`/timeline/0`)
+        .set('access_token', access_token)
+        .send({
+          description: 'Test update',
+          image: 'image.jpg',
+          privacy: 'public',
+          UserId: 1
+        })
       const { body, status } = res
       expect(status).toBe(404)
       expect(body).toHaveProperty('msg', 'Timeline not found')
@@ -615,11 +758,13 @@ describe('Test Router Comment', () => {
 
   describe('Test endpoint POST /comment', () => {
     it('201 Success add comment - should create comment', async (done) => {
-      const res = await request(app).post('/comment').send({
-        comment: 'Test',
-        UserId: 1,
-        TimelineId: 1,
-      })
+      const res = await request(app).post('/comment')
+        .set('access_token', access_token)
+        .send({
+          comment: 'Test',
+          UserId: 1,
+          TimelineId: 1,
+        })
       const { body, status } = res
       expect(status).toBe(201)
       expect(body).toHaveProperty('comment')
@@ -629,10 +774,12 @@ describe('Test Router Comment', () => {
     })
 
     it('400 Failed create - should return error if timeline is null', async (done) => {
-      const res = await request(app).post('/comment').send({
-        comment: 'Test',
-        UserId: 1,
-      })
+      const res = await request(app).post('/comment')
+        .set('access_token', access_token)
+        .send({
+          comment: 'Test',
+          UserId: 1,
+        })
       const { body, status } = res
       expect(status).toBe(400)
       expect(body).toHaveProperty('msg', 'Comment.TimelineId cannot be null')
@@ -640,11 +787,13 @@ describe('Test Router Comment', () => {
     })
 
     it('400 Failed create - should return error if comment is empty', async (done) => {
-      const res = await request(app).post('/comment').send({
-        comment: '',
-        UserId: 1,
-        TimelineId: 1,
-      })
+      const res = await request(app).post('/comment')
+        .set('access_token', access_token)
+        .send({
+          comment: '',
+          UserId: 1,
+          TimelineId: 1,
+        })
       const { body, status } = res
       expect(status).toBe(400)
       expect(body).toHaveProperty('msg', 'Please enter your comment')
@@ -680,11 +829,13 @@ describe('Test Router Comment', () => {
 
   describe('Test endpoint PUT /comment', () => {
     it('200 Succes update comment - should update comment', async (done) => {
-      const res = await request(app).put(`/comment/${id}`).send({
-        comment: 'Test update',
-        UserId: 1,
-        TimelineId: 1,
-      })
+      const res = await request(app).put(`/comment/${id}`)
+        .set('access_token', access_token)
+        .send({
+          comment: 'Test update',
+          UserId: 1,
+          TimelineId: 1,
+        })
       const { body, status } = res
       expect(status).toBe(200)
       expect(body).toHaveProperty('comment')
@@ -694,11 +845,13 @@ describe('Test Router Comment', () => {
     })
 
     it('400 Failed update - should return error if comment is empty', async (done) => {
-      const res = await request(app).put(`/comment/${id}`).send({
-        comment: '',
-        UserId: 1,
-        TimelineId: 1,
-      })
+      const res = await request(app).put(`/comment/${id}`)
+        .set('access_token', access_token)
+        .send({
+          comment: '',
+          UserId: 1,
+          TimelineId: 1,
+        })
       const { body, status } = res
       expect(status).toBe(400)
       expect(body).toHaveProperty('msg', 'Please enter your comment')
@@ -706,11 +859,13 @@ describe('Test Router Comment', () => {
     })
 
     it('404 Failed update - should return error if invalid id', async (done) => {
-      const res = await request(app).put(`/comment/0`).send({
-        comment: 'Test update',
-        UserId: 1,
-        TimelineId: 1,
-      })
+      const res = await request(app).put(`/comment/0`)
+        .set('access_token', access_token)
+        .send({
+          comment: 'Test update',
+          UserId: 1,
+          TimelineId: 1,
+        })
       const { body, status } = res
       expect(status).toBe(404)
       expect(body).toHaveProperty('msg', 'Comment not found')
