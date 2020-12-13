@@ -6,7 +6,7 @@ router.use(Middleware.wargaAuth);
 router.get("/", Controller.find);
 router.post("/:timelineId", Controller.create);
 router.get("/:timelineId/:id", Controller.findById);
-router.put("/:timelineId/:id", Middleware.commentAuthorization, Controller.update);
+router.patch("/:timelineId/:id", Middleware.commentAuthorization, Controller.update);
 router.delete("/:timelineId/:id", Middleware.commentAuthorization, Controller.delete);
 
 module.exports = router;

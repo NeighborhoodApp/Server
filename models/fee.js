@@ -60,7 +60,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       validate: {
         notEmpty: {
-          msg: 'Pleasse select your real estate'
+          msg: 'Real estate cannot be empty'
         },
         isNumeric: {
           msg: 'Please enter valid real estate'
@@ -72,7 +72,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       validate: {
         notEmpty: {
-          msg: 'Pleasse select your complex'
+          msg: 'Real estate cannot be empty'
         },
         isNumeric: {
           msg: 'Please enter valid complex'

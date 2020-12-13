@@ -6,6 +6,9 @@ class CommentController {
       const comment = await Comment.findAll({
         include: [User, Timeline]
       })
+      if (!comment.length) {
+        throw {msg: 'Comment not found', status: 404}
+      }
       res.status(200).json(comment)
     } catch (error) {
       next(error)

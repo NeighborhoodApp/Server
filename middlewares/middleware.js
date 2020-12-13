@@ -119,7 +119,7 @@ class Middleware {
     try {
       const foundFee = await Fee.findByPk(feeId);
       if (!foundFee) next()
-      else if (req.loggedIn.RoleId !== 3 && 
+      else if (req.loggedIn.RoleId !== 3 &&
         foundFee.RealEstateId === req.loggedIn.RealEstateId && foundFee.ComplexId === req.loggedIn.ComplexId) next();
       else throw { msg: "Not authorized", status: 401 };
     } catch (err) {
@@ -240,7 +240,6 @@ class Middleware {
   }
 
   static errorHandler(err, req, res, next) {
-    console.log(err);
     let status = err.status || 500;
     let msg = err.msg || "Internal Server Error";
 
@@ -250,18 +249,6 @@ class Middleware {
     ) {
       status = 400;
       msg = err.errors.map((el) => el.message).join(", ");
-    } else if (err.name === "Invalid Input") {
-      status = 401;
-      msg = "Wrong email/password";
-    } else if (err.name === "Authentication failed") {
-      status = 401;
-      msg = "Authentication failed";
-    } else if (err.name === "Not authorized") {
-      status = 401;
-      msg = "Not authorized";
-    } else if (err.name === "Not found") {
-      status = 404;
-      msg = "Not found";
     }
     res.status(status).json({ msg });
   }
