@@ -62,6 +62,22 @@ describe('Test Router Comment', () => {
       id = body[0].id
       done()
     })
+
+    it('200 Succes get comment by id - should show comment by id', async (done) => {
+      const res = await request(app).get(`/comment/${id}`)
+      const { body, status } = res
+      expect(status).toBe(200)
+      expect(body).toHaveProperty('comment', 'Test')
+      done()
+    })
+
+    it('404 Failed get comment - should return error if comment not found', async (done) => {
+      const res = await request(app).get('/comment/0')
+      const { body, status } = res
+      expect(status).toBe(404)
+      expect(body).toHaveProperty('msg', 'Comment not found')
+      done()
+    })
   })
 
   describe('Test endpoint PUT /comment', () => {

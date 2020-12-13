@@ -1,12 +1,12 @@
 if (process.env.NODE_ENV != "production") {
   require("dotenv").config();
 }
-const express = require("express");
-const PORT = process.env.PORT || 3000;
-const app = express();
-const cors = require("cors");
-const routes = require("./routes");
-const Middleware = require("./middlewares/middleware");
+const express = require('express')
+const PORT = process.env.PORT || 3000
+const app = express()
+const cors = require('cors')
+const routes = require('./routes')
+const Middleware = require("./middlewares/middleware")
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));

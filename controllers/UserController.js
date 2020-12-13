@@ -22,9 +22,11 @@ class UserController {
   }
 
   static async loginClient(req, res, next) {
+    console.log('disiniiii')
     const { email, password } = req.body;
     try {
       const foundUser = await User.findOne({
+        include: [RealEstate],
         where: {
           email: email,
         },
@@ -37,6 +39,7 @@ class UserController {
           id: foundUser.id,
           email: foundUser.email,
           RoleId: foundUser.RoleId,
+          coordinate: foundUser.RealEstate.coordinate
         });
         res.status(200).json({
           access_token: accessToken,

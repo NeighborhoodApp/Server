@@ -79,6 +79,22 @@ describe('Test Router Timeline', () => {
       id = body[0].id
       done()
     })
+
+    it('200 Succes get timeline by id - should show timeline by id', async (done) => {
+      const res = await request(app).get(`/timeline/${id}`)
+      const { body, status } = res
+      expect(status).toBe(200)
+      expect(body).toHaveProperty('description', 'Test')
+      done()
+    })
+
+    it('404 Failed get timeline - should return error if timeline not found', async (done) => {
+      const res = await request(app).get('/timeline/0')
+      const { body, status } = res
+      expect(status).toBe(404)
+      expect(body).toHaveProperty('msg', 'Timeline not found')
+      done()
+    })
   })
 
   describe('Test endpoint PUT /timeline', () => {

@@ -112,6 +112,22 @@ describe('Test Router Fee', () => {
       id = body[0].id
       done()
     })
+
+    it('200 Succes get fee by id - should show fee by id', async (done) => {
+      const res = await request(app).get(`/fee/${id}`)
+      const { body, status } = res
+      expect(status).toBe(200)
+      expect(body).toHaveProperty('name', 'Test fee pengajian')
+      done()
+    })
+
+    it('404 Failed get fee - should return error if fee not found', async (done) => {
+      const res = await request(app).get('/fee/0')
+      const { body, status } = res
+      expect(status).toBe(404)
+      expect(body).toHaveProperty('msg', 'Fee not found')
+      done()
+    })
   })
 
   describe('Test endpoint PUT /fee', () => {

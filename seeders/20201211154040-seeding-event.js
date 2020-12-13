@@ -13,7 +13,6 @@ module.exports = {
     */
     const data = [
       {
-        id: 1,
         name: "Pengajian di rumah Warga 1",
         description: "Description of Pengajian",
         image: "imges/imangename.jpg",

@@ -13,7 +13,6 @@ module.exports = {
     */
     const data = [
       {
-        id: 1,
         comment: "Comment in timeline 1 by warga 2",
         UserId: 6,
         TimelineId: 1,

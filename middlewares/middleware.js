@@ -26,13 +26,11 @@ class Middleware {
       if (!access_token) throw { msg: "Authentication failed", status: 401 };
       else {
         const decoded = await Helper.verifyToken(access_token);
-        console.log(decoded);
         const loggedUser = await User.findOne({
           where: {
             email: decoded.email,
           },
         });
-        console.log(loggedUser);
         if (!loggedUser) throw { msg: "Authentication failed", status: 401 };
         else if (loggedUser.RoleId !== 2)
           throw { msg: "Authentication failed", status: 401 };
@@ -73,7 +71,6 @@ class Middleware {
   static async authorization(req, res, next) { }
 
   static errorHandler(err, req, res, next) {
-    const errors = []
     let status = err.status || 500;
     let msg = err.msg || "Internal Server Error";
 

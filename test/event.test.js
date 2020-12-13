@@ -5,7 +5,7 @@ const { queryInterface } = sequelize
 
 afterAll(async (done) => {
   try {
-    await queryInterface.bulkDelete('Categories', null, {})
+    await queryInterface.bulkDelete('Events', null, {})
     done()
   } catch (error) {
     done()
@@ -124,6 +124,22 @@ describe('Test Router Event', () => {
       const { body, status } = res
       expect(status).toBe(200)
       id = body[0].id
+      done()
+    })
+
+    it('200 Succes get event by id - should show event by id', async (done) => {
+      const res = await request(app).get(`/event/${id}`)
+      const { body, status } = res
+      expect(status).toBe(200)
+      expect(body).toHaveProperty('description', 'Test')
+      done()
+    })
+
+    it('404 Failed get event - should return error if event not found', async (done) => {
+      const res = await request(app).get('/event/0')
+      const { body, status } = res
+      expect(status).toBe(404)
+      expect(body).toHaveProperty('msg', 'Event not found')
       done()
     })
   })
