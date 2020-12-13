@@ -4,7 +4,7 @@ class DeveloperController {
   static async get(req, res, next) {
     try {
       const allDevelopers = await Developer.findAll({
-        include: [{ model: Role }],
+        include: [Role],
         order: [["id", "ASC"]],
       });
       res.status(200).json({ allDevelopers });

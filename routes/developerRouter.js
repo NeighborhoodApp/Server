@@ -8,6 +8,10 @@ router.get("/", DeveloperController.get);
 router.post("/", DeveloperController.create);
 router.get("/:id", DeveloperController.getOne);
 router.put("/:id", DeveloperController.update);
-router.delete("/:id", DeveloperController.delete);
+router.delete(
+  "/:id",
+  Middleware.deleteDeveloperVerification,
+  DeveloperController.delete
+);
 
 module.exports = router;

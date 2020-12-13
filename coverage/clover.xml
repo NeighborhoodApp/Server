@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1607774536033" clover="3.2.0">
+  <project timestamp="1607774536034" name="All files">
+    <metrics statements="86" coveredstatements="64" conditionals="36" coveredconditionals="21" methods="8" coveredmethods="7" elements="130" coveredelements="92" complexity="0" loc="86" ncloc="86" packages="3" files="4" classes="4"/>
+    <package name="middlewares">
+      <metrics statements="62" coveredstatements="40" conditionals="36" coveredconditionals="21" methods="6" coveredmethods="5"/>
+      <file name="middleware.js" path="D:\Abraham\File Prectatore Baladi\DaScin & WebDev\Hacktiv8\Phase-3\Final Project\Server\middlewares\middleware.js">
+        <metrics statements="62" coveredstatements="40" conditionals="36" coveredconditionals="21" methods="6" coveredmethods="5"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="6" count="79" type="stmt"/>
+        <line num="7" count="79" type="stmt"/>
+        <line num="8" count="79" type="cond" truecount="2" falsecount="0"/>
+        <line num="10" count="58" type="stmt"/>
+        <line num="11" count="58" type="cond" truecount="1" falsecount="1"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="14" count="58" type="stmt"/>
+        <line num="15" count="58" type="stmt"/>
+        <line num="19" count="21" type="stmt"/>
+        <line num="24" count="33" type="stmt"/>
+        <line num="25" count="33" type="stmt"/>
+        <line num="26" count="33" type="cond" truecount="2" falsecount="0"/>
+        <line num="28" count="19" type="stmt"/>
+        <line num="29" count="19" type="stmt"/>
+        <line num="30" count="19" type="stmt"/>
+        <line num="35" count="19" type="stmt"/>
+        <line num="36" count="19" type="cond" truecount="1" falsecount="1"/>
+        <line num="37" count="19" type="cond" truecount="1" falsecount="1"/>
+        <line num="38" count="0" type="stmt"/>
+        <line num="40" count="19" type="stmt"/>
+        <line num="41" count="19" type="stmt"/>
+        <line num="45" count="14" type="stmt"/>
+        <line num="50" count="0" type="stmt"/>
+        <line num="51" count="0" type="stmt"/>
+        <line num="52" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="54" count="0" type="stmt"/>
+        <line num="55" count="0" type="stmt"/>
+        <line num="60" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="61" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="62" count="0" type="stmt"/>
+        <line num="64" count="0" type="stmt"/>
+        <line num="65" count="0" type="stmt"/>
+        <line num="69" count="0" type="stmt"/>
+        <line num="74" count="5" type="stmt"/>
+        <line num="75" count="5" type="stmt"/>
+        <line num="76" count="5" type="stmt"/>
+        <line num="77" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="78" count="3" type="cond" truecount="0" falsecount="2"/>
+        <line num="79" count="0" type="stmt"/>
+        <line num="81" count="5" type="stmt"/>
+        <line num="86" count="113" type="stmt"/>
+        <line num="87" count="113" type="cond" truecount="2" falsecount="0"/>
+        <line num="88" count="113" type="cond" truecount="2" falsecount="0"/>
+        <line num="90" count="113" type="cond" truecount="2" falsecount="0"/>
+        <line num="94" count="52" type="stmt"/>
+        <line num="95" count="59" type="stmt"/>
+        <line num="96" count="61" type="cond" truecount="1" falsecount="1"/>
+        <line num="97" count="0" type="stmt"/>
+        <line num="98" count="0" type="stmt"/>
+        <line num="99" count="61" type="cond" truecount="1" falsecount="1"/>
+        <line num="100" count="0" type="stmt"/>
+        <line num="101" count="0" type="stmt"/>
+        <line num="102" count="61" type="cond" truecount="1" falsecount="1"/>
+        <line num="103" count="0" type="stmt"/>
+        <line num="104" count="0" type="stmt"/>
+        <line num="105" count="61" type="cond" truecount="1" falsecount="1"/>
+        <line num="106" count="0" type="stmt"/>
+        <line num="107" count="0" type="stmt"/>
+        <line num="109" count="113" type="stmt"/>
+        <line num="113" count="11" type="stmt"/>
+      </file>
+    </package>
+    <package name="models">
+      <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+      <file name="comment.js" path="D:\Abraham\File Prectatore Baladi\DaScin & WebDev\Hacktiv8\Phase-3\Final Project\Server\models\comment.js">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="12" count="11" type="stmt"/>
+        <line num="13" count="11" type="stmt"/>
+        <line num="16" count="11" type="stmt"/>
+        <line num="41" count="11" type="stmt"/>
+      </file>
+    </package>
+    <package name="routes">
+      <metrics statements="18" coveredstatements="18" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="comment.js" path="D:\Abraham\File Prectatore Baladi\DaScin & WebDev\Hacktiv8\Phase-3\Final Project\Server\routes\comment.js">
+        <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+        <line num="6" count="11" type="stmt"/>
+        <line num="7" count="11" type="stmt"/>
+        <line num="8" count="11" type="stmt"/>
+        <line num="9" count="11" type="stmt"/>
+        <line num="11" count="11" type="stmt"/>
+      </file>
+      <file name="fee.js" path="D:\Abraham\File Prectatore Baladi\DaScin & WebDev\Hacktiv8\Phase-3\Final Project\Server\routes\fee.js">
+        <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+        <line num="6" count="11" type="stmt"/>
+        <line num="7" count="11" type="stmt"/>
+        <line num="8" count="11" type="stmt"/>
+        <line num="9" count="11" type="stmt"/>
+        <line num="11" count="11" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>
