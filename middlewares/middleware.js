@@ -163,7 +163,8 @@ class Middleware {
         },
         include: [Role],
       });
-      if (foundUser.RoleId !== 2) next();
+      if (!foundUser) throw { msg: "User not found", status: 404 };
+      else if (foundUser.RoleId !== 2) next();
       else if (foundUser.RoleId === 2) {
         const allUsersAsAdmin = await User.findAll({
           where: {
@@ -187,6 +188,7 @@ class Middleware {
   }
 
   static errorHandler(err, req, res, next) {
+    console.log(err);
     let status = err.status || 500;
     let msg = err.msg || "Internal Server Error";
 
