@@ -6,6 +6,9 @@ class FeeController {
       const fee = await Fee.findAll({
         include: [RealEstate, Complex]
       })
+      if (!fee.length) {
+        throw { msg: 'Fee not found', status: 404 }
+      }
       res.status(200).json(fee)
     } catch (error) {
       next(error)
@@ -26,7 +29,13 @@ class FeeController {
   }
 
   static async create(req, res, next) {
-    const payload = req.body
+    const payload = {
+      name: req.body.name,
+      description: req.body.description,
+      due_date: req.body.due_date,
+      RealEstateId: req.loggedIn.RealEstateId,
+      ComplexId: req.loggedIn.ComplexId,
+    }
     try {
       const fee = await Fee.create(payload)
       res.status(201).json(fee)
@@ -37,7 +46,13 @@ class FeeController {
 
   static async update(req, res, next) {
     const id = req.params.id
-    const payload = req.body
+    const payload = {
+      name: req.body.name,
+      description: req.body.description,
+      due_date: req.body.due_date,
+      RealEstateId: req.loggedIn.RealEstateId,
+      ComplexId: req.loggedIn.ComplexId,
+    }
     try {
       const fee = await Fee.update(payload, {
         where: {

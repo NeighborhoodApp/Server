@@ -41,6 +41,8 @@ class UserController {
           id: foundUser.id,
           email: foundUser.email,
           RoleId: foundUser.RoleId,
+          RealEstateId: foundUser.RealEstateId,
+          ComplexId: foundUser.ComplexId,
           coordinate: foundUser.RealEstate.coordinate,
         });
         res.status(200).json({
@@ -98,14 +100,7 @@ class UserController {
   }
 
   static async registerWarga(req, res, next) {
-    const {
-      email,
-      password,
-      fullname,
-      address,
-      RealEstateId,
-      ComplexId,
-    } = req.body;
+    const { email, password, fullname, address } = req.body;
     const RoleId = 3;
     try {
       const newUser = await User.create({
@@ -114,10 +109,14 @@ class UserController {
         fullname,
         address,
         RoleId,
-        RealEstateId,
-        ComplexId,
       });
-      res.status(201).json({ id: newUser.id, email: newUser.email });
+      res.status(201).json({
+        id: newUser.id,
+        email: newUser.email,
+        fullname: newUser.fullname,
+        address: newUser.address,
+        status: newUser.status,
+      });
     } catch (err) {
       next(err);
     }

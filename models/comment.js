@@ -31,6 +31,11 @@ module.exports = (sequelize, DataTypes) => {
       TimelineId: {
         allowNull: false,
         type: DataTypes.INTEGER,
+        validate: {
+          isNumeric: {
+            msg: 'Please enter valid timeline'
+          }
+        }
       },
     },
     {

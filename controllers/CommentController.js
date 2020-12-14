@@ -6,6 +6,9 @@ class CommentController {
       const comment = await Comment.findAll({
         include: [User, Timeline]
       })
+      if (!comment.length) {
+        throw {msg: 'Comment not found', status: 404}
+      }
       res.status(200).json(comment)
     } catch (error) {
       next(error)
@@ -26,7 +29,11 @@ class CommentController {
   }
 
   static async create(req, res, next) {
-    const payload = req.body
+    const payload = {
+      comment: req.body.comment,
+      UserId: req.loggedIn.id,
+      TimelineId: req.params.timelineId
+    }
     try {
       const comment = await Comment.create(payload)
       res.status(201).json(comment)
@@ -37,7 +44,11 @@ class CommentController {
 
   static async update(req, res, next) {
     const id = req.params.id
-    const payload = req.body
+    const payload = {
+      comment: req.body.comment,
+      UserId: req.loggedIn.id,
+      TimelineId: req.params.timelineId
+    }
     try {
       const comment = await Comment.update(payload, {
         where: {

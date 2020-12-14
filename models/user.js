@@ -96,24 +96,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      RealEstateId: {
-        type: DataTypes.INTEGER,
-        validate: {
-          notEmpty: {
-            args: true,
-            msg: "Please fill the Real Estate field",
-          },
-        },
-      },
-      ComplexId: {
-        type: DataTypes.INTEGER,
-        validate: {
-          notEmpty: {
-            args: true,
-            msg: "Please fill the Complex field",
-          },
-        },
-      },
+      RealEstateId: DataTypes.INTEGER,
+      ComplexId: DataTypes.INTEGER,
       status: {
         type: DataTypes.STRING,
         defaultValue: "Inactive",

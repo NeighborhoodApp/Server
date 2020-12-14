@@ -5,6 +5,7 @@ const { queryInterface } = sequelize;
 const { Op } = require("sequelize");
 
 let warga_token;
+let warga2_token;
 
 beforeAll(async (done) => {
   try {
@@ -12,7 +13,12 @@ beforeAll(async (done) => {
       email: "warga2@mail.com",
       password: "warga2@mail.com",
     });
+    const res = await request(app).post("/users/login-client").send({
+      email: "warga1@mail.com",
+      password: "warga1@mail.com",
+    });
     warga_token = response.body.access_token;
+    warga2_token = res.body.access_token;
     done();
   } catch (err) {
     done(err);
@@ -21,11 +27,7 @@ beforeAll(async (done) => {
 
 afterAll(async (done) => {
   try {
-    await queryInterface.bulkDelete("Timelines", {
-      id: {
-        [Op.gt]: 2,
-      },
-    });
+    await queryInterface.bulkDelete("Timelines", {});
     done();
   } catch (error) {
     done();
@@ -36,6 +38,16 @@ describe("Test Router Timeline", () => {
   let id = null;
 
   describe("Test endpoint POST /timeline", () => {
+    it('404 Failed get timeline - should return not found', async (done) => {
+      const res = await request(app)
+        .get('/timeline')
+        .set('access_token', warga_token)
+      const { body, status } = res
+      expect(status).toBe(404)
+      expect(body).toHaveProperty('msg', 'Timeline not found')
+      done()
+    })
+
     it("201 Success add timeline - should create timeline", async (done) => {
       const res = await request(app)
         .post("/timeline")
@@ -44,7 +56,6 @@ describe("Test Router Timeline", () => {
           description: "Test",
           image: "image.jpg",
           privacy: "public",
-          UserId: 1,
         });
       const { body, status } = res;
       expect(status).toBe(201);
@@ -62,7 +73,6 @@ describe("Test Router Timeline", () => {
         .send({
           description: "Test",
           image: "image.jpg",
-          UserId: 1,
         });
       const { body, status } = res;
       expect(status).toBe(400);
@@ -78,7 +88,6 @@ describe("Test Router Timeline", () => {
           description: "",
           image: "image.jpg",
           privacy: "public",
-          UserId: 1,
         });
       const { body, status } = res;
       expect(status).toBe(400);
@@ -94,7 +103,6 @@ describe("Test Router Timeline", () => {
           description: "Test",
           image: "image.jpg",
           privacy: "private",
-          UserId: 1,
         });
       const { body, status } = res;
       expect(status).toBe(400);
@@ -110,7 +118,7 @@ describe("Test Router Timeline", () => {
         .set("access_token", warga_token);
       const { body, status } = res;
       expect(status).toBe(200);
-      id = body[3].id;
+      id = body[0].id;
       done();
     });
 
@@ -133,6 +141,16 @@ describe("Test Router Timeline", () => {
       expect(body).toHaveProperty("msg", "Timeline not found");
       done();
     });
+
+    it("401 Failed get timeline - should return error if no logged in user", async (done) => {
+      const res = await request(app)
+        .get("/timeline")
+
+      const { body, status } = res;
+      expect(status).toBe(401);
+      expect(body).toHaveProperty("msg", "Authentication failed");
+      done();
+    });
   });
 
   describe("Test endpoint PUT /timeline", () => {
@@ -144,7 +162,6 @@ describe("Test Router Timeline", () => {
           description: "Test update",
           image: "image.jpg",
           privacy: "public",
-          UserId: 1,
         });
       const { body, status } = res;
       expect(status).toBe(200);
@@ -163,7 +180,6 @@ describe("Test Router Timeline", () => {
           description: "",
           image: "image.jpg",
           privacy: "public",
-          UserId: 1,
         });
       const { body, status } = res;
       expect(status).toBe(400);
@@ -179,11 +195,25 @@ describe("Test Router Timeline", () => {
           description: "Test update",
           image: "image.jpg",
           privacy: "public",
-          UserId: 1,
         });
       const { body, status } = res;
       expect(status).toBe(404);
       expect(body).toHaveProperty("msg", "Timeline not found");
+      done();
+    });
+
+    it("401 Failed update - should return error if not authorized", async (done) => {
+      const res = await request(app)
+        .put(`/timeline/${id}`)
+        .set("access_token", warga2_token)
+        .send({
+          description: "Test update",
+          image: "image.jpg",
+          privacy: "public",
+        });
+      const { body, status } = res;
+      expect(status).toBe(401);
+      expect(body).toHaveProperty("msg", "Not authorized");
       done();
     });
   });
@@ -199,7 +229,7 @@ describe("Test Router Timeline", () => {
       done();
     });
 
-    it("404 Failed delete - should delete timeline", async (done) => {
+    it("404 Failed delete - should return error if not found", async (done) => {
       const res = await request(app)
         .del(`/timeline/0`)
         .set("access_token", warga_token);
