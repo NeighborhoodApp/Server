@@ -18,6 +18,7 @@ app.use("/", routes);
 app.use(Middleware.errorHandler);
 
 io.on('connection', (socket) => {
+  console.log('a user connected')
   socket.on('new comment', ({name,comment}) => {
     io.emit('comment', {name, comment})
   });
