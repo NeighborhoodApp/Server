@@ -3,6 +3,7 @@ const { calculateDistance } = require('../helpers/helper')
 
 class TimelineController {
   static async find(req, res, next) {
+    const { coordinate } = req.headers
     try {
       const timeline = await Timeline.findAll({
         include: [
@@ -21,7 +22,7 @@ class TimelineController {
       if (!timeline.length) {
         throw { msg: 'Timeline not found', status: 404 }
       }
-      const userCoordinat = req.loggedIn.coordinate.replace(/\s/g, "").split(',')
+      const userCoordinat = coordinate.replace(/\s/g, "").split(',')
       const result = calculateDistance(userCoordinat, timeline)
       res.status(200).json(result)
     } catch (error) {
@@ -32,7 +33,22 @@ class TimelineController {
   static async findById(req, res, next) {
     const id = req.params.id
     try {
-      const timeline = await Timeline.findByPk(id)
+      const timeline = await Timeline.findOne({
+        where: {
+          id
+        },
+        include: [
+          {
+            model: Comment,
+            include: [
+              {
+                model: User,
+                required: false
+              }
+            ],
+          },
+        ],
+      })
       if (!timeline) {
         throw { msg: 'Timeline not found', status: 404 }
       }

@@ -2,6 +2,7 @@ const { Event, Category, User, RealEstate } = require('../models')
 
 class EventController {
   static async find(req, res, next) {
+    console.log(access_token)
     try {
       const event = await Event.findAll({
         include: [Category, User, RealEstate]
