@@ -7,7 +7,7 @@ router.get("/", UserController.get);
 router.get("/:id", UserController.getOne);
 router.post("/login-cms", UserController.loginCMS);
 router.post("/login-client", UserController.loginClient);
-router.post("/register-warga", Middleware.wargaAuth, UserController.registerWarga);
+router.post("/register-warga", UserController.registerWarga);
 router.post(
   "/register-admin",
   Middleware.ownerAuth,

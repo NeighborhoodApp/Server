@@ -69,9 +69,12 @@ class ComplexController {
     const complexId = +req.params.id;
 
     try {
-      await Complex.destroy({
+      const complex = await Complex.destroy({
         where: { id: complexId },
       });
+      if (!complex) {
+        throw { msg: 'Complex not found', status: 404 }
+      }
       res.status(200).json({ msg: "Complex is successfully deleted" });
     } catch (err) {
       next(err);

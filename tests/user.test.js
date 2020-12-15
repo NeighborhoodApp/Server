@@ -367,42 +367,42 @@ describe("POST '/users/register-warga' should only registered by Warga(Admin/Use
     }
   });
 
-  it("401 create User failed - should return Authentication failed message", async (done) => {
-    try {
-      const response = await request(app).post("/users/register-warga").send({
-        email: "warga6@mail.com",
-        password: "warga6@mail.com",
-        fullname: "Warga4",
-        address: "Real Estet 2 Alamat Warga",
-      });
-      const { body, status } = response;
-      expect(status).toBe(401);
-      expect(body).toHaveProperty("msg", "Authentication failed");
-      done();
-    } catch (err) {
-      done(err);
-    }
-  });
+  // it("401 create User failed - should return Authentication failed message", async (done) => {
+  //   try {
+  //     const response = await request(app).post("/users/register-warga").send({
+  //       email: "warga6@mail.com",
+  //       password: "warga6@mail.com",
+  //       fullname: "Warga4",
+  //       address: "Real Estet 2 Alamat Warga",
+  //     });
+  //     const { body, status } = response;
+  //     expect(status).toBe(401);
+  //     expect(body).toHaveProperty("msg", "Authentication failed");
+  //     done();
+  //   } catch (err) {
+  //     done(err);
+  //   }
+  // });
 
-  it("401 create User failed (tried to register warga as Owner) - should return Authentication failed message", async (done) => {
-    try {
-      const response = await request(app)
-        .post("/users/register-warga")
-        .set("access_token", owner_token)
-        .send({
-          email: "warga6@mail.com",
-          password: "warga6@mail.com",
-          fullname: "Warga4",
-          address: "Real Estet 2 Alamat Warga",
-        });
-      const { body, status } = response;
-      expect(status).toBe(401);
-      expect(body).toHaveProperty("msg", "Authentication failed");
-      done();
-    } catch (err) {
-      done(err);
-    }
-  });
+  // it("401 create User failed (tried to register warga as Owner) - should return Authentication failed message", async (done) => {
+  //   try {
+  //     const response = await request(app)
+  //       .post("/users/register-warga")
+  //       .set("access_token", owner_token)
+  //       .send({
+  //         email: "warga6@mail.com",
+  //         password: "warga6@mail.com",
+  //         fullname: "Warga4",
+  //         address: "Real Estet 2 Alamat Warga",
+  //       });
+  //     const { body, status } = response;
+  //     expect(status).toBe(401);
+  //     expect(body).toHaveProperty("msg", "Authentication failed");
+  //     done();
+  //   } catch (err) {
+  //     done(err);
+  //   }
+  // });
 });
 
 describe("POST '/users/register-admin' should only registered by AppOwner", () => {
