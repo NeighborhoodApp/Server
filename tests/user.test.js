@@ -132,6 +132,9 @@ describe("POST /users/login-client", () => {
       expect(status).toBe(200);
       expect(body).toHaveProperty("access_token", expect.any(String));
       expect(body).toHaveProperty("id", expect.any(Number));
+      expect(body).toHaveProperty("RealEstateId");
+      expect(body).toHaveProperty("ComplexId");
+      expect(body).toHaveProperty("coordinate");
       done();
     } catch (err) {
       done(err);
