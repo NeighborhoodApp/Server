@@ -48,12 +48,13 @@ class UserController {
           id: foundUser.id,
           // Added this Value
           email: foundUser.email,
+          status: foundUser.status,
           fullname: foundUser.fullname,
           address: foundUser.address,
           RoleId: foundUser.RoleId,
           RealEstateId: foundUser.RealEstateId,
           ComplexId: foundUser.ComplexId,
-          coordinate: foundUser.RealEstate.coordinate,
+          // coordinate: foundUser.RealEstate.coordinate,
         });
       }
     } catch (err) {
