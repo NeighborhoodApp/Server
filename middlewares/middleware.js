@@ -8,7 +8,7 @@ const {
   Complex,
   Event,
   Fee,
-  Timeline
+  Timeline,
 } = require("../models");
 
 class Middleware {
@@ -82,7 +82,7 @@ class Middleware {
     const commentId = +req.params.id;
     try {
       const foundComment = await Comment.findByPk(commentId);
-      if (!foundComment) next()
+      if (!foundComment) next();
       else if (foundComment.UserId == req.loggedIn.id) next();
       else throw { msg: "Not authorized", status: 401 };
     } catch (err) {
@@ -94,7 +94,7 @@ class Middleware {
     const eventId = +req.params.id;
     try {
       const foundEvent = await Event.findByPk(eventId);
-      if (!foundEvent) next()
+      if (!foundEvent) next();
       else if (foundEvent.UserId == req.loggedIn.id) next();
       else throw { msg: "Not authorized", status: 401 };
     } catch (err) {
@@ -106,7 +106,7 @@ class Middleware {
     const timelineId = +req.params.id;
     try {
       const foundTimeline = await Timeline.findByPk(timelineId);
-      if (!foundTimeline) next()
+      if (!foundTimeline) next();
       else if (foundTimeline.UserId == req.loggedIn.id) next();
       else throw { msg: "Not authorized", status: 401 };
     } catch (err) {
@@ -118,9 +118,13 @@ class Middleware {
     const feeId = +req.params.id;
     try {
       const foundFee = await Fee.findByPk(feeId);
-      if (!foundFee) next()
-      else if (req.loggedIn.RoleId !== 3 &&
-        foundFee.RealEstateId === req.loggedIn.RealEstateId && foundFee.ComplexId === req.loggedIn.ComplexId) next();
+      if (!foundFee) next();
+      else if (
+        req.loggedIn.RoleId !== 3 &&
+        foundFee.RealEstateId === req.loggedIn.RealEstateId &&
+        foundFee.ComplexId === req.loggedIn.ComplexId
+      )
+        next();
       else throw { msg: "Not authorized", status: 401 };
     } catch (err) {
       next(err);
@@ -143,7 +147,7 @@ class Middleware {
         where: {
           id: developerId,
         },
-        include: [Role, RealEstate],
+        include: [RealEstate],
       });
       if (!foundDeveloper) throw { msg: "Developer not found", status: 404 };
       else if (foundDeveloper.RealEstates.length > 0)
@@ -239,7 +243,22 @@ class Middleware {
     }
   }
 
+  static adminRegistrationInputValidation(req, res, next) {
+    const { RealEstateId, ComplexId } = req.body;
+    if (!RealEstateId && !ComplexId)
+      throw {
+        msg: "Please fill the Real Estate field and Complex field",
+        status: 400,
+      };
+    else if (!RealEstateId)
+      throw { msg: "Please fill the Real Estate field", status: 400 };
+    else if (!ComplexId)
+      throw { msg: "Please fill the Complex field", status: 400 };
+    else next();
+  }
+
   static errorHandler(err, req, res, next) {
+    console.log(err)
     let status = err.status || 500;
     let msg = err.msg || "Internal Server Error";
 

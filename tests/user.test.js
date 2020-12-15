@@ -132,6 +132,9 @@ describe("POST /users/login-client", () => {
       expect(status).toBe(200);
       expect(body).toHaveProperty("access_token", expect.any(String));
       expect(body).toHaveProperty("id", expect.any(Number));
+      expect(body).toHaveProperty("RealEstateId");
+      expect(body).toHaveProperty("ComplexId");
+      expect(body).toHaveProperty("coordinate");
       done();
     } catch (err) {
       done(err);
@@ -169,8 +172,8 @@ describe("POST /users/login-client", () => {
   });
 });
 
-describe("POST '/users/register-warga' should only registered by Admin", () => {
-  it("201 create new User (warga) success - show successful message", async (done) => {
+describe("POST '/users/register-warga' should only registered by Warga(Admin/Users)", () => {
+  it("201 create new User (warga) as Admin success - show successful message", async (done) => {
     try {
       const response = await request(app)
         .post("/users/register-warga")
@@ -180,14 +183,38 @@ describe("POST '/users/register-warga' should only registered by Admin", () => {
           password: "warga5@mail.com",
           fullname: "Warga4",
           address: "Real Estet 2 Alamat Warga",
-          RealEstateId: 2,
-          ComplexId: 5,
-          status: "Active",
         });
       const { body, status } = response;
       expect(status).toBe(201);
       expect(body).toHaveProperty("email", "warga5@mail.com");
       expect(body).toHaveProperty("id", expect.any(Number));
+      expect(body).toHaveProperty("fullname", "Warga4");
+      expect(body).toHaveProperty("address", "Real Estet 2 Alamat Warga");
+      expect(body).toHaveProperty("status", "Inactive");
+      done();
+    } catch (err) {
+      done(err);
+    }
+  });
+
+  it("201 create new User (warga) as Warga success - show successful message", async (done) => {
+    try {
+      const response = await request(app)
+        .post("/users/register-warga")
+        .set("access_token", warga_token)
+        .send({
+          email: "warga50@mail.com",
+          password: "warga50@mail.com",
+          fullname: "Warga4",
+          address: "Real Estet 2 Alamat Warga",
+        });
+      const { body, status } = response;
+      expect(status).toBe(201);
+      expect(body).toHaveProperty("email", "warga50@mail.com");
+      expect(body).toHaveProperty("id", expect.any(Number));
+      expect(body).toHaveProperty("fullname", "Warga4");
+      expect(body).toHaveProperty("address", "Real Estet 2 Alamat Warga");
+      expect(body).toHaveProperty("status", "Inactive");
       done();
     } catch (err) {
       done(err);
@@ -198,15 +225,12 @@ describe("POST '/users/register-warga' should only registered by Admin", () => {
     try {
       const response = await request(app)
         .post("/users/register-warga")
-        .set("access_token", admin_token)
+        .set("access_token", warga_token)
         .send({
           email: "",
           password: "warga5@mail.com",
           fullname: "Warga4",
           address: "Real Estet 2 Alamat Warga",
-          RealEstateId: 2,
-          ComplexId: 5,
-          status: "Active",
         });
       const { body, status } = response;
       expect(status).toBe(400);
@@ -224,15 +248,12 @@ describe("POST '/users/register-warga' should only registered by Admin", () => {
     try {
       const response = await request(app)
         .post("/users/register-warga")
-        .set("access_token", admin_token)
+        .set("access_token", warga_token)
         .send({
           email: "warga5@mail.com",
           password: "warga5@mail.com",
           fullname: "Warga4",
           address: "Real Estet 2 Alamat Warga",
-          RealEstateId: 2,
-          ComplexId: 5,
-          status: "Active",
         });
       const { body, status } = response;
       expect(status).toBe(400);
@@ -247,15 +268,12 @@ describe("POST '/users/register-warga' should only registered by Admin", () => {
     try {
       const response = await request(app)
         .post("/users/register-warga")
-        .set("access_token", admin_token)
+        .set("access_token", warga_token)
         .send({
           email: "warga",
           password: "warga5@mail.com",
           fullname: "Warga4",
           address: "Real Estet 2 Alamat Warga",
-          RealEstateId: 2,
-          ComplexId: 5,
-          status: "Active",
         });
       const { body, status } = response;
       expect(status).toBe(400);
@@ -270,15 +288,12 @@ describe("POST '/users/register-warga' should only registered by Admin", () => {
     try {
       const response = await request(app)
         .post("/users/register-warga")
-        .set("access_token", admin_token)
+        .set("access_token", warga_token)
         .send({
           email: "warga6@mail.com",
           password: "warga",
           fullname: "Warga4",
           address: "Real Estet 2 Alamat Warga",
-          RealEstateId: 2,
-          ComplexId: 5,
-          status: "Active",
         });
       const { body, status } = response;
       expect(status).toBe(400);
@@ -293,15 +308,12 @@ describe("POST '/users/register-warga' should only registered by Admin", () => {
     try {
       const response = await request(app)
         .post("/users/register-warga")
-        .set("access_token", admin_token)
+        .set("access_token", warga_token)
         .send({
           email: "warga6@mail.com",
           password: "",
           fullname: "Warga4",
           address: "Real Estet 2 Alamat Warga",
-          RealEstateId: 2,
-          ComplexId: 5,
-          status: "Active",
         });
       const { body, status } = response;
       expect(status).toBe(400);
@@ -319,15 +331,12 @@ describe("POST '/users/register-warga' should only registered by Admin", () => {
     try {
       const response = await request(app)
         .post("/users/register-warga")
-        .set("access_token", admin_token)
+        .set("access_token", warga_token)
         .send({
           email: "warga6@mail.com",
           password: "warga6@mail.com",
           fullname: "",
           address: "Real Estet 2 Alamat Warga",
-          RealEstateId: 2,
-          ComplexId: 5,
-          status: "Active",
         });
       const { body, status } = response;
       expect(status).toBe(400);
@@ -342,65 +351,16 @@ describe("POST '/users/register-warga' should only registered by Admin", () => {
     try {
       const response = await request(app)
         .post("/users/register-warga")
-        .set("access_token", admin_token)
+        .set("access_token", warga_token)
         .send({
           email: "warga6@mail.com",
           password: "warga6@mail.com",
           fullname: "horis",
           address: "",
-          RealEstateId: 2,
-          ComplexId: 5,
-          status: "Active",
         });
       const { body, status } = response;
       expect(status).toBe(400);
       expect(body).toHaveProperty("msg", "Please fill the address field");
-      done();
-    } catch (err) {
-      done(err);
-    }
-  });
-
-  it("400 sending bad request User real estate should not be emptied - should return validation error", async (done) => {
-    try {
-      const response = await request(app)
-        .post("/users/register-warga")
-        .set("access_token", admin_token)
-        .send({
-          email: "warga6@mail.com",
-          password: "warga6@mail.com",
-          fullname: "horis",
-          address: "dsadasdas",
-          RealEstateId: "",
-          ComplexId: 5,
-          status: "Active",
-        });
-      const { body, status } = response;
-      expect(status).toBe(400);
-      expect(body).toHaveProperty("msg", "Please fill the Real Estate field");
-      done();
-    } catch (err) {
-      done(err);
-    }
-  });
-
-  it("400 sending bad request User complex should not be emptied - should return validation error", async (done) => {
-    try {
-      const response = await request(app)
-        .post("/users/register-warga")
-        .set("access_token", admin_token)
-        .send({
-          email: "warga6@mail.com",
-          password: "warga6@mail.com",
-          fullname: "horis",
-          address: "dsadasdas",
-          RealEstateId: 2,
-          ComplexId: "",
-          status: "Active",
-        });
-      const { body, status } = response;
-      expect(status).toBe(400);
-      expect(body).toHaveProperty("msg", "Please fill the Complex field");
       done();
     } catch (err) {
       done(err);
@@ -414,9 +374,6 @@ describe("POST '/users/register-warga' should only registered by Admin", () => {
         password: "warga6@mail.com",
         fullname: "Warga4",
         address: "Real Estet 2 Alamat Warga",
-        RealEstateId: 2,
-        ComplexId: 5,
-        status: "Active",
       });
       const { body, status } = response;
       expect(status).toBe(401);
@@ -437,32 +394,6 @@ describe("POST '/users/register-warga' should only registered by Admin", () => {
           password: "warga6@mail.com",
           fullname: "Warga4",
           address: "Real Estet 2 Alamat Warga",
-          RealEstateId: 2,
-          ComplexId: 5,
-          status: "Active",
-        });
-      const { body, status } = response;
-      expect(status).toBe(401);
-      expect(body).toHaveProperty("msg", "Authentication failed");
-      done();
-    } catch (err) {
-      done(err);
-    }
-  });
-
-  it("401 create User failed (tried to register warga as Warga) - should return Authentication failed message", async (done) => {
-    try {
-      const response = await request(app)
-        .post("/users/register-warga")
-        .set("access_token", warga_token)
-        .send({
-          email: "warga6@mail.com",
-          password: "warga6@mail.com",
-          fullname: "Warga4",
-          address: "Real Estet 2 Alamat Warga",
-          RealEstateId: 2,
-          ComplexId: 5,
-          status: "Active",
         });
       const { body, status } = response;
       expect(status).toBe(401);
@@ -660,6 +591,32 @@ describe("POST '/users/register-admin' should only registered by AppOwner", () =
       const { body, status } = response;
       expect(status).toBe(400);
       expect(body).toHaveProperty("msg", "Please fill the address field");
+      done();
+    } catch (err) {
+      done(err);
+    }
+  });
+
+  it("400 sending bad request User real estate and complex should not be emptied - should return validation error", async (done) => {
+    try {
+      const response = await request(app)
+        .post("/users/register-admin")
+        .set("access_token", owner_token)
+        .send({
+          email: "warga6@mail.com",
+          password: "warga6@mail.com",
+          fullname: "horis",
+          address: "dsadasdas",
+          RealEstateId: "",
+          ComplexId: "",
+          status: "Active",
+        });
+      const { body, status } = response;
+      expect(status).toBe(400);
+      expect(body).toHaveProperty(
+        "msg",
+        "Please fill the Real Estate field and Complex field"
+      );
       done();
     } catch (err) {
       done(err);
@@ -927,42 +884,6 @@ describe("PUT /users/:id", () => {
       const { body, status } = response;
       expect(status).toBe(400);
       expect(body).toHaveProperty("msg", "Please fill the address field");
-      done();
-    } catch (err) {
-      done(err);
-    }
-  });
-
-  it("400 update one User failed Real Estate should not be emptied- should return validation error msg", async (done) => {
-    try {
-      const response = await request(app).put("/users/8").send({
-        fullname: "Warga4",
-        address: "Alamat4",
-        RealEstateId: "",
-        ComplexId: 5,
-      });
-
-      const { body, status } = response;
-      expect(status).toBe(400);
-      expect(body).toHaveProperty("msg", "Please fill the Real Estate field");
-      done();
-    } catch (err) {
-      done(err);
-    }
-  });
-
-  it("400 update one User failed Real Estate should not be emptied- should return validation error msg", async (done) => {
-    try {
-      const response = await request(app).put("/users/8").send({
-        fullname: "Warga4",
-        address: "Alamat4",
-        RealEstateId: 2,
-        ComplexId: "",
-      });
-
-      const { body, status } = response;
-      expect(status).toBe(400);
-      expect(body).toHaveProperty("msg", "Please fill the Complex field");
       done();
     } catch (err) {
       done(err);
