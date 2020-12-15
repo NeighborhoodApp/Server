@@ -41,13 +41,13 @@ class UserController {
           id: foundUser.id,
           email: foundUser.email,
           RoleId: foundUser.RoleId,
-          RealEstateId: foundUser.RealEstateId,
-          ComplexId: foundUser.ComplexId,
-          coordinate: foundUser.RealEstate.coordinate,
         });
         res.status(200).json({
           access_token: accessToken,
           id: foundUser.id,
+          RealEstateId: foundUser.RealEstateId,
+          ComplexId: foundUser.ComplexId,
+          coordinate: foundUser.RealEstate.coordinate,
         });
       }
     } catch (err) {
