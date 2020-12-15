@@ -32,7 +32,22 @@ class TimelineController {
   static async findById(req, res, next) {
     const id = req.params.id
     try {
-      const timeline = await Timeline.findByPk(id)
+      const timeline = await Timeline.findOne({
+        where: {
+          id
+        },
+        include: [
+          {
+            model: Comment,
+            include: [
+              {
+                model: User,
+                required: false
+              }
+            ],
+          },
+        ],
+      })
       if (!timeline) {
         throw { msg: 'Timeline not found', status: 404 }
       }
