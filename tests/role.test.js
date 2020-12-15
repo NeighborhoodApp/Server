@@ -7,6 +7,31 @@ const { Op } = require("sequelize");
 let owner_token;
 
 beforeAll(async (done) => {
+  const roles = [
+    {
+      role: "Super Admin",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      role: "Admin",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      role: "Warga",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  ];
+
+  try {
+    await queryInterface.bulkInsert("Roles", roles, {});
+    done();
+  } catch (error) {
+    done();
+  }
+
   await request(app)
     .post("/users/login-cms")
     .send({
