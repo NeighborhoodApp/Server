@@ -33,6 +33,7 @@ class UserController {
           email: email,
         },
       });
+      
       if (!foundUser) throw { msg: "User not found", status: 404 };
       else if (!Helper.comparePassword(password, foundUser.password))
         throw { msg: "Wrong password!", status: 401 };
@@ -45,12 +46,18 @@ class UserController {
         res.status(200).json({
           access_token: accessToken,
           id: foundUser.id,
+          // Added this Value
+          email: foundUser.email,
+          fullname: foundUser.fullname,
+          address: foundUser.address,
+          RoleId: foundUser.RoleId,
           RealEstateId: foundUser.RealEstateId,
           ComplexId: foundUser.ComplexId,
           coordinate: foundUser.RealEstate.coordinate,
         });
       }
     } catch (err) {
+      console.log(err.message);
       next(err);
     }
   }
@@ -102,6 +109,7 @@ class UserController {
   static async registerWarga(req, res, next) {
     const { email, password, fullname, address } = req.body;
     const RoleId = 3;
+    console.log(email);
     try {
       const newUser = await User.create({
         email,
