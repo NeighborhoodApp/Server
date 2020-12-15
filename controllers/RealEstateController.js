@@ -4,7 +4,7 @@ class RealEstateController {
   static async get(req, res, next) {
     try {
       const allRealEstates = await RealEstate.findAll({
-        include: [{ model: Developer }],
+        include: [Developer, Complex],
         order: [["id", "ASC"]],
       });
       res.status(200).json({ allRealEstates });
