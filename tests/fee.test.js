@@ -3,9 +3,9 @@ const { sequelize } = require("../models");
 const request = require("supertest");
 const { queryInterface } = sequelize;
 
-let warga_token;
-let admin_token;
-let admin2_token;
+let warga_token = {};
+let admin_token = {};
+let admin2_token = {};
 
 beforeAll(async (done) => {
   try {
@@ -21,9 +21,19 @@ beforeAll(async (done) => {
       email: "admin3@mail.com",
       password: "admin3@mail.com",
     });
-    warga_token = response.body.access_token;
-    admin_token = res.body.access_token;
-    admin2_token = respon.body.access_token;
+
+    warga_token.access_token = response.body.access_token;
+    warga_token.RealEstateId = response.body.RealEstateId;
+    warga_token.ComplexId = response.body.ComplexId;
+
+    admin_token.access_token = res.body.access_token;
+    admin_token.RealEstateId = res.body.RealEstateId;
+    admin_token.ComplexId = res.body.ComplexId;
+
+    admin2_token.access_token = respon.body.access_token;
+    admin2_token.RealEstateId = respon.body.RealEstateId;
+    admin2_token.ComplexId = respon.body.ComplexId;
+
     done();
   } catch (err) {
     done(err);
@@ -46,7 +56,9 @@ describe("Test Router Fee", () => {
     it('404 Failed get fee - should return not found', async (done) => {
       const res = await request(app)
         .get('/fee')
-        .set('access_token', admin_token)
+        .set({
+          access_token: admin_token.access_token
+        })
       const { body, status } = res
       expect(status).toBe(404)
       expect(body).toHaveProperty('msg', 'Fee not found')
@@ -56,7 +68,11 @@ describe("Test Router Fee", () => {
     it("201 Success add fee - should create fee", async (done) => {
       const res = await request(app)
         .post("/fee")
-        .set("access_token", admin_token)
+        .set({
+          access_token: admin_token.access_token,
+          RealEstateId: admin_token.RealEstateId,
+          ComplexId: admin_token.ComplexId
+        })
         .send({
           name: "Test fee pengajian",
           description: "Test",
@@ -75,7 +91,11 @@ describe("Test Router Fee", () => {
     it("401 Failed create - should return error if logged in as warga", async (done) => {
       const res = await request(app)
         .post("/fee")
-        .set("access_token", warga_token)
+        .set({
+          access_token: warga_token.access_token,
+          RealEstateId: warga_token.RealEstateId,
+          ComplexId: warga_token.ComplexId
+        })
         .send({
           name: "Test fee pengajian",
           description: "Test",
@@ -90,7 +110,11 @@ describe("Test Router Fee", () => {
     it("400 Failed create - should return error if name is empty", async (done) => {
       const res = await request(app)
         .post("/fee")
-        .set("access_token", admin_token)
+        .set({
+          access_token: admin_token.access_token,
+          RealEstateId: admin_token.RealEstateId,
+          ComplexId: admin_token.ComplexId
+        })
         .send({
           name: "",
           description: "Test",
@@ -105,7 +129,11 @@ describe("Test Router Fee", () => {
     it("400 Failed create - should return error if date has passed", async (done) => {
       const res = await request(app)
         .post("/fee")
-        .set("access_token", admin_token)
+        .set({
+          access_token: admin_token.access_token,
+          RealEstateId: admin_token.RealEstateId,
+          ComplexId: admin_token.ComplexId
+        })
         .send({
           name: "Test fee pengajian",
           description: "Test",
@@ -120,7 +148,11 @@ describe("Test Router Fee", () => {
     it("400 Failed create - should return error if date invalid format", async (done) => {
       const res = await request(app)
         .post("/fee")
-        .set("access_token", admin_token)
+        .set({
+          access_token: admin_token.access_token,
+          RealEstateId: admin_token.RealEstateId,
+          ComplexId: admin_token.ComplexId
+        })
         .send({
           name: "Test fee pengajian",
           description: "Test",
@@ -137,7 +169,11 @@ describe("Test Router Fee", () => {
     it("200 Succes get fee - should show fee", async (done) => {
       const res = await request(app)
         .get("/fee")
-        .set("access_token", admin_token);
+        .set({
+          access_token: admin_token.access_token,
+          RealEstateId: admin_token.RealEstateId,
+          ComplexId: admin_token.ComplexId
+        })
       const { body, status } = res;
       expect(status).toBe(200);
       id = body[0].id;
@@ -147,7 +183,11 @@ describe("Test Router Fee", () => {
     it("200 Succes get fee by id - should show fee by id", async (done) => {
       const res = await request(app)
         .get(`/fee/${id}`)
-        .set("access_token", admin_token);
+        .set({
+          access_token: admin_token.access_token,
+          RealEstateId: admin_token.RealEstateId,
+          ComplexId: admin_token.ComplexId
+        })
       const { body, status } = res;
       expect(status).toBe(200);
       expect(body).toHaveProperty("name", "Test fee pengajian");
@@ -157,7 +197,11 @@ describe("Test Router Fee", () => {
     it("404 Failed get fee - should return error if fee not found", async (done) => {
       const res = await request(app)
         .get("/fee/0")
-        .set("access_token", admin_token);
+        .set({
+          access_token: admin_token.access_token,
+          RealEstateId: admin_token.RealEstateId,
+          ComplexId: admin_token.ComplexId
+        })
       const { body, status } = res;
       expect(status).toBe(404);
       expect(body).toHaveProperty("msg", "Fee not found");
@@ -179,7 +223,11 @@ describe("Test Router Fee", () => {
     it("200 Succes update fee - should update fee", async (done) => {
       const res = await request(app)
         .put(`/fee/${id}`)
-        .set("access_token", admin_token)
+        .set({
+          access_token: admin_token.access_token,
+          RealEstateId: admin_token.RealEstateId,
+          ComplexId: admin_token.ComplexId
+        })
         .send({
           name: "Test update fee pengajian",
           description: "Test",
@@ -198,7 +246,11 @@ describe("Test Router Fee", () => {
     it("400 Failed update - should return error if name is empty", async (done) => {
       const res = await request(app)
         .put(`/fee/${id}`)
-        .set("access_token", admin_token)
+        .set({
+          access_token: admin_token.access_token,
+          RealEstateId: admin_token.RealEstateId,
+          ComplexId: admin_token.ComplexId
+        })
         .send({
           name: "",
           description: "Test",
@@ -213,7 +265,11 @@ describe("Test Router Fee", () => {
     it("401 Failed update - should return error if different real estate", async (done) => {
       const res = await request(app)
         .put(`/fee/${id}`)
-        .set("access_token", admin2_token)
+        .set({
+          access_token: admin2_token.access_token,
+          RealEstateId: admin2_token.RealEstateId,
+          ComplexId: admin2_token.ComplexId
+        })
         .send({
           name: "Tes",
           description: "Test",
@@ -228,7 +284,11 @@ describe("Test Router Fee", () => {
     it("404 Failed update - should return error if invalid id", async (done) => {
       const res = await request(app)
         .put(`/fee/0`)
-        .set("access_token", admin_token)
+        .set({
+          access_token: admin_token.access_token,
+          RealEstateId: admin_token.RealEstateId,
+          ComplexId: admin_token.ComplexId
+        })
         .send({
           name: "Test update fee pengajian",
           description: "Test",
@@ -243,9 +303,14 @@ describe("Test Router Fee", () => {
 
   describe("Test endpoint DELETE /fee", () => {
     it("200 Success delete - should delete fee", async (done) => {
+      console.log(id, 'test')
       const res = await request(app)
         .del(`/fee/${id}`)
-        .set("access_token", admin_token);
+        .set({
+          access_token: admin_token.access_token,
+          RealEstateId: admin_token.RealEstateId,
+          ComplexId: admin_token.ComplexId
+        })
       const { body, status } = res;
       expect(status).toBe(200);
       expect(body).toBe("Successful deleted fees");
@@ -255,7 +320,11 @@ describe("Test Router Fee", () => {
     it("404 Failed delete - should return error if not found", async (done) => {
       const res = await request(app)
         .del(`/fee/0`)
-        .set("access_token", admin_token);
+        .set({
+          access_token: admin_token.access_token,
+          RealEstateId: admin_token.RealEstateId,
+          ComplexId: admin_token.ComplexId
+        })
       const { body, status } = res;
       expect(status).toBe(404);
       expect(body).toHaveProperty("msg", "Fee not found");

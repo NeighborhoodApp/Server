@@ -18,14 +18,24 @@ app.use("/", routes);
 app.use(Middleware.errorHandler);
 
 io.on('connection', (socket) => {
-  console.log('a user connected')
-  socket.on('new comment', ({name,comment}) => {
-    io.emit('comment', {name, comment})
+  console.log(socket.id, 'connect')
+  socket.on('join', id => {
+    socket.join(id)
+  })
+  socket.on('new comment', ({id, name,comment}) => {
+    io.in(id).emit('comment', {name, comment})
+  });
+  socket.on('disconnecting', (id) => {
+    socket.leave(id)
+  });
+  socket.on('disconnect', () => {
+    console.log(socket.id, 'disconnected');
+    socket.leaveAll()
   });
 });
 
-http.listen(PORT, () => {
-  console.log('Server running at http://localhost:' + PORT)
-})
+// http.listen(PORT, () => {
+//   console.log('Server running at http://localhost:' + PORT)
+// })
 
 module.exports = app;

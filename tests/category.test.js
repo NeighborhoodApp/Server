@@ -2,7 +2,6 @@ const app = require("../app");
 const { sequelize } = require("../models");
 const request = require("supertest");
 const { queryInterface } = sequelize;
-const { Op } = require("sequelize");
 
 beforeAll(async (done) => {
   const category = [
