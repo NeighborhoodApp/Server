@@ -142,17 +142,6 @@ describe("GET ALL /real-estates", () => {
       done(err);
     }
   });
-  it("401 get all Real Estates failed - should return Authentication failed message", async (done) => {
-    try {
-      const response = await request(app).get("/real-estates");
-      const { body, status } = response;
-      expect(status).toBe(401);
-      expect(body).toHaveProperty("msg", "Authentication failed");
-      done();
-    } catch (err) {
-      done(err);
-    }
-  });
 });
 
 describe("GET /real-estates/:id", () => {

@@ -27,24 +27,18 @@ beforeAll(async (done) => {
 
   try {
     await queryInterface.bulkInsert("Roles", roles, {});
+    const response = await request(app)
+      .post("/users/login-cms")
+      .send({
+        email: "admin@mail.com",
+        password: "tetonggo5",
+      })
+    owner_token = response.body.access_token;
     done();
   } catch (error) {
+    console.log(error)
     done();
   }
-
-  await request(app)
-    .post("/users/login-cms")
-    .send({
-      email: "admin@mail.com",
-      password: "tetonggo5",
-    })
-    .then((response) => {
-      owner_token = response.body.access_token;
-      done();
-    })
-    .catch((err) => {
-      done(err);
-    });
 });
 
 afterAll(async (done) => {
