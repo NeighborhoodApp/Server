@@ -121,12 +121,13 @@ class Middleware {
       if (!foundFee) next();
       else if (
         req.loggedIn.RoleId !== 3 &&
-        foundFee.RealEstateId === req.loggedIn.RealEstateId &&
-        foundFee.ComplexId === req.loggedIn.ComplexId
+        foundFee.RealEstateId === +req.headers.realestateid &&
+        foundFee.ComplexId === +req.headers.complexid
       )
         next();
       else throw { msg: "Not authorized", status: 401 };
     } catch (err) {
+      console.log(err)
       next(err);
     }
   }
@@ -258,7 +259,6 @@ class Middleware {
   }
 
   static errorHandler(err, req, res, next) {
-    console.log(err)
     let status = err.status || 500;
     let msg = err.msg || "Internal Server Error";
 
