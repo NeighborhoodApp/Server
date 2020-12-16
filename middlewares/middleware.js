@@ -150,7 +150,7 @@ class Middleware {
         },
         include: [RealEstate],
       });
-      if (!foundDeveloper) throw { msg: "Developer not found", status: 404 };
+      if (!foundDeveloper) next()
       else if (foundDeveloper.RealEstates.length > 0)
         throw {
           msg:
@@ -174,7 +174,7 @@ class Middleware {
         },
         include: [Complex],
       });
-      if (!foundRealEstate) throw { msg: "RealEstate not found", status: 404 };
+      if (!foundRealEstate) next()
       else if (foundRealEstate.Complexes.length > 0)
         throw {
           msg:
@@ -198,7 +198,7 @@ class Middleware {
         },
         include: [User],
       });
-      if (!foundComplex) throw { msg: "Complex not found", status: 404 };
+      if (!foundComplex) next()
       else if (foundComplex.Users.length > 0)
         throw {
           msg: "Can't delete, some Users are still registered in this area",
