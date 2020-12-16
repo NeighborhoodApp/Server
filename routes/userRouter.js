@@ -5,6 +5,8 @@ const Middleware = require("../middlewares/middleware");
 
 router.get("/", UserController.get);
 router.get("/:id", UserController.getOne);
+router.put("/verify/:id", Middleware.wargaAuth, UserController.verifyToken);
+
 router.post("/login-cms", UserController.loginCMS);
 router.post("/login-client", UserController.loginClient);
 router.post("/register-warga", /*Middleware.wargaAuth,*/ UserController.registerWarga);

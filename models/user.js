@@ -98,6 +98,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       RealEstateId: DataTypes.INTEGER,
       ComplexId: DataTypes.INTEGER,
+      expoPushToken: DataTypes.STRING,
       status: {
         type: DataTypes.STRING,
         defaultValue: "Inactive",
