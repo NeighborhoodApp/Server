@@ -146,6 +146,7 @@ class UserController {
         status: newUser.status,
       });
     } catch (err) {
+      console.log(err.stack);
       next(err);
     }
   }
@@ -217,6 +218,7 @@ class UserController {
       if (updatedUser[0] === 0) throw { msg: "User not found", status: 404 };
       res.status(200).json({ msg: `User info is successfully updated` });
     } catch (err) {
+      console.log(err.stack);
       next(err);
     }
   }
@@ -232,6 +234,28 @@ class UserController {
       next(err);
     }
   }
+
+  static async verifyToken(req, res, next) {
+    const { expoPushToken } = req.body;
+    const userId = +req.params.id;
+    console.log(expoPushToken, userId);
+    try {
+      const updatedUser = await User.update(
+        { expoPushToken },
+        {
+          where: {
+            id: userId,
+          },
+          returning: true
+        }
+      );
+      res.status(200).json({ user: updatedUser[1][0]});
+    } catch (err) {
+      console.log(err.stack);
+      next(err);
+    }
+  }
 }
+
 
 module.exports = UserController;
