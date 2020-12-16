@@ -37,7 +37,7 @@ class UserController {
       if (!foundUser) throw { msg: "User not found", status: 404 };
       else if (!Helper.comparePassword(password, foundUser.password))
         throw { msg: "Wrong password!", status: 401 };
-      else if (foundUser.status === 'Inactive') {
+      else if (foundUser.status === "Inactive") {
         const accessToken = Helper.signToken({
           id: foundUser.id,
           email: foundUser.email,
@@ -180,9 +180,9 @@ class UserController {
   }
 
   static async patch(req, res, next) {
+    console.log("masuk patch");
     const { status } = req.body;
     const userId = +req.params.id;
-
     try {
       if (!status) throw { msg: "Don't empty the status field", status: 400 };
       else {
