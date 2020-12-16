@@ -238,6 +238,7 @@ class UserController {
   static async verifyToken(req, res, next) {
     const { expoPushToken } = req.body;
     const userId = +req.params.id;
+    console.log(expoPushToken, userId);
     try {
       const updatedUser = await User.update(
         { expoPushToken },
