@@ -25,7 +25,7 @@ io.on('connection', (socket) => {
   socket.on('new comment', ({id, name,comment}) => {
     io.in(id).emit('comment', {name, comment})
   });
-  socket.on('disconnecting', (id) => {
+  socket.on('dc', (id) => {
     socket.leave(id)
   });
   socket.on('disconnect', () => {
@@ -34,8 +34,8 @@ io.on('connection', (socket) => {
   });
 });
 
-// http.listen(PORT, () => {
-//   console.log('Server running at http://localhost:' + PORT)
-// })
+http.listen(PORT, () => {
+  console.log('Server running at http://localhost:' + PORT)
+})
 
 module.exports = app;
