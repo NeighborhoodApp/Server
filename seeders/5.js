@@ -7,7 +7,7 @@ module.exports = {
     await queryInterface.bulkInsert("Users", [
       {
         email: "ahmadarowi@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Ahmad Narowi",
         address: "Jl. Pasir Kuda,",
         RoleId: "3",
@@ -19,7 +19,7 @@ module.exports = {
       },
       {
         email: "ahmadawawi@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Ahmad Zawawi",
         address: "Jl. Pasir Patiih,",
         RoleId: "3",
@@ -31,7 +31,7 @@ module.exports = {
       },
       {
         email: "jhonan@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Jhon Man",
         address: "Jl. Tanjung Pasir",
         RoleId: "3",
@@ -43,7 +43,7 @@ module.exports = {
       },
       {
         email: "julfikar@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Julfikar",
         address: "Jl. Jati Baru,",
         RoleId: "3",
@@ -55,7 +55,7 @@ module.exports = {
       },
       {
         email: "reza@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Reza",
         address: "Jl. Jati Nagor",
         RoleId: "3",
@@ -67,7 +67,7 @@ module.exports = {
       },
       {
         email: "akbar@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Akbar",
         address: "Jl. Malaka,",
         RoleId: "3",
@@ -79,7 +79,7 @@ module.exports = {
       },
       {
         email: "nugraha@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Nugraha",
         address: "Jl. Sudirman",
         RoleId: "3",
@@ -91,7 +91,7 @@ module.exports = {
       },
       {
         email: "zainalbadi@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Zainal Abadi",
         address: "Jl. Pasir Kuda,",
         RoleId: "3",
@@ -103,7 +103,7 @@ module.exports = {
       },
       {
         email: "dulloh@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Dulloh",
         address: "Jl. Pasir Patiih,",
         RoleId: "3",
@@ -115,7 +115,7 @@ module.exports = {
       },
       {
         email: "sudarmanali@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Sudarman Ali",
         address: "Jl. Tanjung Pasir",
         RoleId: "3",
@@ -127,7 +127,7 @@ module.exports = {
       },
       {
         email: "lukman@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Lukman",
         address: "Jl. Jati Baru,",
         RoleId: "3",
@@ -139,7 +139,7 @@ module.exports = {
       },
       {
         email: "prabu@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Prabu",
         address: "Jl. Jati Nagor",
         RoleId: "3",
@@ -151,7 +151,7 @@ module.exports = {
       },
       {
         email: "riduan@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Riduan",
         address: "Jl. Malaka,",
         RoleId: "3",
@@ -163,7 +163,7 @@ module.exports = {
       },
       {
         email: "amelia@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Amelia",
         address: "Jl. Sudirman",
         RoleId: "3",
@@ -175,7 +175,7 @@ module.exports = {
       },
       {
         email: "deeta@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Deeta",
         address: "Jl. Pasir Kuda,",
         RoleId: "3",
@@ -187,7 +187,7 @@ module.exports = {
       },
       {
         email: "tiara@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Tiara",
         address: "Jl. Pasir Patiih,",
         RoleId: "3",
@@ -199,7 +199,7 @@ module.exports = {
       },
       {
         email: "najamiah@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Najamiah",
         address: "Jl. Tanjung Pasir",
         RoleId: "3",
@@ -211,7 +211,7 @@ module.exports = {
       },
       {
         email: "ardimandalo@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Ardi Mandalo",
         address: "Jl. Jati Baru,",
         RoleId: "3",
@@ -223,7 +223,7 @@ module.exports = {
       },
       {
         email: "sarinurhayati@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Sari Nurhayati",
         address: "Jl. Jati Nagor",
         RoleId: "3",
@@ -235,7 +235,7 @@ module.exports = {
       },
       {
         email: "sarifah@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Sarifah",
         address: "Jl. Malaka,",
         RoleId: "3",
@@ -247,7 +247,7 @@ module.exports = {
       },
       {
         email: "riasari@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Ria Sari",
         address: "Jl. Sudirman",
         RoleId: "3",
@@ -259,7 +259,7 @@ module.exports = {
       },
       {
         email: "mellyrosary@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Melly Rosary",
         address: "Jl. Pasir Kuda,",
         RoleId: "3",
@@ -271,7 +271,7 @@ module.exports = {
       },
       {
         email: "izzamaharani@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Izza Maharani",
         address: "Jl. Pasir Patiih,",
         RoleId: "3",
@@ -283,7 +283,7 @@ module.exports = {
       },
       {
         email: "citratalek@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Citra Talek",
         address: "Jl. Tanjung Pasir",
         RoleId: "3",
@@ -295,7 +295,7 @@ module.exports = {
       },
       {
         email: "iskandar@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Iskandar",
         address: "Jl. Jati Baru,",
         RoleId: "3",
@@ -307,7 +307,7 @@ module.exports = {
       },
       {
         email: "bahrowi@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Bahrowi",
         address: "Jl. Jati Nagor",
         RoleId: "3",
@@ -319,7 +319,7 @@ module.exports = {
       },
       {
         email: "nasir@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Nasir",
         address: "Jl. Malaka,",
         RoleId: "3",
@@ -331,7 +331,7 @@ module.exports = {
       },
       {
         email: "ardi@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Ardi",
         address: "Jl. Sudirman",
         RoleId: "3",
@@ -343,7 +343,7 @@ module.exports = {
       },
       {
         email: "basri@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Basri",
         address: "Jl. Pasir Kuda,",
         RoleId: "3",
@@ -355,7 +355,7 @@ module.exports = {
       },
       {
         email: "manda@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Manda",
         address: "Jl. Pasir Patiih,",
         RoleId: "3",
@@ -367,7 +367,7 @@ module.exports = {
       },
       {
         email: "julaika@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Julaika",
         address: "Jl. Tanjung Pasir",
         RoleId: "3",
@@ -379,7 +379,7 @@ module.exports = {
       },
       {
         email: "mahrawi@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Mahrawi",
         address: "Jl. Jati Baru,",
         RoleId: "3",
@@ -391,7 +391,7 @@ module.exports = {
       },
       {
         email: "zaskia@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Zaskia",
         address: "Jl. Jati Nagor",
         RoleId: "3",
@@ -403,7 +403,7 @@ module.exports = {
       },
       {
         email: "rodi@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Rodi",
         address: "Jl. Malaka,",
         RoleId: "3",
@@ -415,7 +415,7 @@ module.exports = {
       },
       {
         email: "atet@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Atet",
         address: "Jl. Sudirman",
         RoleId: "3",
@@ -427,7 +427,7 @@ module.exports = {
       },
       {
         email: "hadi@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Hadi",
         address: "Jl. Pasir Kuda,",
         RoleId: "3",
@@ -439,7 +439,7 @@ module.exports = {
       },
       {
         email: "ruslan@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Ruslan",
         address: "Jl. Pasir Patiih,",
         RoleId: "3",
@@ -451,7 +451,7 @@ module.exports = {
       },
       {
         email: "mahpi@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Mahpi",
         address: "Jl. Tanjung Pasir",
         RoleId: "3",
@@ -463,7 +463,7 @@ module.exports = {
       },
       {
         email: "hendra@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Hendra",
         address: "Jl. Jati Baru,",
         RoleId: "3",
@@ -475,7 +475,7 @@ module.exports = {
       },
       {
         email: "mahpi@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Mahpi",
         address: "Jl. Jati Nagor",
         RoleId: "3",
@@ -487,7 +487,7 @@ module.exports = {
       },
       {
         email: "midah@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Midah",
         address: "Jl. Malaka,",
         RoleId: "3",
@@ -499,7 +499,7 @@ module.exports = {
       },
       {
         email: "gusti@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Gusti",
         address: "Jl. Sudirman",
         RoleId: "3",
@@ -511,7 +511,7 @@ module.exports = {
       },
       {
         email: "saskia@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Saskia",
         address: "Jl. Pasir Kuda,",
         RoleId: "3",
@@ -523,7 +523,7 @@ module.exports = {
       },
       {
         email: "midah@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Midah",
         address: "Jl. Pasir Patiih,",
         RoleId: "3",
@@ -535,7 +535,7 @@ module.exports = {
       },
       {
         email: "mastah@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Mastah",
         address: "Jl. Tanjung Pasir",
         RoleId: "3",
@@ -547,7 +547,7 @@ module.exports = {
       },
       {
         email: "purnomo@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Purnomo",
         address: "Jl. Jati Baru,",
         RoleId: "3",
@@ -559,7 +559,7 @@ module.exports = {
       },
       {
         email: "prasetio@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Prasetio",
         address: "Jl. Jati Nagor",
         RoleId: "3",
@@ -571,7 +571,7 @@ module.exports = {
       },
       {
         email: "regina@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Regina",
         address: "Jl. Malaka,",
         RoleId: "3",
@@ -583,7 +583,7 @@ module.exports = {
       },
       {
         email: "siska@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Siska",
         address: "Jl. Sudirman",
         RoleId: "3",
@@ -595,7 +595,7 @@ module.exports = {
       },
       {
         email: "novi@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Novi",
         address: "Jl. Pasir Kuda,",
         RoleId: "2",
@@ -607,7 +607,7 @@ module.exports = {
       },
       {
         email: "herma@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Herma",
         address: "Jl. Pasir Patiih,",
         RoleId: "2",
@@ -619,7 +619,7 @@ module.exports = {
       },
       {
         email: "hendra@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Hendra",
         address: "Jl. Tanjung Pasir",
         RoleId: "2",
@@ -631,7 +631,7 @@ module.exports = {
       },
       {
         email: "hadi@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Hadi",
         address: "Jl. Jati Baru,",
         RoleId: "2",
@@ -643,7 +643,7 @@ module.exports = {
       },
       {
         email: "humairah@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Humairah",
         address: "Jl. Jati Nagor",
         RoleId: "2",
@@ -655,7 +655,7 @@ module.exports = {
       },
       {
         email: "memet@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Memet",
         address: "Jl. Malaka,",
         RoleId: "2",
@@ -667,7 +667,7 @@ module.exports = {
       },
       {
         email: "admin1@mail.com",
-        password: "123456",
+        password: helper.hashPassword("123456"),
         fullname: "Yudi",
         address: "Jl. Sudirman",
         RoleId: "2",
