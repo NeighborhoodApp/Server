@@ -6,6 +6,7 @@ const storage = unggah.s3({
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   bucketName: 'tetonggo-h8',
   rename: (req, file) => {
+    console.log(file)
     return `${Date.now()}-${file.originalname}`
   }
 })

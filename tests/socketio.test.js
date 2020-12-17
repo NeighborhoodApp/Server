@@ -1,23 +1,27 @@
 const io = require('socket.io-client');
 const http = require('http');
-const ioBack = require('socket.io')();
-const app = require("../app.js");
+const ioBack = require('socket.io');
+
 let socket;
 let httpServer;
 let httpServerAddr;
 let ioServer;
+
 /**
  * Setup WS & HTTP servers
  */
-beforeAll((done) => {
-ioBack.attach(4000)
-
-  httpServer = http.createServer(app).listen(4000);
-  httpServerAddr = httpServer.listen(4000).address('http://localhost');
+// beforeAll((done) => {
+//   httpServer = http.createServer().listen();
+//   httpServerAddr = httpServer.listen().address();
+//   ioServer = ioBack(httpServer);
+//   done();
+// });
+beforeAll(async (done) => {
+  httpServer = await http.createServer().listen();
+  httpServerAddr = await httpServer.address();
   ioServer = ioBack(httpServer);
   done();
 });
-
 /**
  *  Cleanup WS & HTTP servers
  */
@@ -33,7 +37,7 @@ afterAll((done) => {
 beforeEach((done) => {
   // Setup
   // Do not hardcode server port and address, square brackets are used for IPv6
-  socket = io.connect(`http://${httpServerAddr.address}:${httpServerAddr.port}`, {
+  socket = io.connect(`http://[${httpServerAddr.address}]:${httpServerAddr.port}`, {
     'reconnection delay': 0,
     'reopen delay': 0,
     'force new connection': true,
@@ -42,6 +46,7 @@ beforeEach((done) => {
   socket.on('connect', () => {
     done();
   });
+  done()
 });
 
 /**
@@ -59,22 +64,28 @@ afterEach((done) => {
 describe('basic socket.io example', () => {
   test('should communicate', (done) => {
     // once connected, emit Hello World
-    ioServer.emit('echo', 'Hello World');
-    socket.once('echo', (message) => {
+    ioServer.emit('new comment', {name: 'tes', comment: 'Hello World'});
+    socket.once('new comment', ({name, comment}) => {
       // Check that the message matches
-      expect(message).toBe('Hello World');
+      expect(comment).toBe('Hello World');
       done();
     });
     ioServer.on('connection', (mySocket) => {
       expect(mySocket).toBeDefined();
+      done()
     });
   });
   test('should communicate with waiting for socket.io handshakes', (done) => {
     // Emit sth from Client do Server
-    socket.emit('examlpe', 'some messages');
+    socket.emit('new comment', {name: 'tes', comment: 'Hello World'});
     // Use timeout to wait for socket.io server handshakes
     setTimeout(() => {
       // Put your server side expect() here
+      socket.once('new comment', ({name, comment}) => {
+        // Check that the message matches
+        expect(comment).toBe('Hello World');
+        done();
+      });
       done();
     }, 50);
   });

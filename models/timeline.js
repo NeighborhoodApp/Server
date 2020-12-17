@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     image: {
-      allowNull: false,
+      // allowNull: false,
       type: DataTypes.STRING
     },
     privacy: {
