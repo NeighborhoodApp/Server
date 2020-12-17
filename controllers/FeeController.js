@@ -29,13 +29,13 @@ class FeeController {
   }
 
   static async create(req, res, next) {
-    const { realestateid, complexid } = req.headers
+
     const payload = {
       name: req.body.name,
       description: req.body.description,
       due_date: req.body.due_date,
-      RealEstateId: realestateid,
-      ComplexId: complexid,
+      RealEstateId: req.body.RealEstateId,
+      ComplexId: req.body.ComplexId,
     }
     try {
       const fee = await Fee.create(payload)
@@ -47,14 +47,13 @@ class FeeController {
 
   static async update(req, res, next) {
     const id = req.params.id
-    const { RealEstateId, ComplexId } = req.headers
 
     const payload = {
       name: req.body.name,
       description: req.body.description,
       due_date: req.body.due_date,
-      RealEstateId: RealEstateId,
-      ComplexId: ComplexId,
+      RealEstateId: req.body.RealEstateId,
+      ComplexId: req.body.ComplexId,
     }
     try {
       const fee = await Fee.update(payload, {
