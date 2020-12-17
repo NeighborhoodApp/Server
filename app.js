@@ -7,8 +7,8 @@ const app = express()
 const cors = require('cors')
 const routes = require('./routes')
 const Middleware = require("./middlewares/middleware")
-const http = require('http').createServer(app);
-const io = require('socket.io')(http);
+const http = require("http").createServer(app)
+const io = require("socket.io")(http)
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -20,12 +20,15 @@ app.use(Middleware.errorHandler);
 io.on('connection', (socket) => {
   console.log(socket.id, 'connect')
   socket.on('join', id => {
+    console.log(socket.id, 'joined id', id)
     socket.join(id)
   })
   socket.on('new comment', ({id, name,comment}) => {
+    console.log(comment)
     io.in(id).emit('comment', {name, comment})
   });
-  socket.on('disconnecting', (id) => {
+  socket.on('dc', (id) => {
+    console.log(socket.id, 'leaved id', id)
     socket.leave(id)
   });
   socket.on('disconnect', () => {

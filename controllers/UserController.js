@@ -181,9 +181,9 @@ class UserController {
   }
 
   static async patch(req, res, next) {
+    console.log("masuk patch");
     const { status } = req.body;
     const userId = +req.params.id;
-
     try {
       if (!status) throw { msg: "Don't empty the status field", status: 400 };
       else {

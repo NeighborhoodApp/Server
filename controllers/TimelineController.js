@@ -1,27 +1,36 @@
-const { Timeline, User, RealEstate, Comment, Complex } = require("../models");
-const { calculateDistance } = require("../helpers/helper");
+const { Timeline, User, RealEstate, Comment, Complex } = require('../models')
+const { calculateDistance } = require('../helpers/helper')
 
 class TimelineController {
   static async find(req, res, next) {
-    const { coordinate } = req.headers;
-    console.log("tess");
+    const { coordinate } = req.headers
+    console.log('tess')
     try {
       const timeline = await Timeline.findAll({
         include: [
           {
             model: User,
             include: [
-              RealEstate,
-              Complex,
+              // {
+              //   model: RealEstate,
+              //   required: false
+              // }
+              RealEstate, Complex
             ],
+            // include: [
+            //   {
+            //     model: Complex,
+            //     required: false
+            //   }
+            // ],
           },
           {
             model: Comment,
-            order: [["updatedAt", "DESC"]],
-          },
+            order: [['updatedAt', 'DESC']]
+          }
         ],
-        order: [["updatedAt", "DESC"]],
-      });
+        order: [['updatedAt', 'DESC']]
+      })
       if (!timeline.length) {
         throw { msg: "Timeline not found", status: 404 };
       }
@@ -43,7 +52,7 @@ class TimelineController {
         include: [
           {
             model: Comment,
-            order: [["updatedAt", "DESC"]],
+            order: [['updatedAt', 'DESC']],
             include: [
               {
                 model: User,
@@ -51,7 +60,7 @@ class TimelineController {
               },
             ],
           },
-          User,
+          User
         ],
       });
       if (!timeline) {
@@ -64,7 +73,7 @@ class TimelineController {
   }
 
   static async create(req, res, next) {
-    console.log(req.body.image);
+    // console.log(req.body.image)
     const payload = {
       description: req.body.description,
       image: req.body.image,

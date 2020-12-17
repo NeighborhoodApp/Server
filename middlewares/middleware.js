@@ -127,7 +127,7 @@ class Middleware {
         next();
       else throw { msg: "Not authorized", status: 401 };
     } catch (err) {
-      console.log(err)
+      console.log(err);
       next(err);
     }
   }
@@ -150,7 +150,7 @@ class Middleware {
         },
         include: [RealEstate],
       });
-      if (!foundDeveloper) next()
+      if (!foundDeveloper) next();
       else if (foundDeveloper.RealEstates.length > 0)
         throw {
           msg:
@@ -174,7 +174,7 @@ class Middleware {
         },
         include: [Complex],
       });
-      if (!foundRealEstate) next()
+      if (!foundRealEstate) next();
       else if (foundRealEstate.Complexes.length > 0)
         throw {
           msg:
@@ -198,7 +198,7 @@ class Middleware {
         },
         include: [User],
       });
-      if (!foundComplex) next()
+      if (!foundComplex) next();
       else if (foundComplex.Users.length > 0)
         throw {
           msg: "Can't delete, some Users are still registered in this area",
