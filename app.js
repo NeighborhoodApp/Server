@@ -1,6 +1,7 @@
-if (process.env.NODE_ENV != "production") {
-  require("dotenv").config();
-}
+// if (process.env.NODE_ENV != "production") {
+  
+// }
+require("dotenv").config();
 const express = require('express')
 const PORT = 3000
 const app = express()
@@ -16,16 +17,16 @@ app.use(express.json());
 
 app.use("/", routes);
 app.use(Middleware.errorHandler);
-
+/* istanbul ignore next */
 io.on('connection', (socket) => {
   console.log(socket.id, 'connect')
   socket.on('join', id => {
     console.log(socket.id, 'joined id', id)
     socket.join(id)
   })
-  socket.on('new comment', ({id, name,comment}) => {
-    console.log(comment)
-    io.in(id).emit('comment', {name, comment})
+  socket.on('new comment', ({id, name,comment,img}) => {
+    console.log(id, name,comment,img)
+    io.in(id).emit('comment', {name, comment, img})
   });
   socket.on('dc', (id) => {
     console.log(socket.id, 'leaved id', id)
