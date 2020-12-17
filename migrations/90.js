@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    queryInterface.addColumn("Users", "expoPushToken", {
+    await queryInterface.addColumn("Users", "expoPushToken", {
       type: Sequelize.STRING,
     });
     /**
@@ -14,7 +14,7 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    queryInterface.removeColumn("Users", "expoPushToken", {});
+    await queryInterface.removeColumn("Users", "expoPushToken");
     /**
      * Add reverting commands here.
      *
