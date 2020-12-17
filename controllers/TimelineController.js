@@ -4,7 +4,6 @@ const { calculateDistance } = require('../helpers/helper')
 class TimelineController {
   static async find(req, res, next) {
     const { coordinate } = req.headers
-    console.log('tess')
     try {
       const timeline = await Timeline.findAll({
         include: [
@@ -26,7 +25,7 @@ class TimelineController {
           },
           {
             model: Comment,
-            order: [['updatedAt', 'DESC']]
+            order: [['createdAt', 'ASC']]
           }
         ],
         order: [['updatedAt', 'DESC']]
@@ -73,7 +72,6 @@ class TimelineController {
   }
 
   static async create(req, res, next) {
-    // console.log(req.body.image)
     const payload = {
       description: req.body.description,
       image: req.body.image,

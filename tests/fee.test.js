@@ -70,13 +70,13 @@ describe("Test Router Fee", () => {
         .post("/fee")
         .set({
           access_token: admin_token.access_token,
-          RealEstateId: admin_token.RealEstateId,
-          ComplexId: admin_token.ComplexId
         })
         .send({
           name: "Test fee pengajian",
           description: "Test",
           due_date: "2020-12-30",
+          RealEstateId: admin_token.RealEstateId,
+          ComplexId: admin_token.ComplexId
         });
       const { body, status } = res;
       expect(status).toBe(201);
@@ -93,13 +93,14 @@ describe("Test Router Fee", () => {
         .post("/fee")
         .set({
           access_token: warga_token.access_token,
-          RealEstateId: warga_token.RealEstateId,
-          ComplexId: warga_token.ComplexId
+
         })
         .send({
           name: "Test fee pengajian",
           description: "Test",
           due_date: "2020-12-30",
+          RealEstateId: warga_token.RealEstateId,
+          ComplexId: warga_token.ComplexId
         });
       const { body, status } = res;
       expect(status).toBe(401);
@@ -112,13 +113,13 @@ describe("Test Router Fee", () => {
         .post("/fee")
         .set({
           access_token: admin_token.access_token,
-          RealEstateId: admin_token.RealEstateId,
-          ComplexId: admin_token.ComplexId
         })
         .send({
           name: "",
           description: "Test",
           due_date: "2020-12-30",
+          RealEstateId: admin_token.RealEstateId,
+          ComplexId: admin_token.ComplexId
         });
       const { body, status } = res;
       expect(status).toBe(400);
@@ -131,13 +132,14 @@ describe("Test Router Fee", () => {
         .post("/fee")
         .set({
           access_token: admin_token.access_token,
-          RealEstateId: admin_token.RealEstateId,
-          ComplexId: admin_token.ComplexId
+
         })
         .send({
           name: "Test fee pengajian",
           description: "Test",
           due_date: "2020-12-3",
+          RealEstateId: admin_token.RealEstateId,
+          ComplexId: admin_token.ComplexId
         });
       const { body, status } = res;
       expect(status).toBe(400);
@@ -150,13 +152,14 @@ describe("Test Router Fee", () => {
         .post("/fee")
         .set({
           access_token: admin_token.access_token,
-          RealEstateId: admin_token.RealEstateId,
-          ComplexId: admin_token.ComplexId
+
         })
         .send({
           name: "Test fee pengajian",
           description: "Test",
           due_date: "2020-13-30",
+          RealEstateId: admin_token.RealEstateId,
+          ComplexId: admin_token.ComplexId
         });
       const { body, status } = res;
       expect(status).toBe(400);

@@ -116,6 +116,7 @@ class Middleware {
 
   static async feeAuthorization(req, res, next) {
     const feeId = +req.params.id;
+    console.log(req.params.id, 'feeeeeeeeeeeeeeeeeeeeee')
     try {
       const foundFee = await Fee.findByPk(feeId);
       if (!foundFee) next();
