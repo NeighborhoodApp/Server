@@ -1,6 +1,6 @@
 const app = require("../app");
 const request = require("supertest");
-const filePath = `/home/samudra/Documents/Hactiv8/Final-Project/Server/tests/test.txt`;
+const filePath = `/home/rpratama/hacktiv8/phase-3/final-project/Server/tests/test.txt`;
 
 describe('Test Router Image', () => {
   describe('Test endpoint POST /upload', () => {
