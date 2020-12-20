@@ -18,39 +18,47 @@ class Helper {
   }
 
   static verifyToken(token) {
+    console.log(token);
     const decoded = jwt.verify(token, process.env.SECRET);
     return decoded;
   }
 
   static calculateDistance(userCoordinat, timeline) {
-    const result = []
-    timeline.forEach(el => {
-      if (el.privacy === 'member') {
-        result.push(el)
-      }
-      const estateCoordinat = el.User.RealEstate.coordinate.replace(/\s/g, "").split(',')
-      let R = 6371; // km
-      let dLat = toRad(estateCoordinat[0] - userCoordinat[0]);
-      let dLon = toRad(estateCoordinat[1] - userCoordinat[1]);
-      let lat1 = toRad(userCoordinat[0]);//user0
-      let lat2 = toRad(estateCoordinat[0]);
-
-      let a =
-        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
-      let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      let d = R * c;
-
-      if (d <= 1) {
-        result.push(el)
-      }
-    })
+    const result = [];
     // Converts numeric degrees to radians
-    function toRad(value) {
+    const toRad = (value) => {
       return value * (Math.PI / 180);
-    }
+    };
 
-    return result
+    timeline.forEach((el) => {
+      if (el.privacy === "member") {
+        result.push(el);
+      } else {
+        const estateCoordinat = el.User.RealEstate.coordinate
+          .replace(/\s/g, "")
+          .split(",");
+        let R = 6371; // km
+        let dLat = toRad(estateCoordinat[0] - userCoordinat[0]);
+        let dLon = toRad(estateCoordinat[1] - userCoordinat[1]);
+        let lat1 = toRad(userCoordinat[0]); //user0
+        let lat2 = toRad(estateCoordinat[0]);
+
+        let a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.sin(dLon / 2) *
+            Math.sin(dLon / 2) *
+            Math.cos(lat1) *
+            Math.cos(lat2);
+        let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        let d = R * c;
+
+        if (d <= 1) {
+          result.push(el);
+        }
+      }
+    });
+
+    return result;
   }
 }
 

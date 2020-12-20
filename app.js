@@ -38,8 +38,8 @@ io.on('connection', (socket) => {
   });
 });
 
-http.listen(PORT, () => {
-  console.log('Server running at http://localhost:' + PORT)
-})
+// http.listen(PORT, () => {
+//   console.log('Server running at http://localhost:' + PORT)
+// })
 
 module.exports = app;

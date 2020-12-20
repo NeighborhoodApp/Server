@@ -213,10 +213,17 @@ class UserController {
           where: {
             id: userId,
           },
+          returning: true,
         }
       );
       if (updatedUser[0] === 0) throw { msg: "User not found", status: 404 };
-      res.status(200).json({ msg: `User info is successfully updated` });
+      const newUser = { ...updatedUser[1][0] };
+      delete newUser.dataValues.password;
+      console.log(newUser);
+      res.status(200).json({
+        foundUser: newUser.dataValues,
+        msg: `User info is successfully updated`,
+      });
     } catch (err) {
       console.log(err.stack);
       next(err);
@@ -238,7 +245,7 @@ class UserController {
   static async verifyToken(req, res, next) {
     const { expoPushToken } = req.body;
     const userId = +req.params.id;
-    console.log(expoPushToken, userId);
+    console.log("expoPushToken", expoPushToken, "userId", userId);
     try {
       const updatedUser = await User.update(
         { expoPushToken },
@@ -249,7 +256,15 @@ class UserController {
           returning: true
         }
       );
-      res.status(200).json({ user: updatedUser[1][0]});
+      if (updatedUser[0] === 0) throw { msg: "User not found", status: 404 };
+      const newUser = { ...updatedUser[1][0] };
+      delete newUser.dataValues.password;
+      const dataValue = { ...newUser.dataValues };
+      if (dataValue.RealEstateId) {
+        const realEstate = await RealEstate.findByPk(dataValue.RealEstateId);
+        dataValue.coordinate = realEstate.coordinate;
+      }
+      res.status(200).json({ foundUser: dataValue });
     } catch (err) {
       console.log(err.stack);
       next(err);

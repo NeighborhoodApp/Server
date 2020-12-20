@@ -260,7 +260,7 @@ class Middleware {
   }
 
   static errorHandler(err, req, res, next) {
-    console.log(err.stack);
+    console.log("err.stack", err.message);
     let status = err.status || 500;
     let msg = err.msg || "Internal Server Error";
 
