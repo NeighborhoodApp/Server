@@ -25,7 +25,7 @@ class UserController {
   }
 
   static async loginClient(req, res, next) {
-    const { email, password } = req.body;
+    const { email, password, expoPushToken } = req.body;
     try {
       const foundUser = await User.findOne({
         include: [RealEstate, Complex],
@@ -39,6 +39,17 @@ class UserController {
       if (!Helper.comparePassword(password, foundUser.password)) {
         throw { msg: "Wrong password!", status: 401 };
       }
+      console.log("expoPushToken", expoPushToken);
+      const updateUser = await User.update(
+        { expoPushToken },
+        {
+          where: {
+            id: foundUser.id,
+          },
+        }
+      );
+      console.log("updateUser", updateUser);
+
       const accessToken = Helper.signToken({
         id: foundUser.id,
         email: foundUser.email,
