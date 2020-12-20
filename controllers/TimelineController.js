@@ -16,7 +16,7 @@ class TimelineController {
           },
           {
             model: Comment,
-            order: [['createdAt', 'ASC']]
+            order: [['id', 'ASC']]
           }
         ],
         order: [['updatedAt', 'DESC']]
@@ -44,7 +44,6 @@ class TimelineController {
         include: [
           {
             model: Comment,
-            order: [['updatedAt', 'DESC']],
             include: [
               {
                 model: User,
@@ -54,6 +53,9 @@ class TimelineController {
           },
           User
         ],
+        order: [
+          [Comment, 'id', 'ASC']
+        ]
       });
       if (!timeline) {
         throw { msg: "Timeline not found", status: 404 };
