@@ -69,7 +69,7 @@ class Middleware {
         else if (loggedUser.RoleId !== 3 && loggedUser.RoleId !== 2)
           throw { msg: "Authentication failed", status: 401 };
         else {
-          req.loggedIn = decoded;
+          req.loggedIn = loggedUser;
           next();
         }
       }

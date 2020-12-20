@@ -39,10 +39,21 @@ class UserController {
       if (!Helper.comparePassword(password, foundUser.password)) {
         throw { msg: "Wrong password!", status: 401 };
       }
-      let userLogin = { ...foundUser.dataValues };
+      const accessToken = Helper.signToken({
+        id: foundUser.id,
+        email: foundUser.email,
+        RoleId: foundUser.RoleId,
+      });
+
+      let userLogin = {
+        ...foundUser.dataValues,
+        access_token: accessToken,
+      };
+      
       if (foundUser.RealEstate) {
         userLogin = {
           ...foundUser.dataValues,
+          access_token: accessToken,
           coordinate: foundUser.RealEstate.coordinate,
         };
       }

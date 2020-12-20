@@ -29,13 +29,9 @@ class EventController {
   }
 
   static async create(req, res, next) {
-    const payload = {
-      name: req.body.name,
-      description: req.body.description,
-      image: req.body.image,
-      date: req.body.date,
-      CategoryId: req.body.CategoryId,
-      RealEstateId: req.body.RealEstateId,
+    const { name, description, image, date, CategoryId } = req.body;
+    const payload = { name, description, image, date, CategoryId,
+      RealEstateId: req.loggedIn.RealEstateId,
       UserId: req.loggedIn.id,
     };
     try {
