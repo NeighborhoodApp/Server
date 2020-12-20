@@ -28,54 +28,26 @@ class UserController {
     const { email, password } = req.body;
     try {
       const foundUser = await User.findOne({
-        include: [RealEstate],
+        include: [RealEstate, Complex],
         where: {
           email: email,
         },
       });
 
       if (!foundUser) throw { msg: "User not found", status: 404 };
-      else if (!Helper.comparePassword(password, foundUser.password))
+
+      if (!Helper.comparePassword(password, foundUser.password)) {
         throw { msg: "Wrong password!", status: 401 };
-      else if (foundUser.status === "Inactive") {
-        const accessToken = Helper.signToken({
-          id: foundUser.id,
-          email: foundUser.email,
-          RoleId: foundUser.RoleId,
-        });
-        return res.status(200).json({
-          access_token: accessToken,
-          id: foundUser.id,
-          // Added this Value
-          email: foundUser.email,
-          status: foundUser.status,
-          fullname: foundUser.fullname,
-          address: foundUser.address,
-          RoleId: foundUser.RoleId,
-          RealEstateId: foundUser.RealEstateId,
-          ComplexId: foundUser.ComplexId,
-          // coordinate: foundUser.RealEstate.coordinate,
-        });
-      } else {
-        const accessToken2 = Helper.signToken({
-          id: foundUser.id,
-          email: foundUser.email,
-          RoleId: foundUser.RoleId,
-        });
-        res.status(200).json({
-          access_token: accessToken2,
-          id: foundUser.id,
-          // Added this Value
-          email: foundUser.email,
-          status: foundUser.status,
-          fullname: foundUser.fullname,
-          address: foundUser.address,
-          RoleId: foundUser.RoleId,
-          RealEstateId: foundUser.RealEstateId,
-          ComplexId: foundUser.ComplexId,
-          coordinate: foundUser.RealEstate.coordinate,
-        });
       }
+      let userLogin = { ...foundUser.dataValues };
+      if (foundUser.RealEstate) {
+        userLogin = {
+          ...foundUser.dataValues,
+          coordinate: foundUser.RealEstate.coordinate,
+        };
+      }
+      delete userLogin.password;
+      res.status(200).json(userLogin);
     } catch (err) {
       console.log(err.message);
       next(err);
@@ -104,6 +76,7 @@ class UserController {
         ComplexId,
         status,
       });
+      
       await RealEstate.update(
         { status: "Active" },
         {
