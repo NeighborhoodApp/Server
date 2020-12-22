@@ -18,7 +18,12 @@ class EventController {
   static async findById(req, res, next) {
     const id = req.params.id;
     try {
-      const event = await Event.findByPk(id);
+      const event = await Event.findOne({
+        where: {
+          id
+        },
+        include: [Category, User, RealEstate]
+      });
       if (!event) {
         throw { msg: "Event not found", status: 404 };
       }
