@@ -11,6 +11,7 @@ const http = require("http").createServer(app)
 const io = require("socket.io")(http)
 
 app.use(cors());
+app.use(express.static(path.join(__dirname, "../../build"))); 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
