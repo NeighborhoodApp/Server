@@ -139,7 +139,7 @@ class UserController {
     try {
       const allUsers = await User.findAll({
         include: [Role, Complex, RealEstate],
-        order: [["id", "ASC"]],
+        order: [["id", "DESC"]],
       });
       res.status(200).json({ allUsers });
     } catch (err) {
@@ -188,11 +188,11 @@ class UserController {
   }
 
   static async update(req, res, next) {
-    const { fullname, address, RoleId, RealEstateId, ComplexId } = req.body;
+    const { fullname, address, RoleId, RealEstateId, ComplexId, status } = req.body;
     const userId = +req.params.id;
     try {
       const updatedUser = await User.update(
-        { fullname, address, RoleId, RealEstateId, ComplexId },
+        { fullname, address, RoleId, RealEstateId, ComplexId, status },
         {
           where: {
             id: userId,
