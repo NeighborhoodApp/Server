@@ -9,6 +9,7 @@ const routes = require('./routes')
 const Middleware = require("./middlewares/middleware")
 const http = require("http").createServer(app)
 const io = require("socket.io")(http)
+const path = require('path')
 
 app.use(cors());
 app.use(express.static(path.join(__dirname, "../../build"))); 
