@@ -150,7 +150,7 @@ class UserController {
     try {
       const allUsers = await User.findAll({
         include: [Role, Complex, RealEstate],
-        order: [["id", "DESC"]],
+        order: [["RoleId", "ASC"]],
       });
       res.status(200).json({ allUsers });
     } catch (err) {
