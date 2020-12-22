@@ -10,7 +10,12 @@ const developerRouter = require("./developerRouter.js");
 const roleRouter = require("./roleRouter.js");
 const realEstateRouter = require("./realEstateRouter.js");
 const complexRouter = require("./complexRouter.js");
-
+router.get('/', (req, res) => {
+  res.status(200).json({
+    response: 200,
+    status: 'Connected'
+  })
+})
 router.use('/category', category)
 router.use('/event', event)
 router.use('/fee', fee)
